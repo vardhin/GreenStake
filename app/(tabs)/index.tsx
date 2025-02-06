@@ -1,65 +1,57 @@
-import { StyleSheet, ScrollView, Pressable, useColorScheme } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { StyleSheet, ScrollView, Pressable, View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import Colors from '@/constants/Colors';
 
 export default function HomeScreen() {
-  // Ensure we always have a valid color scheme
-  const rawColorScheme = useColorScheme();
-  const colorScheme = (rawColorScheme ?? 'light') as 'light' | 'dark';
-  const themeColors = Colors[colorScheme];
-
   return (
     <ScrollView style={styles.scrollView}>
-      <ThemedView style={styles.container}>
+      <View style={styles.container}>
         {/* Hero Section */}
-        <ThemedView style={styles.heroSection}>
-          <ThemedText type="title">Welcome to GreenStake</ThemedText>
-          <ThemedText style={styles.subtitle}>
+        <View style={styles.heroSection}>
+          <Text style={styles.title}>Welcome to GreenStake</Text>
+          <Text style={styles.subtitle}>
             Trade carbon credits and make a positive impact on our planet
-          </ThemedText>
-        </ThemedView>
+          </Text>
+        </View>
 
         {/* Quick Actions */}
-        <ThemedView style={styles.actionContainer}>
+        <View style={styles.actionContainer}>
           <Pressable 
-            style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}
+            style={styles.actionButton}
             onPress={() => {/* handle trade credits */}}
           >
             <FontAwesome 
               name="exchange" 
               size={24} 
-              color={themeColors.tint}
+              color="#2f95dc"
               accessibilityLabel="Trade Credits"
             />
-            <ThemedText style={styles.actionText}>Trade Credits</ThemedText>
+            <Text style={styles.actionText}>Trade Credits</Text>
           </Pressable>
-          <Pressable style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}>
-            <FontAwesome name="leaf" size={24} color={themeColors.tint} />
-            <ThemedText style={styles.actionText}>View Projects</ThemedText>
+          <Pressable style={styles.actionButton}>
+            <FontAwesome name="leaf" size={24} color="#2f95dc" />
+            <Text style={styles.actionText}>View Projects</Text>
           </Pressable>
-          <Pressable style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}>
-            <FontAwesome name="line-chart" size={24} color={themeColors.tint} />
-            <ThemedText style={styles.actionText}>Market Stats</ThemedText>
+          <Pressable style={styles.actionButton}>
+            <FontAwesome name="line-chart" size={24} color="#2f95dc" />
+            <Text style={styles.actionText}>Market Stats</Text>
           </Pressable>
-        </ThemedView>
+        </View>
 
         {/* Market Overview */}
-        <ThemedView style={[styles.section, { backgroundColor: themeColors.secondary }]}>
-          <ThemedText type="title" style={styles.sectionTitle}>Market Overview</ThemedText>
-          <ThemedText>Current Carbon Credit Price: $25/ton</ThemedText>
-          <ThemedText>Available Credits: 1,500</ThemedText>
-        </ThemedView>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Market Overview</Text>
+          <Text>Current Carbon Credit Price: $25/ton</Text>
+          <Text>Available Credits: 1,500</Text>
+        </View>
 
         {/* Featured Projects */}
-        <ThemedView style={[styles.section, { backgroundColor: themeColors.secondary }]}>
-          <ThemedText type="title" style={styles.sectionTitle}>Featured Projects</ThemedText>
-          <ThemedText>Rainforest Conservation - Brazil</ThemedText>
-          <ThemedText>Wind Farm Development - Texas</ThemedText>
-          <ThemedText>Solar Energy Initiative - India</ThemedText>
-        </ThemedView>
-      </ThemedView>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Featured Projects</Text>
+          <Text>Rainforest Conservation - Brazil</Text>
+          <Text>Wind Farm Development - Texas</Text>
+          <Text>Solar Energy Initiative - India</Text>
+        </View>
+      </View>
     </ScrollView>
   );
 }
@@ -89,6 +81,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     width: '30%',
+    backgroundColor: '#f0f0f0',
   },
   actionText: {
     marginTop: 8,
@@ -99,6 +92,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 15,
+    backgroundColor: '#f0f0f0',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -114,5 +108,10 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
