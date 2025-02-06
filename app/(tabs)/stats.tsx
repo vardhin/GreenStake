@@ -1,7 +1,9 @@
-import { View, Text, Dimensions, ScrollView } from 'react-native';
+import { View, Dimensions, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
+import { ThemedText } from '../components/ThemedText';
+import { ThemedView } from '../components/ThemedView';
 
 const { width } = Dimensions.get('window');
 
@@ -84,18 +86,12 @@ export default function StatsScreen() {
   });
 
   return (
-    <ScrollView 
-      style={styles.scrollContent}
-      contentContainerStyle={styles.scrollContent}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.container}>
-        <Text style={theme.typography.h2}>Market Analytics</Text>
-        
-        <View style={styles.chartContainer}>
+    <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ThemedView style={styles.container}>
+        <ThemedView style={styles.chartContainer}>
           <View style={styles.chartHeader}>
-            <Text style={theme.typography.subtitle1}>Project Activity Trends</Text>
-            <Text style={theme.typography.caption}>Monthly performance metrics</Text>
+            <ThemedText type="title">Carbon Credits Market Trend</ThemedText>
+            <ThemedText type="subtitle">Last 6 Months</ThemedText>
           </View>
           
           <View style={styles.chartWrapper}>
@@ -104,62 +100,35 @@ export default function StatsScreen() {
               width={CHART_WIDTH}
               height={220}
               chartConfig={{
-                backgroundColor: 'transparent',
+                backgroundColor: theme.colors.surface,
                 backgroundGradientFrom: theme.colors.surface,
                 backgroundGradientTo: theme.colors.surface,
                 decimalPlaces: 0,
                 color: (opacity = 1) => `rgba(46, 125, 50, ${opacity})`,
-                labelColor: () => theme.colors.text.secondary,
-                strokeWidth: 2,
-                propsForDots: {
-                  r: '4',
-                  strokeWidth: '2',
-                  stroke: theme.colors.primary,
-                },
-                propsForLabels: {
-                  fontSize: 11,
-                  fontWeight: '500',
-                },
-                style: {
-                  borderRadius: theme.borderRadius.lg,
-                },
-                fillShadowGradientFrom: theme.colors.primary,
-                fillShadowGradientTo: theme.colors.surface,
-                fillShadowGradientOpacity: 0.1,
+                labelColor: () => theme.colors.text.primary,
+                style: styles.chart,
               }}
               bezier
               style={styles.chart}
-              withInnerLines={false}
-              withOuterLines={true}
-              withVerticalLines={false}
-              withHorizontalLines={true}
-              withVerticalLabels={true}
-              withHorizontalLabels={true}
-              fromZero={true}
-              segments={5}
-              yAxisInterval={1}
-              yAxisSuffix=""
-              yAxisLabel=""
-              formatYLabel={(value) => Math.round(value).toString()}
             />
           </View>
-
+          
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
-              <Text style={styles.statValue}>99</Text>
-              <Text style={styles.statLabel}>Peak Value</Text>
+              <ThemedText style={styles.statValue}>1,234</ThemedText>
+              <ThemedText style={styles.statLabel}>Total Credits</ThemedText>
             </View>
             <View style={[styles.statItem, styles.statItemBorder]}>
-              <Text style={styles.statValue}>52.5</Text>
-              <Text style={styles.statLabel}>Average</Text>
+              <ThemedText style={styles.statValue}>$25.50</ThemedText>
+              <ThemedText style={styles.statLabel}>Avg. Price</ThemedText>
             </View>
             <View style={styles.statItem}>
-              <Text style={styles.statValue}>20</Text>
-              <Text style={styles.statLabel}>Minimum</Text>
+              <ThemedText style={styles.statValue}>+12%</ThemedText>
+              <ThemedText style={styles.statLabel}>Monthly Growth</ThemedText>
             </View>
           </View>
-        </View>
-      </View>
+        </ThemedView>
+      </ThemedView>
     </ScrollView>
   );
 } 

@@ -1,6 +1,8 @@
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
+import { ThemedText } from '../components/ThemedText';
+import { ThemedView } from '../components/ThemedView';
 
 // Mock data - move to a separate file later
 const MOCK_PURCHASED_CREDITS = [
@@ -19,42 +21,42 @@ export default function ProjectsScreen() {
   
   const styles = StyleSheet.create({
     projectName: {
-      ...theme.typography.title,
+      ...theme.typography.h2,
       color: theme.colors.text.primary,
       marginBottom: theme.spacing.sm,
     },
     details: {
-      ...theme.typography.subtitle,
+      ...theme.typography.subtitle1,
       color: theme.colors.primary,
     },
     date: {
-      ...theme.typography.body,
+      ...theme.typography.body2,
       color: theme.colors.text.secondary,
       marginTop: theme.spacing.sm,
     },
   });
 
   return (
-    <View style={{ backgroundColor: theme.colors.background, flex: 1, padding: theme.spacing.lg }}>
-      <Text style={{ ...theme.typography.h1, color: theme.colors.text.primary }}>My Carbon Credits</Text>
+    <ThemedView style={{ flex: 1, padding: theme.spacing.lg }}>
+      <ThemedText type="title">My Carbon Credits</ThemedText>
       <FlatList
         data={MOCK_PURCHASED_CREDITS}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={{
+          <ThemedView style={{
             backgroundColor: theme.colors.surfaceVariant,
             borderRadius: theme.borderRadius.lg,
             padding: theme.spacing.lg,
             marginVertical: theme.spacing.sm,
             ...theme.elevation.small,
           }}>
-            <Text style={styles.projectName}>{item.projectName}</Text>
-            <Text style={styles.details}>Credits: {item.credits}</Text>
-            <Text style={styles.details}>Investment: ${item.totalInvestment}</Text>
-            <Text style={styles.date}>Purchased: {item.purchaseDate}</Text>
-          </View>
+            <ThemedText style={styles.projectName}>{item.projectName}</ThemedText>
+            <ThemedText style={styles.details}>Credits: {item.credits}</ThemedText>
+            <ThemedText style={styles.details}>Investment: ${item.totalInvestment}</ThemedText>
+            <ThemedText style={styles.date}>Purchased: {item.purchaseDate}</ThemedText>
+          </ThemedView>
         )}
       />
-    </View>
+    </ThemedView>
   );
 } 

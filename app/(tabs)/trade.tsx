@@ -3,6 +3,8 @@ import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
+import { ThemedText } from '../components/ThemedText';
+import { ThemedView } from '../components/ThemedView';
 
 // You'll want to move these types to a separate types file later
 type Project = {
@@ -106,55 +108,84 @@ export default function TradeScreen() {
   });
 
   return (
-    <View style={[commonStyles.container, commonStyles.gap]}>
-      <Text style={styles.balance}>Balance: ${userBalance}</Text>
-      
+    <ThemedView style={{ flex: 1, padding: theme.spacing.lg }}>
       {!selectedProject ? (
         <FlatList
           data={MOCK_PROJECTS}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Pressable
-              style={commonStyles.cardVariant}
+              style={{
+                backgroundColor: theme.colors.surface,
+                borderRadius: theme.borderRadius.lg,
+                padding: theme.spacing.lg,
+                marginVertical: theme.spacing.sm,
+                ...theme.elevation.small,
+              }}
               onPress={() => setSelectedProject(item)}>
-              <Text style={commonStyles.title}>{item.name}</Text>
-              <Text style={styles.description}>{item.description}</Text>
-              <Text style={styles.price}>Price per credit: ${item.creditPrice}</Text>
-              <Text style={styles.available}>Available credits: {item.availableCredits}</Text>
+              <ThemedText type="title">{item.name}</ThemedText>
+              <ThemedText style={styles.description}>{item.description}</ThemedText>
+              <ThemedText style={styles.price}>
+                Price per credit: ${item.creditPrice}
+              </ThemedText>
+              <ThemedText style={styles.available}>
+                Available: {item.availableCredits} credits
+              </ThemedText>
             </Pressable>
           )}
         />
       ) : (
-        <View style={commonStyles.card}>
+        <ThemedView style={{
+          backgroundColor: theme.colors.surface,
+          borderRadius: theme.borderRadius.lg,
+          padding: theme.spacing.lg,
+          ...theme.elevation.small,
+        }}>
           <Pressable
             style={styles.backButton}
             onPress={() => setSelectedProject(null)}>
             <FontAwesome name="arrow-left" size={24} color={theme.colors.text.primary} />
           </Pressable>
           
-          <Text style={commonStyles.title}>{selectedProject.name}</Text>
+          <ThemedText type="title">{selectedProject.name}</ThemedText>
           <View style={styles.inputContainer}>
-            <Text style={commonStyles.label}>Investment Amount ($)</Text>
+            <ThemedText type="subtitle">Investment Amount ($)</ThemedText>
             <TextInput
-              style={commonStyles.input}
+              style={{
+                backgroundColor: theme.colors.surface,
+                borderRadius: theme.borderRadius.md,
+                padding: theme.spacing.md,
+                color: theme.colors.text.primary,
+                borderWidth: 1,
+                borderColor: theme.colors.border,
+              }}
               keyboardType="numeric"
               value={investmentAmount}
               onChangeText={setInvestmentAmount}
               placeholder="Enter amount"
+              placeholderTextColor={theme.colors.text.secondary}
             />
           </View>
           
-          <Text style={styles.calculatedCredits}>
+          <ThemedText style={styles.calculatedCredits}>
             Credits to receive: {calculateCredits(investmentAmount)}
-          </Text>
+          </ThemedText>
           
           <Pressable
-            style={commonStyles.button}
+            style={{
+              backgroundColor: theme.colors.primary,
+              borderRadius: theme.borderRadius.md,
+              padding: theme.spacing.md,
+              alignItems: 'center',
+              ...theme.elevation.small,
+            }}
             onPress={handlePurchase}>
-            <Text style={commonStyles.buttonText}>Purchase Credits</Text>
+            <ThemedText style={{ color: theme.colors.text.inverse }}>
+              Purchase Credits
+            </ThemedText>
           </Pressable>
-        </View>
+        </ThemedView>
       )}
-    </View>
+    </ThemedView>
   );
 } 

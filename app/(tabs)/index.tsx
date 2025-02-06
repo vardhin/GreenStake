@@ -1,101 +1,109 @@
-import { ScrollView, Pressable, View, Text } from 'react-native';
+import { ScrollView, Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { theme, commonStyles, useTheme } from '../styles/theme';
+import { useTheme } from '../hooks/useTheme';
+import { ThemedText } from '../components/ThemedText';
+import { ThemedView } from '../components/ThemedView';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const currentTheme = useTheme();
+  const theme = useTheme();
+  
+  const styles = StyleSheet.create({
+    scrollView: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    heroSection: {
+      backgroundColor: theme.colors.surfaceVariant,
+      borderRadius: theme.borderRadius.lg,
+      padding: theme.spacing.lg,
+      marginVertical: theme.spacing.sm,
+      ...theme.elevation.small,
+      alignItems: 'center',
+    },
+    subtitle: {
+      fontSize: theme.typography.subtitle1.fontSize,
+      fontWeight: theme.typography.subtitle1.fontWeight,
+      textAlign: 'center',
+      marginTop: theme.spacing.sm,
+      color: theme.colors.text.primary,
+    },
+    actionContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-around',
+    },
+    actionButton: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: theme.spacing.md,
+      borderRadius: theme.borderRadius.md,
+      width: '30%',
+      backgroundColor: theme.colors.primaryLight,
+      ...theme.elevation.small,
+    },
+    actionText: {
+      ...theme.typography.caption,
+      marginTop: theme.spacing.sm,
+      textAlign: 'center',
+      color: theme.colors.text.primary,
+      fontWeight: '600',
+    },
+  });
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={commonStyles.container}>
+      <View style={{ flex: 1, padding: theme.spacing.lg }}>
         {/* Hero Section */}
         <View style={styles.heroSection}>
-          <Text style={commonStyles.header}>Welcome to GreenStake</Text>
-          <Text style={styles.subtitle}>
+          <ThemedText type="title">Welcome to GreenStake</ThemedText>
+          <ThemedText style={styles.subtitle}>
             Trade carbon credits and make a positive impact on our planet
-          </Text>
+          </ThemedText>
         </View>
 
         {/* Quick Actions */}
-        <View style={[commonStyles.row, styles.actionContainer]}>
+        <View style={styles.actionContainer}>
           <Pressable 
             style={styles.actionButton}
             onPress={() => router.push('/trade')}
           >
             <FontAwesome name="exchange" size={24} color={theme.colors.primary} />
-            <Text style={styles.actionText}>Trade Credits</Text>
+            <ThemedText style={styles.actionText}>Trade Credits</ThemedText>
           </Pressable>
           <Pressable 
             style={styles.actionButton}
             onPress={() => router.push('/projects')}
           >
             <FontAwesome name="leaf" size={24} color={theme.colors.primary} />
-            <Text style={styles.actionText}>View Projects</Text>
+            <ThemedText style={styles.actionText}>View Projects</ThemedText>
           </Pressable>
           <Pressable 
             style={styles.actionButton}
             onPress={() => router.push('/stats')}
           >
             <FontAwesome name="line-chart" size={24} color={theme.colors.primary} />
-            <Text style={styles.actionText}>Market Stats</Text>
+            <ThemedText style={styles.actionText}>Market Stats</ThemedText>
           </Pressable>
         </View>
 
         {/* Market Overview */}
-        <View style={commonStyles.cardVariant}>
-          <Text style={commonStyles.title}>Market Overview</Text>
-          <Text style={commonStyles.body}>Current Carbon Credit Price: $25/ton</Text>
-          <Text style={commonStyles.body}>Available Credits: 1,500</Text>
+        <View style={styles.heroSection}>
+          <ThemedText type="title">Market Overview</ThemedText>
+          <ThemedText>Current Carbon Credit Price: $25/ton</ThemedText>
+          <ThemedText>Available Credits: 1,500</ThemedText>
         </View>
 
         {/* Featured Projects */}
-        <View style={commonStyles.cardVariant}>
-          <Text style={commonStyles.title}>Featured Projects</Text>
-          <Text style={commonStyles.body}>Rainforest Conservation - Brazil</Text>
-          <Text style={commonStyles.body}>Wind Farm Development - Texas</Text>
-          <Text style={commonStyles.body}>Solar Energy Initiative - India</Text>
+        <View style={styles.heroSection}>
+          <ThemedText type="title">Featured Projects</ThemedText>
+          <ThemedText>Rainforest Conservation - Brazil</ThemedText>
+          <ThemedText>Wind Farm Development - Texas</ThemedText>
+          <ThemedText>Solar Energy Initiative - India</ThemedText>
         </View>
       </View>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  heroSection: {
-    ...commonStyles.cardVariant,
-    alignItems: 'center',
-  },
-  subtitle: {
-    fontSize: theme.typography.subtitle1.fontSize,
-    fontWeight: theme.typography.subtitle1.fontWeight,
-    textAlign: 'center',
-    marginTop: theme.spacing.sm,
-    color: theme.colors.text.primary,
-  },
-  actionContainer: {
-    justifyContent: 'space-around',
-  },
-  actionButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: theme.spacing.md,
-    borderRadius: theme.borderRadius.md,
-    width: '30%',
-    backgroundColor: theme.colors.primaryLight,
-    ...theme.elevation.small,
-  },
-  actionText: {
-    ...theme.typography.caption,
-    marginTop: theme.spacing.sm,
-    textAlign: 'center',
-    color: theme.colors.text.primary,
-    fontWeight: '600',
-  },
-});
