@@ -49,7 +49,7 @@ export default function TabLayout() {
         options={{
           title: 'Portfolio',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="briefcase" size={size} color={color} />
+            <MaterialCommunityIcons name="chart-box" size={size} color={color} />
           ),
         }}
       />
