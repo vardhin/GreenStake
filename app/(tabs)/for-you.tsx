@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, ScrollView, TouchableOpacity, StyleSheet, Platform, TextInput } from 'react-native';
+import { View, ScrollView, TouchableOpacity, StyleSheet, Platform, TextInput, Modal, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import Slider from '@react-native-community/slider';
 import { useTheme } from '@/hooks/useTheme';
@@ -13,6 +13,18 @@ interface Project {
   returns: string;
   investors: number;
   type: typeof PROJECT_TYPES[number];
+}
+
+interface Transaction {
+  projectTitle: string;
+  amount: number;
+  date: Date;
+  type: 'investment';
+}
+
+interface UserBalance {
+  available: number;
+  invested: number;
 }
 
 const PROJECTS: Project[] = [
@@ -47,6 +59,14 @@ export default function ForYouScreen() {
   const [favoriteProjects, setFavoriteProjects] = useState<string[]>([]);
   const [investedProjects, setInvestedProjects] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showInvestModal, setShowInvestModal] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [investmentAmount, setInvestmentAmount] = useState('');
+  const [userBalance, setUserBalance] = useState<UserBalance>({
+    available: 10000, // Example initial balance
+    invested: 0,
+  });
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const filteredProjects = PROJECTS.filter(project => {
     if (searchQuery && !project.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
@@ -61,6 +81,46 @@ export default function ForYouScreen() {
     
     return true;
   });
+
+  const handleInvestment = () => {
+    if (!selectedProject || !investmentAmount) return;
+    
+    const amount = parseFloat(investmentAmount);
+    
+    if (isNaN(amount) || amount <= 0) {
+      Alert.alert('Invalid Amount', 'Please enter a valid investment amount');
+      return;
+    }
+    
+    if (amount > userBalance.available) {
+      Alert.alert('Insufficient Funds', 'You do not have enough balance for this investment');
+      return;
+    }
+
+    // Update user balance
+    setUserBalance(prev => ({
+      available: prev.available - amount,
+      invested: prev.invested + amount,
+    }));
+
+    // Add to transactions
+    setTransactions(prev => [...prev, {
+      projectTitle: selectedProject.title,
+      amount,
+      date: new Date(),
+      type: 'investment',
+    }]);
+
+    // Add to invested projects
+    setInvestedProjects(prev => [...prev, selectedProject.title]);
+
+    // Close modal and reset
+    setShowInvestModal(false);
+    setSelectedProject(null);
+    setInvestmentAmount('');
+
+    Alert.alert('Success', 'Investment completed successfully!');
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -186,6 +246,58 @@ export default function ForYouScreen() {
       borderRadius: 8,
       color: isDark ? '#fff' : '#000',
     },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    modalContent: {
+      width: '80%',
+      padding: 20,
+      borderRadius: 12,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 16,
+    },
+    balanceText: {
+      marginBottom: 16,
+      fontSize: 16,
+    },
+    investmentInput: {
+      backgroundColor: '#f0f0f0',
+      padding: 12,
+      borderRadius: 8,
+      marginBottom: 16,
+    },
+    modalButtons: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    modalButton: {
+      flex: 1,
+      padding: 12,
+      borderRadius: 8,
+      marginHorizontal: 8,
+      alignItems: 'center',
+    },
+    cancelButton: {
+      backgroundColor: '#ff4444',
+    },
+    confirmButton: {
+      backgroundColor: '#4CAF50',
+    },
+    modalButtonText: {
+      color: 'white',
+      fontWeight: '500',
+    },
   });
 
   return (
@@ -269,7 +381,8 @@ export default function ForYouScreen() {
                   <TouchableOpacity 
                     style={styles.investButton}
                     onPress={() => {
-                      console.log(`Investing in ${project.title}`);
+                      setSelectedProject(project);
+                      setShowInvestModal(true);
                     }}
                   >
                     <ThemedText style={styles.investButtonText}>Invest Now</ThemedText>
@@ -284,6 +397,47 @@ export default function ForYouScreen() {
           )}
         </View>
       </ScrollView>
+      <Modal
+        visible={showInvestModal}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setShowInvestModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalContent, { backgroundColor: isDark ? '#1A1D1E' : 'white' }]}>
+            <ThemedText style={styles.modalTitle}>Invest in {selectedProject?.title}</ThemedText>
+            
+            <ThemedText style={styles.balanceText}>
+              Available Balance: ${userBalance.available.toLocaleString()}
+            </ThemedText>
+            
+            <TextInput
+              style={[styles.investmentInput, { color: isDark ? '#fff' : '#000' }]}
+              placeholder="Enter investment amount"
+              placeholderTextColor={isDark ? '#666' : '#999'}
+              keyboardType="numeric"
+              value={investmentAmount}
+              onChangeText={setInvestmentAmount}
+            />
+            
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.cancelButton]}
+                onPress={() => setShowInvestModal(false)}
+              >
+                <ThemedText style={styles.modalButtonText}>Cancel</ThemedText>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={[styles.modalButton, styles.confirmButton]}
+                onPress={handleInvestment}
+              >
+                <ThemedText style={styles.modalButtonText}>Confirm</ThemedText>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 } 
