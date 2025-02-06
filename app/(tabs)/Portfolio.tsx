@@ -194,22 +194,11 @@ const Projects: React.FC = () => {
   const navigation = useNavigation();
 
   React.useEffect(() => {
-    Platform.select({
-      ios: () => {
-        navigation.setOptions({
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="wallet-outline" size={size} color={color} />
-          ),
-        });
-      },
-      android: () => {
-        navigation.setOptions({
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="wallet-outline" size={size} color={color} />
-          ),
-        });
-      },
-    })();
+    navigation.setOptions({
+      tabBarIcon: ({ color, size }) => (
+        <Ionicons name="wallet-outline" size={size} color={color} />
+      ),
+    });
   }, [navigation]);
 
   const styles: Record<string, ViewStyle | TextStyle> = {
