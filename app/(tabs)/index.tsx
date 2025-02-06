@@ -135,6 +135,25 @@ export default function HomeScreen() {
     productTitle: {
       fontWeight: '500',
     },
+    floatingChatButton: {
+      position: 'absolute',
+      bottom: 80, // Position above tab bar
+      right: 20,
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      backgroundColor: '#638863',
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
   });
 
   const cardActions = {
@@ -271,6 +290,13 @@ export default function HomeScreen() {
           ))}
         </ScrollView>
       </ScrollView>
+      
+      <Pressable 
+        style={styles.floatingChatButton}
+        onPress={() => router.push('/chat')}
+      >
+        <IconSymbol name="bubble.left.fill" size={24} color="white" />
+      </Pressable>
     </View>
   );
 } 
