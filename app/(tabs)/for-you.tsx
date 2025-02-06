@@ -114,23 +114,35 @@ export default function ForYouScreen() {
       const data = await response.json();
       console.log('Raw API response:', JSON.stringify(data, null, 2));
       
-      // Check if data is an array
-      if (!Array.isArray(data)) {
-        console.error('API response is not an array:', data);
-        throw new Error('Invalid API response format');
+      // Handle different response structures
+      let projectsData = data;
+      if (data.data) {
+        console.log('Found data property in response');
+        projectsData = data.data;
+      }
+      if (data.projects) {
+        console.log('Found projects property in response');
+        projectsData = data.projects;
       }
       
-      const formattedProjects: Project[] = data.map((project: any) => {
+      if (!Array.isArray(projectsData)) {
+        console.error('Projects data is not an array:', projectsData);
+        console.log('Falling back to mock data');
+        setProjects(MOCK_PROJECTS);
+        return;
+      }
+      
+      const formattedProjects: Project[] = projectsData.map((project: any) => {
         console.log('Processing project:', project);
         return {
-          title: project.title,
+          title: project.title || 'Untitled Project',
           returns: '5-10',
           investors: project.investors?.length || 0,
           type: project.category === 'WIND' ? 'Wind' : 
                 project.category === 'SOLAR' ? 'Solar' : 
                 project.category === 'METHANE' ? 'Methane' : 'Trees',
-          description: project.description,
-          fundingGoal: project.fundingGoal
+          description: project.description || '',
+          fundingGoal: project.fundingGoal || 0
         };
       });
       
@@ -143,12 +155,10 @@ export default function ForYouScreen() {
         name: err.name
       });
       
-      // Load mock data if network request fails
       console.log('Loading mock data instead');
       setProjects(MOCK_PROJECTS);
       
-      // Still show the error but less intrusively
-      if (__DEV__) {  // Only in development
+      if (__DEV__) {
         Alert.alert(
           'Dev Notice',
           'Using mock data due to network error. Check console for details.'
