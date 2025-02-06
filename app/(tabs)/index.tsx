@@ -13,7 +13,7 @@ export default function HomeScreen() {
   const isDark = colorScheme === 'dark';
 
   const handleLearnMore = () => {
-    // Implement learn more action
+    router.push('/about');
   };
 
   const styles = StyleSheet.create({
@@ -186,7 +186,7 @@ export default function HomeScreen() {
                   borderColor: isDark ? '#2D3133' : '#dce5dc',
                   backgroundColor: isDark ? '#1A1D1E' : 'white'
                 }]}
-                onPress={() => cardActions[title]}
+                onPress={cardActions[title]}
               >
                 <IconSymbol name={icon} size={20} color={colors.text} />
                 <ThemedText weight="bold" size="sm">{title}</ThemedText>
