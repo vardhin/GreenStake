@@ -30,6 +30,8 @@ interface UserBalance {
   invested: number;
 }
 
+const API_BASE_URL = 'http://192.168.115.59:3000';
+
 export default function ForYouScreen() {
   const { spacing } = useTheme();
   const colorScheme = useColorScheme();
@@ -60,13 +62,14 @@ export default function ForYouScreen() {
   const loadProjects = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:3000/api/projects');
+      console.log('Fetching from:', `${API_BASE_URL}/api/projects`); // Debug log
+      const response = await fetch(`${API_BASE_URL}/api/projects`);
       const data = await response.json();
       
       // Transform API data to match Project interface
       const formattedProjects: Project[] = data.map((project: any) => ({
         title: project.title,
-        returns: '5-10', // You might want to calculate this based on project data
+        returns: '5-10',
         investors: project.investors?.length || 0,
         type: project.category === 'WIND' ? 'Wind' : 
               project.category === 'SOLAR' ? 'Solar' : 
@@ -78,6 +81,7 @@ export default function ForYouScreen() {
       setProjects(formattedProjects);
     } catch (err) {
       console.error('Failed to load projects:', err);
+      Alert.alert('Error', 'Failed to load projects. Please check your connection.');
     } finally {
       setIsLoading(false);
     }
@@ -113,8 +117,7 @@ export default function ForYouScreen() {
     }
 
     try {
-      // Replace PROJECT_ID and INVESTOR_TOKEN with actual values
-      const response = await fetch(`http://localhost:3000/api/projects/PROJECT_ID/invest`, {
+      const response = await fetch(`${API_BASE_URL}/api/projects/PROJECT_ID/invest`, {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer INVESTOR_TOKEN',
@@ -152,7 +155,7 @@ export default function ForYouScreen() {
       Alert.alert('Success', 'Investment completed successfully!');
     } catch (error) {
       console.error('Investment failed:', error);
-      Alert.alert('Error', 'Failed to complete investment. Please try again.');
+      Alert.alert('Error', 'Failed to complete investment. Please check your connection.');
     }
   };
 
