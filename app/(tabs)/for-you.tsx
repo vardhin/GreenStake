@@ -112,19 +112,29 @@ export default function ForYouScreen() {
       
       console.log('Response status:', response.status);
       const data = await response.json();
-      console.log('Received data:', data);
+      console.log('Raw API response:', JSON.stringify(data, null, 2));
       
-      const formattedProjects: Project[] = data.map((project: any) => ({
-        title: project.title,
-        returns: '5-10',
-        investors: project.investors?.length || 0,
-        type: project.category === 'WIND' ? 'Wind' : 
-              project.category === 'SOLAR' ? 'Solar' : 
-              project.category === 'METHANE' ? 'Methane' : 'Trees',
-        description: project.description,
-        fundingGoal: project.fundingGoal
-      }));
+      // Check if data is an array
+      if (!Array.isArray(data)) {
+        console.error('API response is not an array:', data);
+        throw new Error('Invalid API response format');
+      }
       
+      const formattedProjects: Project[] = data.map((project: any) => {
+        console.log('Processing project:', project);
+        return {
+          title: project.title,
+          returns: '5-10',
+          investors: project.investors?.length || 0,
+          type: project.category === 'WIND' ? 'Wind' : 
+                project.category === 'SOLAR' ? 'Solar' : 
+                project.category === 'METHANE' ? 'Methane' : 'Trees',
+          description: project.description,
+          fundingGoal: project.fundingGoal
+        };
+      });
+      
+      console.log('Formatted projects:', formattedProjects);
       setProjects(formattedProjects);
     } catch (err) {
       console.error('Detailed error:', {
