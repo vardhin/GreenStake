@@ -1,85 +1,123 @@
-import { ScrollView, Pressable, View } from 'react-native';
-import { StyleSheet } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { useTheme, createCommonStyles } from '../hooks/useTheme';
-import { ThemedText } from '../../components/ThemedText';
-import { ThemedView } from '../../components/ThemedView';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { HelloWave } from '@/components/HelloWave';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { ExternalLink } from '@/components/ExternalLink';
+import { useTheme } from '@/hooks/useTheme';
 
 export default function HomeScreen() {
-  const router = useRouter();
-  const theme = useTheme();
-  const commonStyles = createCommonStyles(theme);
-  
-  const styles = StyleSheet.create({
-    actionContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-around',
-      marginVertical: theme.spacing.lg,
-    },
-    actionButton: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: theme.spacing.md,
-      borderRadius: theme.borderRadius.md,
-      width: '30%',
-      backgroundColor: theme.colors.surface,
-      ...theme.elevation.small,
-    },
-  });
+  const { spacing, colors } = useTheme();
 
   return (
-    <ThemedView style={commonStyles.container}>
-      <ScrollView style={commonStyles.scrollView}>
-        {/* Hero Section */}
-        <View style={commonStyles.cardVariant}>
-          <ThemedText style={commonStyles.h1}>Welcome to GreenStake</ThemedText>
-          <ThemedText style={commonStyles.subtitle1}>
-            Trade carbon credits and make a positive impact on our planet
+    <ScrollView style={styles.container}>
+      <ThemedView style={styles.header}>
+        <View style={styles.welcomeContainer}>
+          <ThemedText size="display" weight="bold">
+            Welcome
           </ThemedText>
+          <HelloWave />
         </View>
+        
+        <ThemedText 
+          variant="secondary" 
+          size="lg" 
+          style={{ marginTop: spacing.sm }}
+        >
+          Your new React Native app with standardized theming
+        </ThemedText>
+      </ThemedView>
 
-        {/* Quick Actions */}
-        <View style={styles.actionContainer}>
-          <Pressable 
-            style={styles.actionButton}
-            onPress={() => router.push('/trade')}
-          >
-            <FontAwesome name="exchange" size={24} color={theme.colors.primary} />
-            <ThemedText style={commonStyles.caption}>Trade Credits</ThemedText>
-          </Pressable>
-          <Pressable 
-            style={styles.actionButton}
-            onPress={() => router.push('/projects')}
-          >
-            <FontAwesome name="leaf" size={24} color={theme.colors.primary} />
-            <ThemedText style={commonStyles.caption}>View Projects</ThemedText>
-          </Pressable>
-          <Pressable 
-            style={styles.actionButton}
-            onPress={() => router.push('/stats')}
-          >
-            <FontAwesome name="line-chart" size={24} color={theme.colors.primary} />
-            <ThemedText style={commonStyles.caption}>Market Stats</ThemedText>
-          </Pressable>
-        </View>
+      <ThemedView style={styles.section}>
+        <ThemedText size="xl" weight="semibold">
+          Getting Started
+        </ThemedText>
+        
+        <ThemedView variant="secondary" style={styles.card}>
+          <ThemedText weight="semibold">Theme System</ThemedText>
+          <ThemedText variant="secondary">
+            This app uses a standardized theme system that automatically adapts to system preferences.
+            Try switching your device's theme!
+          </ThemedText>
+        </ThemedView>
 
-        {/* Market Overview */}
-        <View style={commonStyles.card}>
-          <ThemedText style={commonStyles.h2}>Market Overview</ThemedText>
-          <ThemedText style={commonStyles.body1}>Current Carbon Credit Price: $25/ton</ThemedText>
-          <ThemedText style={commonStyles.body1}>Available Credits: 1,500</ThemedText>
-        </View>
+        <ThemedView variant="secondary" style={styles.card}>
+          <ThemedText weight="semibold">Components</ThemedText>
+          <ThemedText variant="secondary">
+            Explore themed components like ThemedView and ThemedText with various variants and styles.
+          </ThemedText>
+        </ThemedView>
 
-        {/* Featured Projects */}
-        <View style={commonStyles.card}>
-          <ThemedText style={commonStyles.h2}>Featured Projects</ThemedText>
-          <ThemedText style={commonStyles.body1}>Rainforest Conservation - Brazil</ThemedText>
-          <ThemedText style={commonStyles.body1}>Wind Farm Development - Texas</ThemedText>
-          <ThemedText style={commonStyles.body1}>Solar Energy Initiative - India</ThemedText>
+        <ThemedView variant="secondary" style={styles.card}>
+          <ThemedText weight="semibold">Typography</ThemedText>
+          <View style={styles.typographyDemo}>
+            <ThemedText size="xs">Extra Small Text</ThemedText>
+            <ThemedText size="sm">Small Text</ThemedText>
+            <ThemedText size="base">Base Text</ThemedText>
+            <ThemedText size="lg">Large Text</ThemedText>
+            <ThemedText size="xl">Extra Large Text</ThemedText>
+          </View>
+        </ThemedView>
+      </ThemedView>
+
+      <ThemedView style={styles.section}>
+        <ThemedText size="xl" weight="semibold">
+          Resources
+        </ThemedText>
+        
+        <View style={styles.links}>
+          <ExternalLink href="https://docs.expo.dev">
+            <ThemedText style={styles.link} variant="primary">
+              📚 Expo Documentation
+            </ThemedText>
+          </ExternalLink>
+          
+          <ExternalLink href="https://reactnative.dev">
+            <ThemedText style={styles.link} variant="primary">
+              ⚛️ React Native Documentation
+            </ThemedText>
+          </ExternalLink>
+          
+          <ExternalLink href="https://github.com/expo/expo">
+            <ThemedText style={styles.link} variant="primary">
+              🐙 Expo GitHub Repository
+            </ThemedText>
+          </ExternalLink>
         </View>
-      </ScrollView>
-    </ThemedView>
+      </ThemedView>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    padding: 32,
+    paddingTop: 64,
+  },
+  welcomeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  section: {
+    padding: 32,
+    gap: 16,
+  },
+  card: {
+    padding: 16,
+    borderRadius: 12,
+    gap: 8,
+  },
+  typographyDemo: {
+    gap: 8,
+  },
+  links: {
+    gap: 12,
+  },
+  link: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+}); 

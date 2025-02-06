@@ -1,31 +1,51 @@
 import { Text, type TextProps, StyleSheet } from 'react-native';
+import { useTheme } from '@/hooks/useTheme';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | 'xxl' | 'display';
+  weight?: 'regular' | 'medium' | 'semibold' | 'bold';
 };
 
 export function ThemedText({
   style,
   lightColor,
   darkColor,
-  type = 'default',
+  variant = 'primary',
+  size = 'base',
+  weight = 'regular',
   ...rest
 }: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const { colors, typography } = useTheme();
+  
+  const getTextColor = () => {
+    if (lightColor || darkColor) {
+      return useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+    }
+    
+    switch (variant) {
+      case 'secondary':
+        return colors.textSecondary;
+      case 'tertiary':
+        return colors.textTertiary;
+      default:
+        return colors.text;
+    }
+  };
 
   return (
     <Text
       style={[
-        { color },
-        type === 'default' ? styles.default : undefined,
-        type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-        type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
+        {
+          color: getTextColor(),
+          fontSize: typography.sizes[size],
+          fontWeight: typography.weights[weight],
+          lineHeight: typography.sizes[size] * typography.lineHeights.normal,
+        },
         style,
       ]}
       {...rest}
