@@ -3,6 +3,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function AboutScreen() {
   const { spacing } = useTheme();
@@ -77,4 +78,11 @@ export default function AboutScreen() {
       </ScrollView>
     </View>
   );
-} 
+}
+
+AboutScreen.options = {
+  tabBarIcon: ({ color, size }) => (
+    <Ionicons name="information-circle" size={size} color={color} />
+  ),
+  tabBarLabel: 'About'
+}; 
