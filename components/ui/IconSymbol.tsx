@@ -11,6 +11,9 @@ const MAPPING = {
   // See SF Symbols in the SF Symbols app on Mac.
   'house.fill': 'home',
   'paperplane.fill': 'send',
+  'magnifyingglass': 'search',
+  'doc.text': 'description',
+  'person.circle': 'person',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
 } as Partial<
@@ -39,5 +42,10 @@ export function IconSymbol({
   style?: StyleProp<ViewStyle>;
   weight?: SymbolWeight;
 }) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  const materialIconName = MAPPING[name];
+  if (!materialIconName) {
+    console.warn(`No mapping found for icon: ${name}`);
+    return null;
+  }
+  return <MaterialIcons color={color} size={size} name={materialIconName} style={style} />;
 }
