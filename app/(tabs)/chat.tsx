@@ -30,7 +30,7 @@ export default function ChatScreen() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:11434/api/generate', {
+      const response = await fetch('http://192.168.115.99:11434/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
