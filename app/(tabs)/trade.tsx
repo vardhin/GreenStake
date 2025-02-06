@@ -1,8 +1,7 @@
-import { View, Text, TextInput, Pressable, FlatList } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, Text, TextInput, Pressable, FlatList, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { useTheme, createCommonStyles } from '../hooks/useTheme';
+import { useTheme, createCommonStyles } from '../../hooks/useTheme';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 
@@ -83,10 +82,21 @@ export default function TradeScreen() {
       textAlign: 'center',
       marginVertical: theme.spacing.lg,
     },
+    input: {
+      ...commonStyles.input,
+      width: '100%',
+    },
+    purchaseButton: {
+      ...commonStyles.button,
+      marginTop: theme.spacing.lg,
+    },
+    purchaseButtonText: {
+      ...commonStyles.buttonText,
+    },
   });
 
   return (
-    <View style={commonStyles.container}>
+    <ThemedView style={commonStyles.container}>
       {!selectedProject ? (
         <FlatList
           data={MOCK_PROJECTS}
@@ -114,18 +124,11 @@ export default function TradeScreen() {
             <FontAwesome name="arrow-left" size={24} color={theme.colors.text.primary} />
           </Pressable>
           
-          <ThemedText type="title">{selectedProject.name}</ThemedText>
-          <View style={styles.inputContainer}>
-            <ThemedText type="subtitle">Investment Amount ($)</ThemedText>
+          <ThemedText style={commonStyles.h2}>{selectedProject.name}</ThemedText>
+          <View style={commonStyles.gap}>
+            <ThemedText style={commonStyles.inputLabel}>Investment Amount ($)</ThemedText>
             <TextInput
-              style={{
-                backgroundColor: theme.colors.surface,
-                borderRadius: theme.borderRadius.md,
-                padding: theme.spacing.md,
-                color: theme.colors.text.primary,
-                borderWidth: 1,
-                borderColor: theme.colors.border,
-              }}
+              style={styles.input}
               keyboardType="numeric"
               value={investmentAmount}
               onChangeText={setInvestmentAmount}
@@ -139,20 +142,14 @@ export default function TradeScreen() {
           </ThemedText>
           
           <Pressable
-            style={{
-              backgroundColor: theme.colors.primary,
-              borderRadius: theme.borderRadius.md,
-              padding: theme.spacing.md,
-              alignItems: 'center',
-              ...theme.elevation.small,
-            }}
+            style={styles.purchaseButton}
             onPress={handlePurchase}>
-            <ThemedText style={{ color: theme.colors.text.inverse }}>
+            <ThemedText style={styles.purchaseButtonText}>
               Purchase Credits
             </ThemedText>
           </Pressable>
         </ThemedView>
       )}
-    </View>
+    </ThemedView>
   );
 } 
