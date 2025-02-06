@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
 import { HapticTab } from '../../components/HapticTab';
-import { ThemeProvider } from './providers/ThemeProvider';
+import { ThemeProvider } from '../providers/ThemeProvider';
 
 const TabLayout = () => {
   const theme = useTheme();
