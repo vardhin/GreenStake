@@ -5,10 +5,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 
 export default function HomeScreen() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme() ?? 'light';
+  const themeColors = Colors[colorScheme as keyof typeof Colors];
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollView}>
       <ThemedView style={styles.container}>
         {/* Hero Section */}
         <ThemedView style={styles.heroSection}>
@@ -20,29 +21,29 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <ThemedView style={styles.actionContainer}>
-          <Pressable style={[styles.actionButton, { backgroundColor: Colors[colorScheme ?? 'light'].secondary }]}>
-            <FontAwesome name="exchange" size={24} color={Colors[colorScheme ?? 'light'].tint} />
+          <Pressable style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}>
+            <FontAwesome name="exchange" size={24} color={themeColors.tint} />
             <ThemedText style={styles.actionText}>Trade Credits</ThemedText>
           </Pressable>
-          <Pressable style={[styles.actionButton, { backgroundColor: Colors[colorScheme ?? 'light'].secondary }]}>
-            <FontAwesome name="leaf" size={24} color={Colors[colorScheme ?? 'light'].tint} />
+          <Pressable style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}>
+            <FontAwesome name="leaf" size={24} color={themeColors.tint} />
             <ThemedText style={styles.actionText}>View Projects</ThemedText>
           </Pressable>
-          <Pressable style={[styles.actionButton, { backgroundColor: Colors[colorScheme ?? 'light'].secondary }]}>
-            <FontAwesome name="line-chart" size={24} color={Colors[colorScheme ?? 'light'].tint} />
+          <Pressable style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}>
+            <FontAwesome name="line-chart" size={24} color={themeColors.tint} />
             <ThemedText style={styles.actionText}>Market Stats</ThemedText>
           </Pressable>
         </ThemedView>
 
         {/* Market Overview */}
-        <ThemedView style={[styles.section, { backgroundColor: Colors[colorScheme ?? 'light'].secondary }]}>
+        <ThemedView style={[styles.section, { backgroundColor: themeColors.secondary }]}>
           <ThemedText type="title" style={styles.sectionTitle}>Market Overview</ThemedText>
           <ThemedText>Current Carbon Credit Price: $25/ton</ThemedText>
           <ThemedText>Available Credits: 1,500</ThemedText>
         </ThemedView>
 
         {/* Featured Projects */}
-        <ThemedView style={[styles.section, { backgroundColor: Colors[colorScheme ?? 'light'].secondary }]}>
+        <ThemedView style={[styles.section, { backgroundColor: themeColors.secondary }]}>
           <ThemedText type="title" style={styles.sectionTitle}>Featured Projects</ThemedText>
           <ThemedText>Rainforest Conservation - Brazil</ThemedText>
           <ThemedText>Wind Farm Development - Texas</ThemedText>
@@ -100,5 +101,8 @@ const styles = StyleSheet.create({
   sectionTitle: {
     marginBottom: 10,
     fontSize: 18,
+  },
+  scrollView: {
+    flex: 1,
   },
 });
