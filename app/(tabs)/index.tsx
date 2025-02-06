@@ -138,9 +138,8 @@ export default function HomeScreen() {
   });
 
   const cardActions = {
-    'Measure your emissions': () => router.push('/for-you'),
-    'Buy credits': () => router.push('/transactions'),
-    'Plant trees': () => router.push('/profile'),
+    'Measure your emissions': () => router.push('/profile'),
+    'Buy credits': () => router.push('/for-you'),
   };
 
   return (
@@ -181,7 +180,6 @@ export default function HomeScreen() {
             {[
               { title: 'Measure your emissions', icon: 'chart.line.uptrend.xyaxis' },
               { title: 'Buy credits', icon: 'creditcard' },
-              { title: 'Plant trees', icon: 'leaf' }
             ].map(({ title, icon }) => (
               <Pressable 
                 key={title} 
@@ -262,7 +260,7 @@ export default function HomeScreen() {
             <Pressable 
               key={product.title} 
               style={[styles.productCard, { backgroundColor: isDark ? '#1A1D1E' : 'white' }]}
-              onPress={() => router.push('/search')}
+              onPress={() => router.push('/for-you')}
             >
               <Image
                 source={{ uri: product.image }}
