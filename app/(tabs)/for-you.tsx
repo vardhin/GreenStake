@@ -113,12 +113,23 @@ export default function ForYouScreen() {
       console.log('Response status:', response.status);
       const data = await response.json();
       
-      // Extract projects from the nested structure
+      // Extract all projects from the nested structure
       let projectsData = [];
       if (Array.isArray(data)) {
-        projectsData = data.flatMap(item => item.projects || []);
-      } else if (data.projects) {
-        projectsData = data.projects.flatMap(item => item.projects || []);
+        // Iterate through each item and extract its nested projects
+        data.forEach(item => {
+          if (item.projects && Array.isArray(item.projects)) {
+            // Get the first project from each item's projects array
+            const project = item.projects[0];
+            if (project) {
+              projectsData.push({
+                ...project,
+                investments: item.investments || [], // Get investments from parent object
+                // Add any other relevant data from the parent object
+              });
+            }
+          }
+        });
       }
       
       if (!projectsData.length) {
