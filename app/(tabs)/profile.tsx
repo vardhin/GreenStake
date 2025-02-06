@@ -94,13 +94,14 @@ export default function ProfileScreen() {
     },
   });
 
-  const StatItem = ({ title, subtitle }: { title: string, subtitle: string }) => (
+  const StatItem = ({ title, subtitle, onPress }: { title: string, subtitle: string, onPress: () => void }) => (
     <TouchableOpacity 
       style={[styles.statItem, { 
         backgroundColor: isDark ? '#1A1D1E' : 'white',
         borderBottomColor: isDark ? '#2D3133' : '#dce5dc',
         borderBottomWidth: 1,
       }]}
+      onPress={onPress}
     >
       <View>
         <ThemedText weight="medium" size="base">{title}</ThemedText>
@@ -126,6 +127,21 @@ export default function ProfileScreen() {
     </View>
   );
 
+  const handlePortfolioPress = () => {
+    // Add your navigation or action logic here
+    console.log('Portfolio pressed');
+  };
+
+  const handleCarbonCreditsPress = () => {
+    // Add your navigation or action logic here
+    console.log('Carbon Credits pressed');
+  };
+
+  const handleCO2OffsetPress = () => {
+    // Add your navigation or action logic here
+    console.log('CO2 Offset pressed');
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: isDark ? '#151718' : 'white' }]}>
       <ScrollView>
@@ -148,11 +164,14 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={[styles.portfolioButton, { 
-          backgroundColor: isDark ? '#1A1D1E' : 'white',
-          borderBottomColor: isDark ? '#2D3133' : '#dce5dc',
-          borderBottomWidth: 1,
-        }]}>
+        <TouchableOpacity 
+          style={[styles.portfolioButton, { 
+            backgroundColor: isDark ? '#1A1D1E' : 'white',
+            borderBottomColor: isDark ? '#2D3133' : '#dce5dc',
+            borderBottomWidth: 1,
+          }]}
+          onPress={handlePortfolioPress}
+        >
           <ThemedText size="base">My Carbon Portfolio</ThemedText>
           <ArrowRightIcon />
         </TouchableOpacity>
@@ -183,8 +202,16 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        <StatItem title="Total Carbon Credits" subtitle="2,340 credits" />
-        <StatItem title="Lifetime CO2 Offset" subtitle="3,240 tons" />
+        <StatItem 
+          title="Total Carbon Credits" 
+          subtitle="2,340 credits" 
+          onPress={handleCarbonCreditsPress}
+        />
+        <StatItem 
+          title="Lifetime CO2 Offset" 
+          subtitle="3,240 tons" 
+          onPress={handleCO2OffsetPress}
+        />
 
         <ThemedText size="xl" weight="bold" style={styles.historyTitle}>
           History
