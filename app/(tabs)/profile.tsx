@@ -128,15 +128,15 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
   );
 
   const handlePortfolioPress = () => {
-    navigation.push('/(tabs)/portfolio');
+    navigation.navigate('portfolio');
   };
 
   const handleCarbonCreditsPress = () => {
-    navigation.push('/(tabs)/carbon-credits');
+    navigation.navigate('transactions');
   };
 
   const handleCO2OffsetPress = () => {
-    navigation.push('/(tabs)/co2-offset');
+    navigation.navigate('for-you');
   };
 
   return (
