@@ -30,10 +30,9 @@ export default function ChatScreen() {
     setIsLoading(true);
 
     try {
-      const API_URL = Platform.select({
-        ios: 'http://localhost:11434/api/generate',
-        android: 'http://10.0.2.2:11434/api/generate',
-      });
+      // Replace YOUR_COMPUTER_IP with your actual computer's IP address
+      // Example: '192.168.1.100:11434' or whatever your computer's local IP is
+      const API_URL = 'http://192.168.115.99:11434/api/generate';
 
       const response = await fetch(API_URL, {
         method: 'POST',
