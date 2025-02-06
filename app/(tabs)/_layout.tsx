@@ -1,34 +1,12 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
-import React from 'react';
 import { Platform } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { useTheme } from '../hooks/useTheme';
 import { HapticTab } from '../../components/HapticTab';
-import { useTheme } from '../styles/theme';
-import { ThemeProvider } from '../providers/ThemeProvider';
-import { Stack } from 'expo-router';
 
-export default function RootLayout() {
+export default function TabLayout() {
   const theme = useTheme();
 
-  return (
-    <ThemeProvider>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: {
-            backgroundColor: theme.colors.background,
-          },
-        }}
-      >
-        <TabNavigator />
-      </Stack>
-    </ThemeProvider>
-  );
-}
-
-function TabNavigator() {
-  const theme = useTheme();
-  
   return (
     <Tabs
       screenOptions={{
@@ -39,6 +17,8 @@ function TabNavigator() {
         sceneContainerStyle: {
           backgroundColor: theme.colors.background
         },
+        animation: 'slide_from_right',
+        animationDuration: 200,
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
