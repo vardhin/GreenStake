@@ -23,8 +23,16 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <ThemedView style={styles.actionContainer}>
-          <Pressable style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}>
-            <FontAwesome name="exchange" size={24} color={themeColors.tint} />
+          <Pressable 
+            style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}
+            onPress={() => {/* handle trade credits */}}
+          >
+            <FontAwesome 
+              name="exchange" 
+              size={24} 
+              color={themeColors.tint}
+              accessibilityLabel="Trade Credits"
+            />
             <ThemedText style={styles.actionText}>Trade Credits</ThemedText>
           </Pressable>
           <Pressable style={[styles.actionButton, { backgroundColor: themeColors.secondary }]}>
