@@ -4,8 +4,9 @@ import { StyleSheet } from 'react-native';
 import { theme, commonStyles } from '../styles/theme';
 
 const { width } = Dimensions.get('window');
-const CHART_MARGIN = theme.spacing.lg * 2;
-const CHART_WIDTH = width - CHART_MARGIN;
+const CONTAINER_PADDING = theme.spacing.lg;
+const CHART_CONTAINER_PADDING = theme.spacing.lg;
+const CHART_WIDTH = width - (CONTAINER_PADDING * 2) - (CHART_CONTAINER_PADDING * 2);
 
 export default function StatsScreen() {
   const data = {
@@ -23,13 +24,16 @@ export default function StatsScreen() {
     <ScrollView 
       style={commonStyles.safeArea}
       contentContainerStyle={styles.scrollContent}
+      showsVerticalScrollIndicator={false}
     >
       <View style={styles.container}>
         <Text style={styles.header}>Market Analytics</Text>
         
         <View style={styles.chartContainer}>
-          <Text style={styles.chartTitle}>Project Activity Trends</Text>
-          <Text style={styles.chartSubtitle}>Monthly performance metrics</Text>
+          <View style={styles.chartHeader}>
+            <Text style={styles.chartTitle}>Project Activity Trends</Text>
+            <Text style={styles.chartSubtitle}>Monthly performance metrics</Text>
+          </View>
           
           <View style={styles.chartWrapper}>
             <LineChart
@@ -37,7 +41,7 @@ export default function StatsScreen() {
               width={CHART_WIDTH}
               height={220}
               chartConfig={{
-                backgroundColor: theme.colors.surface,
+                backgroundColor: 'transparent',
                 backgroundGradientFrom: theme.colors.surface,
                 backgroundGradientTo: theme.colors.surface,
                 decimalPlaces: 0,
@@ -50,15 +54,15 @@ export default function StatsScreen() {
                   stroke: theme.colors.primary,
                 },
                 propsForLabels: {
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: '500',
                 },
                 propsForVerticalLabels: {
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: '500',
                 },
                 propsForHorizontalLabels: {
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: '500',
                 },
                 style: {
@@ -78,6 +82,10 @@ export default function StatsScreen() {
               withHorizontalLabels={true}
               fromZero={true}
               segments={5}
+              yAxisInterval={1}
+              yAxisSuffix=""
+              yAxisLabel=""
+              formatYLabel={(value) => Math.round(value).toString()}
             />
           </View>
 
@@ -86,7 +94,7 @@ export default function StatsScreen() {
               <Text style={styles.statValue}>99</Text>
               <Text style={styles.statLabel}>Peak Value</Text>
             </View>
-            <View style={styles.statItem}>
+            <View style={[styles.statItem, styles.statItemBorder]}>
               <Text style={styles.statValue}>52.5</Text>
               <Text style={styles.statLabel}>Average</Text>
             </View>
@@ -108,19 +116,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-    paddingHorizontal: theme.spacing.lg,
+    paddingHorizontal: CONTAINER_PADDING,
     paddingTop: theme.spacing.lg,
+    paddingBottom: theme.spacing.xxl,
   },
   header: {
     ...theme.typography.h2,
     color: theme.colors.text.primary,
-    marginBottom: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
   },
   chartContainer: {
     backgroundColor: theme.colors.surface,
     borderRadius: theme.borderRadius.lg,
-    padding: theme.spacing.lg,
+    padding: CHART_CONTAINER_PADDING,
     ...theme.elevation.medium,
+  },
+  chartHeader: {
+    marginBottom: theme.spacing.lg,
   },
   chartTitle: {
     ...theme.typography.subtitle1,
@@ -130,26 +142,34 @@ const styles = StyleSheet.create({
   chartSubtitle: {
     ...theme.typography.caption,
     color: theme.colors.text.secondary,
-    marginBottom: theme.spacing.lg,
   },
   chartWrapper: {
     alignItems: 'center',
-    marginHorizontal: -theme.spacing.md,
+    justifyContent: 'center',
+    marginHorizontal: -theme.spacing.xs,
   },
   chart: {
     borderRadius: theme.borderRadius.lg,
-    paddingRight: theme.spacing.lg,
+    marginLeft: -theme.spacing.md, // Adjust for chart padding
   },
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginTop: theme.spacing.xl,
     paddingTop: theme.spacing.lg,
     borderTopWidth: 1,
     borderTopColor: theme.colors.border,
   },
   statItem: {
+    flex: 1,
     alignItems: 'center',
+  },
+  statItemBorder: {
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: theme.colors.border,
+    paddingHorizontal: theme.spacing.md,
   },
   statValue: {
     ...theme.typography.h3,
@@ -159,5 +179,6 @@ const styles = StyleSheet.create({
   statLabel: {
     ...theme.typography.caption,
     color: theme.colors.text.secondary,
+    textAlign: 'center',
   },
 }); 
