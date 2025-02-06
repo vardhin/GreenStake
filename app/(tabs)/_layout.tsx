@@ -4,27 +4,26 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { theme } from '@/styles/theme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: theme.colors.navigation.active,
+        tabBarInactiveTintColor: theme.colors.navigation.inactive,
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
+            backgroundColor: theme.colors.navigation.background,
+            borderTopColor: theme.colors.navigation.border,
           },
-          default: {},
+          default: {
+            backgroundColor: theme.colors.navigation.background,
+            borderTopColor: theme.colors.navigation.border,
+          },
         }),
       }}>
       <Tabs.Screen

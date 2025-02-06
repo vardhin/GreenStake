@@ -1,9 +1,10 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { createContext, useContext } from 'react';
 
 const { width } = Dimensions.get('window');
 const scale = width / 375; // Base scale for iPhone 8
 
-export const theme = {
+export const lightTheme = {
   colors: {
     // Professional eco-friendly color palette
     primary: '#2E7D32', // Rich forest green
@@ -132,17 +133,150 @@ export const theme = {
   },
 };
 
+export const darkTheme = {
+  colors: {
+    primary: '#4CAF50',
+    primaryDark: '#2E7D32',
+    primaryLight: '#81C784',
+    secondary: '#546E7A',
+    secondaryDark: '#37474F',
+    secondaryLight: '#78909C',
+    background: '#121212',
+    surface: '#1E1E1E',
+    surfaceVariant: '#1B2816',
+    border: '#2E3B2E',
+    text: {
+      primary: '#FFFFFF',
+      secondary: '#B0BEC5',
+      disabled: '#78909C',
+      inverse: '#1C2121',
+    },
+    status: {
+      error: '#C62828',
+      success: '#2E7D32',
+      warning: '#F57F17',
+      info: '#0277BD',
+    },
+    navigation: {
+      active: '#4CAF50',
+      inactive: '#78909C',
+      background: '#1E1E1E',
+      border: '#2E3B2E',
+    }
+  },
+  spacing: {
+    xxs: Math.round(4 * scale),
+    xs: Math.round(8 * scale),
+    sm: Math.round(12 * scale),
+    md: Math.round(16 * scale),
+    lg: Math.round(24 * scale),
+    xl: Math.round(32 * scale),
+    xxl: Math.round(48 * scale),
+  },
+  borderRadius: {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 24,
+    round: 999,
+  },
+  typography: {
+    h1: {
+      fontSize: Math.round(32 * scale),
+      fontWeight: '700',
+      lineHeight: Math.round(40 * scale),
+      letterSpacing: -0.5,
+    },
+    h2: {
+      fontSize: Math.round(24 * scale),
+      fontWeight: '700',
+      lineHeight: Math.round(32 * scale),
+      letterSpacing: 0,
+    },
+    h3: {
+      fontSize: Math.round(20 * scale),
+      fontWeight: '600',
+      lineHeight: Math.round(28 * scale),
+      letterSpacing: 0.15,
+    },
+    subtitle1: {
+      fontSize: Math.round(18 * scale),
+      fontWeight: '600',
+      lineHeight: Math.round(24 * scale),
+      letterSpacing: 0.15,
+    },
+    subtitle2: {
+      fontSize: Math.round(16 * scale),
+      fontWeight: '500',
+      lineHeight: Math.round(22 * scale),
+      letterSpacing: 0.1,
+    },
+    body1: {
+      fontSize: Math.round(16 * scale),
+      fontWeight: '400',
+      lineHeight: Math.round(24 * scale),
+      letterSpacing: 0.5,
+    },
+    body2: {
+      fontSize: Math.round(14 * scale),
+      fontWeight: '400',
+      lineHeight: Math.round(20 * scale),
+      letterSpacing: 0.25,
+    },
+    caption: {
+      fontSize: Math.round(12 * scale),
+      fontWeight: '400',
+      lineHeight: Math.round(16 * scale),
+      letterSpacing: 0.4,
+    },
+  },
+  elevation: {
+    none: {
+      elevation: 0,
+      shadowColor: 'transparent',
+    },
+    small: {
+      elevation: 2,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+    },
+    medium: {
+      elevation: 4,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.23,
+      shadowRadius: 4,
+    },
+    large: {
+      elevation: 8,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.25,
+      shadowRadius: 8,
+    },
+  },
+};
+
+// Create a type for our theme
+export type Theme = typeof lightTheme;
+
+// Create a context to manage the theme
+export const ThemeContext = createContext<Theme>(lightTheme);
+
 export const commonStyles = StyleSheet.create({
   // Layout
   container: {
     flex: 1,
-    paddingHorizontal: theme.spacing.lg,
-    paddingVertical: theme.spacing.md,
-    backgroundColor: theme.colors.background,
+    paddingHorizontal: lightTheme.spacing.lg,
+    paddingVertical: lightTheme.spacing.md,
+    backgroundColor: lightTheme.colors.background,
   },
   safeArea: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: lightTheme.colors.background,
   },
   scrollView: {
     flexGrow: 1,
@@ -162,146 +296,146 @@ export const commonStyles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   gap: {
-    gap: theme.spacing.md,
+    gap: lightTheme.spacing.md,
   },
 
   // Margins
   marginHorizontal: {
-    marginHorizontal: theme.spacing.md,
+    marginHorizontal: lightTheme.spacing.md,
   },
   marginVertical: {
-    marginVertical: theme.spacing.md,
+    marginVertical: lightTheme.spacing.md,
   },
   marginTop: {
-    marginTop: theme.spacing.md,
+    marginTop: lightTheme.spacing.md,
   },
   marginBottom: {
-    marginBottom: theme.spacing.md,
+    marginBottom: lightTheme.spacing.md,
   },
   marginLeft: {
-    marginLeft: theme.spacing.md,
+    marginLeft: lightTheme.spacing.md,
   },
   marginRight: {
-    marginRight: theme.spacing.md,
+    marginRight: lightTheme.spacing.md,
   },
 
   // Padding
   paddingHorizontal: {
-    paddingHorizontal: theme.spacing.md,
+    paddingHorizontal: lightTheme.spacing.md,
   },
   paddingVertical: {
-    paddingVertical: theme.spacing.md,
+    paddingVertical: lightTheme.spacing.md,
   },
   paddingTop: {
-    paddingTop: theme.spacing.md,
+    paddingTop: lightTheme.spacing.md,
   },
   paddingBottom: {
-    paddingBottom: theme.spacing.md,
+    paddingBottom: lightTheme.spacing.md,
   },
   paddingLeft: {
-    paddingLeft: theme.spacing.md,
+    paddingLeft: lightTheme.spacing.md,
   },
   paddingRight: {
-    paddingRight: theme.spacing.md,
+    paddingRight: lightTheme.spacing.md,
   },
 
   // Typography
   h1: {
-    ...theme.typography.h1,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.md,
+    ...lightTheme.typography.h1,
+    color: lightTheme.colors.text.primary,
+    marginBottom: lightTheme.spacing.md,
   },
   h2: {
-    ...theme.typography.h2,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.sm,
+    ...lightTheme.typography.h2,
+    color: lightTheme.colors.text.primary,
+    marginBottom: lightTheme.spacing.sm,
   },
   h3: {
-    ...theme.typography.h3,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.sm,
+    ...lightTheme.typography.h3,
+    color: lightTheme.colors.text.primary,
+    marginBottom: lightTheme.spacing.sm,
   },
   subtitle1: {
-    ...theme.typography.subtitle1,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.xs,
+    ...lightTheme.typography.subtitle1,
+    color: lightTheme.colors.text.primary,
+    marginBottom: lightTheme.spacing.xs,
   },
   subtitle2: {
-    ...theme.typography.subtitle2,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.xs,
+    ...lightTheme.typography.subtitle2,
+    color: lightTheme.colors.text.primary,
+    marginBottom: lightTheme.spacing.xs,
   },
   body1: {
-    ...theme.typography.body1,
-    color: theme.colors.text.primary,
+    ...lightTheme.typography.body1,
+    color: lightTheme.colors.text.primary,
   },
   body2: {
-    ...theme.typography.body2,
-    color: theme.colors.text.primary,
+    ...lightTheme.typography.body2,
+    color: lightTheme.colors.text.primary,
   },
   caption: {
-    ...theme.typography.caption,
-    color: theme.colors.text.secondary,
+    ...lightTheme.typography.caption,
+    color: lightTheme.colors.text.secondary,
   },
 
   // Components
   card: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.borderRadius.lg,
-    padding: theme.spacing.lg,
-    marginVertical: theme.spacing.sm,
-    ...theme.elevation.small,
+    backgroundColor: lightTheme.colors.surface,
+    borderRadius: lightTheme.borderRadius.lg,
+    padding: lightTheme.spacing.lg,
+    marginVertical: lightTheme.spacing.sm,
+    ...lightTheme.elevation.small,
   },
   cardVariant: {
-    backgroundColor: theme.colors.surfaceVariant,
-    borderRadius: theme.borderRadius.lg,
-    padding: theme.spacing.lg,
-    marginVertical: theme.spacing.sm,
-    ...theme.elevation.small,
+    backgroundColor: lightTheme.colors.surfaceVariant,
+    borderRadius: lightTheme.borderRadius.lg,
+    padding: lightTheme.spacing.lg,
+    marginVertical: lightTheme.spacing.sm,
+    ...lightTheme.elevation.small,
   },
   button: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: theme.borderRadius.md,
-    paddingVertical: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.lg,
+    backgroundColor: lightTheme.colors.primary,
+    borderRadius: lightTheme.borderRadius.md,
+    paddingVertical: lightTheme.spacing.sm,
+    paddingHorizontal: lightTheme.spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: Math.round(48 * scale),
-    ...theme.elevation.small,
+    ...lightTheme.elevation.small,
   },
   buttonText: {
-    color: theme.colors.text.inverse,
-    ...theme.typography.subtitle2,
+    color: lightTheme.colors.text.inverse,
+    ...lightTheme.typography.subtitle2,
     textAlign: 'center',
   },
   input: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.borderRadius.md,
-    paddingVertical: theme.spacing.sm,
-    paddingHorizontal: theme.spacing.md,
-    ...theme.typography.body1,
-    color: theme.colors.text.primary,
+    backgroundColor: lightTheme.colors.surface,
+    borderRadius: lightTheme.borderRadius.md,
+    paddingVertical: lightTheme.spacing.sm,
+    paddingHorizontal: lightTheme.spacing.md,
+    ...lightTheme.typography.body1,
+    color: lightTheme.colors.text.primary,
     borderWidth: 1,
-    borderColor: theme.colors.border,
+    borderColor: lightTheme.colors.border,
     minHeight: Math.round(48 * scale),
   },
   inputLabel: {
-    ...theme.typography.body2,
-    color: theme.colors.text.secondary,
-    marginBottom: theme.spacing.xs,
+    ...lightTheme.typography.body2,
+    color: lightTheme.colors.text.secondary,
+    marginBottom: lightTheme.spacing.xs,
   },
   
   // Utility
-  shadow: theme.elevation.small,
-  shadowMedium: theme.elevation.medium,
-  shadowLarge: theme.elevation.large,
+  shadow: lightTheme.elevation.small,
+  shadowMedium: lightTheme.elevation.medium,
+  shadowLarge: lightTheme.elevation.large,
   rounded: {
-    borderRadius: theme.borderRadius.round,
+    borderRadius: lightTheme.borderRadius.round,
   },
   divider: {
     height: 1,
-    backgroundColor: theme.colors.border,
-    marginVertical: theme.spacing.md,
+    backgroundColor: lightTheme.colors.border,
+    marginVertical: lightTheme.spacing.md,
   },
   flexGrow: {
     flexGrow: 1,
