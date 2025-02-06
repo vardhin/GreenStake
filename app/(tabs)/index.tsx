@@ -227,19 +227,45 @@ export default function HomeScreen() {
           contentContainerStyle={styles.productsScrollContent}
         >
           {[
-            'Wind Power', 'Solar Power', 'Reforestation',
-            'Energy Efficiency', 'Carbon Capture', 'Aviation', 'Trucking'
-          ].map((product, index) => (
+            {
+              title: 'Wind Power',
+              image: 'https://cdn.usegalileo.ai/sdxl10/bf87542a-441e-4fe0-9347-09e9c4ae7419.png'
+            },
+            {
+              title: 'Solar Power',
+              image: 'https://cdn.usegalileo.ai/sdxl10/a92ad3c4-54d0-433f-b975-005aaca92660.png'
+            },
+            {
+              title: 'Reforestation',
+              image: 'https://cdn.usegalileo.ai/sdxl10/1887c4dd-f0f9-43ee-ade3-e3159c2c9a60.png'
+            },
+            {
+              title: 'Energy Efficiency',
+              image: 'https://cdn.usegalileo.ai/sdxl10/050a2de6-f490-4142-8c35-8bee4d66a58b.png'
+            },
+            {
+              title: 'Carbon Capture',
+              image: 'https://cdn.usegalileo.ai/sdxl10/56ea7bd1-d84e-49da-926b-6e6d2c95ab55.png'
+            },
+            {
+              title: 'Aviation',
+              image: 'https://cdn.usegalileo.ai/sdxl10/1ef5d7ff-4fcb-415a-b5c7-7d149a19651f.png'
+            },
+            {
+              title: 'Trucking',
+              image: 'https://cdn.usegalileo.ai/sdxl10/3685b511-0b2b-4d3b-b509-1b2008f955a9.png'
+            }
+          ].map((product) => (
             <Pressable 
-              key={product} 
+              key={product.title} 
               style={[styles.productCard, { backgroundColor: isDark ? '#1A1D1E' : 'white' }]}
               onPress={() => router.push('/search')}
             >
               <Image
-                source={{ uri: `https://cdn.usegalileo.ai/sdxl10/product-${index}.png` }}
+                source={{ uri: product.image }}
                 style={styles.productImage}
               />
-              <ThemedText style={styles.productTitle} size="sm">{product}</ThemedText>
+              <ThemedText style={styles.productTitle} size="sm">{product.title}</ThemedText>
             </Pressable>
           ))}
         </ScrollView>
