@@ -1,7 +1,9 @@
-import { View, ScrollView, StyleSheet, Platform } from 'react-native';
+import { View, ScrollView, StyleSheet, Platform, TextInput } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useTheme } from '@/hooks/useTheme';
+import Slider from '@react-native-community/slider';
+import { useState } from 'react';
 
 // Sample transaction data - you can replace this with your actual data source
 const transactions = [
@@ -18,6 +20,8 @@ export default function TransactionsScreen() {
   const { spacing } = useTheme();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
+  const [searchQuery, setSearchQuery] = useState('');
+  const [minAmount, setMinAmount] = useState(0);
 
   const styles = StyleSheet.create({
     container: {
@@ -47,12 +51,57 @@ export default function TransactionsScreen() {
       fontSize: 16,
       fontWeight: '500',
     },
+    searchBar: {
+      height: 40,
+      borderWidth: 1,
+      borderColor: isDark ? '#2D2D2D' : '#e0e0e0',
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      marginBottom: 16,
+      color: isDark ? 'white' : 'black',
+    },
+    filterContainer: {
+      marginBottom: 16,
+    },
+    sliderLabel: {
+      marginBottom: 8,
+    },
+  });
+
+  const filteredTransactions = transactions.filter(transaction => {
+    const matchesSearch = transaction.type.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesAmount = transaction.amount >= minAmount;
+    return matchesSearch && matchesAmount;
   });
 
   return (
     <View style={[styles.container, { backgroundColor: isDark ? '#151718' : 'white' }]}>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Search transactions..."
+        placeholderTextColor={isDark ? '#666' : '#999'}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
+      
+      <View style={styles.filterContainer}>
+        <ThemedText style={styles.sliderLabel}>
+          Minimum Amount: ${minAmount.toFixed(2)}
+        </ThemedText>
+        <Slider
+          style={{ width: '100%', height: 40 }}
+          minimumValue={0}
+          maximumValue={100}
+          value={minAmount}
+          onValueChange={setMinAmount}
+          minimumTrackTintColor={isDark ? '#4CAF50' : '#2E7D32'}
+          maximumTrackTintColor={isDark ? '#2D2D2D' : '#e0e0e0'}
+          thumbTintColor={isDark ? '#4CAF50' : '#2E7D32'}
+        />
+      </View>
+
       <ScrollView>
-        {transactions.map((transaction, index) => (
+        {filteredTransactions.map((transaction, index) => (
           <View key={index} style={styles.transactionItem}>
             <View>
               <ThemedText style={styles.transactionType}>{transaction.type}</ThemedText>
