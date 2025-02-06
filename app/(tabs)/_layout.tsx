@@ -4,7 +4,7 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
-import { theme } from '@/styles/theme';
+import { theme } from '../styles/theme';
 
 export default function TabLayout() {
   return (
