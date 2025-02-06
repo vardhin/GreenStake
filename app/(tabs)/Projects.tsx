@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, Dimensions, ViewStyle, TextStyle } from 'react-native';
-import { Svg, Path, Defs, LinearGradient, Stop } from 'react-native-svg';
+import { LineChart } from 'react-native-chart-kit';
 
 interface ChartComponentProps {
   width?: number;
@@ -22,26 +22,51 @@ interface InsightCardProps {
 const ChartComponent: React.FC<ChartComponentProps> = ({ 
   width = Dimensions.get('window').width - 40, 
   height = 148 
-}) => (
-  <Svg width={width} height={height} viewBox="-3 0 478 150">
-    <Path
-      d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z"
-      fill="url(#paint0_linear)"
+}) => {
+  const data = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    datasets: [
+      {
+        data: [20, 45, 28, 80, 99, 43],
+        color: (opacity = 1) => `rgba(99, 136, 99, ${opacity})`,
+        strokeWidth: 2,
+      },
+    ],
+  };
+
+  const chartConfig = {
+    backgroundColor: '#ffffff',
+    backgroundGradientFrom: '#ffffff',
+    backgroundGradientTo: '#ffffff',
+    decimalPlaces: 0,
+    color: (opacity = 1) => `rgba(99, 136, 99, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(17, 24, 17, ${opacity})`,
+    style: {
+      borderRadius: 16,
+    },
+    propsForDots: {
+      r: '6',
+      strokeWidth: '2',
+      stroke: '#638863',
+    },
+  };
+
+  return (
+    <LineChart
+      data={data}
+      width={width}
+      height={height}
+      chartConfig={chartConfig}
+      bezier
+      style={{
+        marginVertical: 8,
+        borderRadius: 16,
+      }}
+      withInnerLines={false}
+      withOuterLines={false}
     />
-    <Path
-      d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25"
-      stroke="#638863"
-      strokeWidth={3}
-      strokeLinecap="round"
-    />
-    <Defs>
-      <LinearGradient id="paint0_linear" x1="236" y1="1" x2="236" y2="149">
-        <Stop stopColor="#f0f4f0" />
-        <Stop offset="1" stopColor="#f0f4f0" stopOpacity="0" />
-      </LinearGradient>
-    </Defs>
-  </Svg>
-);
+  );
+};
 
 const RecommendedItem: React.FC<RecommendedItemProps> = ({ title, price }) => {
   const styles: Record<string, ViewStyle | TextStyle> = {
@@ -87,12 +112,18 @@ const InsightCard: React.FC<InsightCardProps> = ({ title, value, change, isBoxed
     container: {
       minWidth: 272,
       flex: 1,
-      gap: 8,
+      gap: 12,
       padding: isBoxed ? 24 : 0,
+      backgroundColor: '#ffffff',
       ...(isBoxed && {
-        borderRadius: 12,
+        borderRadius: 16,
         borderWidth: 1,
         borderColor: '#dce5dc',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 8,
+        elevation: 3,
       }),
     },
     title: {
@@ -143,48 +174,48 @@ const Projects: React.FC = () => {
   const styles: Record<string, ViewStyle | TextStyle> = {
     container: {
       flex: 1,
-      backgroundColor: 'white',
-    },
-    header: {
-      alignItems: 'center',
-      padding: 16,
-      paddingBottom: 8,
-    },
-    headerText: {
-      color: '#111811',
-      fontSize: 18,
-      fontWeight: 'bold',
+      backgroundColor: '#f8faf8',
     },
     sectionTitle: {
       color: '#111811',
-      fontSize: 22,
+      fontSize: 24,
       fontWeight: 'bold',
-      padding: 16,
-      paddingBottom: 12,
+      padding: 20,
+      paddingBottom: 16,
     },
     insightsContainer: {
-      padding: 16,
-    },
-    personalizedContainer: {
-      padding: 16,
+      padding: 20,
       gap: 24,
     },
+    personalizedContainer: {
+      padding: 20,
+      gap: 24,
+    },
+    recommendedContainer: {
+      backgroundColor: '#ffffff',
+      borderRadius: 16,
+      margin: 20,
+      marginTop: 0,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 8,
+      elevation: 3,
+    },
     bottomSpacing: {
-      height: 20,
+      height: 32,
     },
   };
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>For You</Text>
-      </View>
-
       <Text style={styles.sectionTitle}>Recommended</Text>
 
-      <RecommendedItem title="VCS 2015: 1,000 tCO2e" price="$15.00" />
-      <RecommendedItem title="GS 2021: 1,000 tCO2e" price="$14.00" />
-      <RecommendedItem title="African Solar Project" price="$10.00" />
+      <View style={styles.recommendedContainer}>
+        <RecommendedItem title="VCS 2015: 1,000 tCO2e" price="$15.00" />
+        <RecommendedItem title="GS 2021: 1,000 tCO2e" price="$14.00" />
+        <RecommendedItem title="African Solar Project" price="$10.00" />
+      </View>
 
       <Text style={styles.sectionTitle}>Market Insights</Text>
 
