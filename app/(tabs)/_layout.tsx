@@ -48,7 +48,7 @@ export default function TabLayout() {
         options={{
           title: 'Portfolio',
           tabBarIcon: ({ color, size }) => (
-            <IconSymbol name="chart.pie" size={size} color={color} />
+            <IconSymbol name="chart.pie.fill" size={size} color={color} />
           ),
         }}
       />
@@ -57,7 +57,7 @@ export default function TabLayout() {
         options={{
           title: 'About',
           tabBarIcon: ({ color, size }) => (
-            <IconSymbol name="info" size={size} color={color} />
+            <IconSymbol name="info.circle.fill" size={size} color={color} />
           ),
         }}
       />
