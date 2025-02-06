@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Animated } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { HapticTab } from '@/components/HapticTab';
@@ -13,12 +13,41 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
+  // Add animation value for tab press
+  const tabPressScale = new Animated.Value(1);
+
+  const animateTabPress = () => {
+    Animated.sequence([
+      Animated.timing(tabPressScale, {
+        toValue: 0.95,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(tabPressScale, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   return (
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
+        tabBarButton: (props) => (
+          <Animated.View
+            style={{
+              flex: 1,
+              transform: [{ scale: tabPressScale }],
+            }}>
+            <HapticTab {...props} onPress={() => {
+              animateTabPress();
+              props.onPress();
+            }} />
+          </Animated.View>
+        ),
         tabBarBackground: TabBarBackground,
         tabBarStyle: {
           backgroundColor: isDark ? '#151718' : '#ffffff',
@@ -27,6 +56,18 @@ export default function TabLayout() {
           paddingTop: 8,
           paddingBottom: Platform.OS === 'ios' ? 24 : 16,
           height: Platform.OS === 'ios' ? 80 : 70,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: -2,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 3,
+          elevation: 5,
+          transform: [{ scale: tabPressScale }],
+        },
+        tabBarItemStyle: {
+          transform: [{ scale: 1 }],
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -39,8 +80,15 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Animated.View
+              style={{
+                transform: [{
+                  scale: focused ? tabPressScale : 1,
+                }],
+              }}>
+              <MaterialCommunityIcons name="home" size={size} color={color} />
+            </Animated.View>
           ),
         }}
       />
@@ -48,8 +96,15 @@ export default function TabLayout() {
         name="portfolio"
         options={{
           title: 'Portfolio',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="wallet" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Animated.View
+              style={{
+                transform: [{
+                  scale: focused ? tabPressScale : 1,
+                }],
+              }}>
+              <MaterialCommunityIcons name="wallet" size={size} color={color} />
+            </Animated.View>
           ),
         }}
       />
@@ -57,8 +112,15 @@ export default function TabLayout() {
         name="about"
         options={{
           title: 'About',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="information" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Animated.View
+              style={{
+                transform: [{
+                  scale: focused ? tabPressScale : 1,
+                }],
+              }}>
+              <MaterialCommunityIcons name="information" size={size} color={color} />
+            </Animated.View>
           ),
         }}
       />
@@ -66,8 +128,15 @@ export default function TabLayout() {
         name="for-you"
         options={{
           title: 'For You',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol name="paperplane.fill" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Animated.View
+              style={{
+                transform: [{
+                  scale: focused ? tabPressScale : 1,
+                }],
+              }}>
+              <IconSymbol name="paperplane.fill" size={size} color={color} />
+            </Animated.View>
           ),
         }}
       />
@@ -75,8 +144,15 @@ export default function TabLayout() {
         name="search"
         options={{
           title: 'Search',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol name="magnifyingglass" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Animated.View
+              style={{
+                transform: [{
+                  scale: focused ? tabPressScale : 1,
+                }],
+              }}>
+              <IconSymbol name="magnifyingglass" size={size} color={color} />
+            </Animated.View>
           ),
         }}
       />
@@ -84,8 +160,15 @@ export default function TabLayout() {
         name="transactions"
         options={{
           title: 'Transactions',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol name="doc.text" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Animated.View
+              style={{
+                transform: [{
+                  scale: focused ? tabPressScale : 1,
+                }],
+              }}>
+              <IconSymbol name="doc.text" size={size} color={color} />
+            </Animated.View>
           ),
         }}
       />
@@ -93,8 +176,15 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <IconSymbol name="person.circle" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Animated.View
+              style={{
+                transform: [{
+                  scale: focused ? tabPressScale : 1,
+                }],
+              }}>
+              <IconSymbol name="person.circle" size={size} color={color} />
+            </Animated.View>
           ),
         }}
       />
