@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native';
 
-export default function ProjectsScreen() {
+export default function StatsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Projects Screen</Text>
+      <Text>Stats Screen</Text>
     </View>
   );
 } 

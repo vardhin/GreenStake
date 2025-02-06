@@ -3,28 +3,8 @@ import { FontAwesome } from '@expo/vector-icons';
 
 export default function TradeScreen() {
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.title}>Trade Carbon Credits</Text>
-        
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Amount (tons)</Text>
-          <TextInput 
-            style={styles.input}
-            keyboardType="numeric"
-            placeholder="Enter amount"
-          />
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <Pressable style={[styles.button, styles.buyButton]}>
-            <Text style={styles.buttonText}>Buy Credits</Text>
-          </Pressable>
-          <Pressable style={[styles.button, styles.sellButton]}>
-            <Text style={styles.buttonText}>Sell Credits</Text>
-          </Pressable>
-        </View>
-      </View>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Trade Screen</Text>
     </View>
   );
 }

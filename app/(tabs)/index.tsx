@@ -1,10 +1,9 @@
 import { StyleSheet, ScrollView, Pressable, View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { RootTabScreenProps } from '../../types/navigation';
 
-export default function HomeScreen() {
-  const navigation = useNavigation();
-
+export default function HomeScreen({ navigation }: RootTabScreenProps<'Home'>) {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
