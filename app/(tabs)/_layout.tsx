@@ -4,8 +4,17 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { HapticTab } from '../../components/HapticTab';
 import { useTheme } from '../styles/theme';
+import { ThemeProvider } from '../providers/ThemeProvider';
 
 export default function TabLayout() {
+  return (
+    <ThemeProvider>
+      <TabNavigator />
+    </ThemeProvider>
+  );
+}
+
+function TabNavigator() {
   const theme = useTheme();
   
   return (
