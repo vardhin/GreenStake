@@ -1,18 +1,34 @@
 import { ScrollView, StyleSheet, View, Image, ImageBackground, Pressable } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { useTheme } from '@/hooks/useTheme';
-import { Ionicons } from '@expo/vector-icons';
+import { IconSymbol } from '@/components/ui/IconSymbol';
+import { useRouter } from 'expo-router';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function HomeScreen() {
   const { spacing, colors } = useTheme();
+  const router = useRouter();
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+
+  const handleSearch = () => {
+    router.push('/search');
+  };
+
+  const handleLearnMore = () => {
+    // Implement learn more action
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDark ? '#151718' : 'white' }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header Search */}
         <View style={styles.searchHeader}>
-          <Pressable style={styles.searchButton}>
-            <Ionicons name="search" size={20} color={colors.text} />
+          <Pressable 
+            style={[styles.searchButton, { backgroundColor: isDark ? '#2D3133' : '#f5f5f5' }]}
+            onPress={handleSearch}
+          >
+            <IconSymbol name="magnifyingglass" size={20} color={colors.text} />
           </Pressable>
         </View>
 
@@ -36,34 +52,58 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <ThemedText size="lg" weight="bold">How it works</ThemedText>
-            <ThemedText size="sm">We make it easy for businesses to take action on climate change.</ThemedText>
-            <Pressable style={styles.learnMoreButton}>
+            <ThemedText size="sm" variant="secondary">
+              We make it easy for businesses to take action on climate change.
+            </ThemedText>
+            <Pressable 
+              style={styles.learnMoreButton}
+              onPress={handleLearnMore}
+            >
               <ThemedText style={styles.buttonText} size="sm">Learn More</ThemedText>
             </Pressable>
           </View>
 
           <View style={styles.cards}>
-            {['Measure your emissions', 'Buy credits', 'Plant trees'].map((title) => (
-              <View key={title} style={styles.card}>
-                <Ionicons name="leaf" size={20} color={colors.text} />
+            {[
+              { title: 'Measure your emissions', icon: 'chart.line.uptrend.xyaxis' },
+              { title: 'Buy credits', icon: 'creditcard' },
+              { title: 'Plant trees', icon: 'leaf' }
+            ].map(({ title, icon }) => (
+              <Pressable 
+                key={title} 
+                style={[
+                  styles.card,
+                  { 
+                    borderColor: isDark ? '#2D3133' : '#dce5dc',
+                    backgroundColor: isDark ? '#1A1D1E' : 'white'
+                  }
+                ]}
+              >
+                <IconSymbol name={icon} size={20} color={colors.text} />
                 <ThemedText weight="bold" size="sm">{title}</ThemedText>
-              </View>
+              </Pressable>
             ))}
           </View>
         </View>
 
         {/* Business Account Section */}
-        <View style={styles.businessSection}>
+        <View style={[
+          styles.businessSection,
+          { 
+            backgroundColor: isDark ? '#1A1D1E' : 'white',
+            shadowColor: isDark ? '#000' : '#000'
+          }
+        ]}>
           <Image
             source={{ uri: "https://cdn.usegalileo.ai/sdxl10/3852bc2a-20ca-46ed-962c-776251b3867b.png" }}
             style={styles.businessImage}
           />
           <View style={styles.businessContent}>
             <ThemedText size="lg" weight="bold">GreenStake Business Account</ThemedText>
-            <ThemedText style={styles.businessText} size="sm">
+            <ThemedText style={styles.businessText} size="sm" variant="secondary">
               Your business can earn interest on uninvested cash and get the flexibility to spend whenever you need it.
             </ThemedText>
-            <ThemedText style={styles.apyText} size="sm">1.5% APY</ThemedText>
+            <ThemedText style={styles.apyText} size="sm" variant="secondary">1.5% APY</ThemedText>
           </View>
         </View>
 
@@ -81,13 +121,19 @@ export default function HomeScreen() {
             'Wind Power', 'Solar Power', 'Reforestation',
             'Energy Efficiency', 'Carbon Capture', 'Aviation', 'Trucking'
           ].map((product, index) => (
-            <View key={product} style={styles.productCard}>
+            <Pressable 
+              key={product} 
+              style={[
+                styles.productCard,
+                { backgroundColor: isDark ? '#1A1D1E' : 'white' }
+              ]}
+            >
               <Image
                 source={{ uri: `https://cdn.usegalileo.ai/sdxl10/product-${index}.png` }}
                 style={styles.productImage}
               />
               <ThemedText style={styles.productTitle} size="sm">{product}</ThemedText>
-            </View>
+            </Pressable>
           ))}
         </ScrollView>
       </ScrollView>

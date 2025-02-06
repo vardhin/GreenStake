@@ -10,6 +10,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
 
   return (
     <Tabs
@@ -19,31 +20,30 @@ export default function TabLayout() {
         header: () => null,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-            backgroundColor: colorScheme === 'dark' ? '#151718' : '#ffffff',
-            borderTopWidth: 1,
-            borderTopColor: '#f0f4f0',
-            paddingVertical: 8,
-            paddingBottom: 20,
-          },
-          default: {
-            backgroundColor: colorScheme === 'dark' ? '#151718' : '#ffffff',
-            borderTopWidth: 1,
-            borderTopColor: '#f0f4f0',
-            paddingVertical: 8,
-            paddingBottom: 20,
-          },
-        }),
-        tabBarInactiveTintColor: colorScheme === 'dark' ? '#787E83' : '#638863',
+        tabBarStyle: {
+          backgroundColor: isDark ? '#151718' : '#ffffff',
+          borderTopWidth: 1,
+          borderTopColor: isDark ? '#2D3133' : '#f0f4f0',
+          paddingTop: 8,
+          paddingBottom: Platform.OS === 'ios' ? 24 : 16,
+          height: Platform.OS === 'ios' ? 80 : 70,
+          position: 'absolute',
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '500',
+          marginTop: -4,
+        },
+        tabBarInactiveTintColor: isDark ? '#787E83' : '#638863',
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
           headerShown: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={24} name="house.fill" color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol name="house.fill" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -51,7 +51,9 @@ export default function TabLayout() {
         options={{
           title: 'For You',
           headerShown: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={24} name="figure.walk" color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol name="figure.walk" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -59,7 +61,9 @@ export default function TabLayout() {
         options={{
           title: 'Search',
           headerShown: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={24} name="magnifyingglass" color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol name="magnifyingglass" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -67,7 +71,9 @@ export default function TabLayout() {
         options={{
           title: 'Transactions',
           headerShown: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={24} name="doc.text" color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol name="doc.text" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -75,7 +81,9 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           headerShown: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={24} name="person.circle" color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <IconSymbol name="person.circle" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
