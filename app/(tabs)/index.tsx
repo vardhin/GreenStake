@@ -1,124 +1,229 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { HelloWave } from '@/components/HelloWave';
+import { ScrollView, StyleSheet, View, Image, ImageBackground, Pressable } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { ExternalLink } from '@/components/ExternalLink';
 import { useTheme } from '@/hooks/useTheme';
+import { Link } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   const { spacing, colors } = useTheme();
 
   return (
-    <ScrollView style={styles.container}>
-      <ThemedView style={styles.header}>
-        <View style={styles.welcomeContainer}>
-          <ThemedText size="display" weight="bold">
-            GreenStake
-          </ThemedText>
-          <HelloWave />
+    <View style={styles.container}>
+      <ScrollView>
+        {/* Header Search */}
+        <View style={styles.searchHeader}>
+          <Pressable style={styles.searchButton}>
+            <Ionicons name="search" size={24} color={colors.text} />
+          </Pressable>
         </View>
-        
-        <ThemedText 
-          variant="secondary" 
-          size="lg" 
-          style={{ marginTop: spacing.sm }}
+
+        {/* Hero Section */}
+        <ImageBackground
+          source={{ uri: "https://cdn.usegalileo.ai/sdxl10/55c46daa-6b15-4e31-97dc-29e74e789638.png" }}
+          style={styles.hero}
+          imageStyle={styles.heroImage}
         >
-          Leading institutional-grade carbon credit exchange platform
-        </ThemedText>
-      </ThemedView>
-
-      <ThemedView style={styles.section}>
-        <ThemedText size="xl" weight="semibold">
-          Market Insights
-        </ThemedText>
-        
-        <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Market Performance</ThemedText>
-          <ThemedText variant="secondary">
-            VCU Spot Price: $25.50/tCO₂e
-            24h Volume: 150,000 VCUs
-            7d Price Change: +2.3%
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Project Portfolio</ThemedText>
-          <ThemedText variant="secondary">
-            Access a diverse range of verified carbon projects meeting international standards.
-            Featuring VERRA, Gold Standard, and ACR certified initiatives across multiple sectors.
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Platform Metrics</ThemedText>
-          <View style={styles.typographyDemo}>
-            <ThemedText size="sm">$2.5B+ Total Trading Volume</ThemedText>
-            <ThemedText size="sm">15M+ Carbon Credits Traded</ThemedText>
-            <ThemedText size="sm">500+ Verified Projects</ThemedText>
-            <ThemedText size="sm">200+ Institutional Clients</ThemedText>
+          <View style={styles.heroContent}>
+            <ThemedText size="2xl" weight="bold" style={styles.heroTitle}>
+              Welcome to GreenStake, the carbon credit exchange platform
+            </ThemedText>
+            <ThemedText style={styles.heroSubtitle}>
+              Buy and sell carbon credits with ease. The more you buy, the more we plant.
+            </ThemedText>
           </View>
-        </ThemedView>
-      </ThemedView>
+        </ImageBackground>
 
-      <ThemedView style={styles.section}>
-        <ThemedText size="xl" weight="semibold">
-          Platform Access
-        </ThemedText>
-        
-        <View style={styles.links}>
-          <ExternalLink href="/trading">
-            <ThemedText style={styles.link} variant="primary">
-              Trading Platform
-            </ThemedText>
-          </ExternalLink>
-          
-          <ExternalLink href="/portfolio">
-            <ThemedText style={styles.link} variant="primary">
-              Project Portfolio
-            </ThemedText>
-          </ExternalLink>
-          
-          <ExternalLink href="/insights">
-            <ThemedText style={styles.link} variant="primary">
-              Market Intelligence
-            </ThemedText>
-          </ExternalLink>
+        {/* How it Works Section */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <ThemedText size="xl" weight="bold">How it works</ThemedText>
+            <ThemedText>We make it easy for businesses to take action on climate change.</ThemedText>
+            <Pressable style={styles.learnMoreButton}>
+              <ThemedText style={styles.buttonText}>Learn More</ThemedText>
+            </Pressable>
+          </View>
+
+          <View style={styles.cards}>
+            {['Measure your emissions', 'Buy credits', 'Plant trees'].map((title) => (
+              <View key={title} style={styles.card}>
+                <Ionicons name="leaf" size={24} color={colors.text} />
+                <ThemedText weight="bold">{title}</ThemedText>
+              </View>
+            ))}
+          </View>
         </View>
-      </ThemedView>
-    </ScrollView>
+
+        {/* Business Account Section */}
+        <View style={styles.businessSection}>
+          <Image
+            source={{ uri: "https://cdn.usegalileo.ai/sdxl10/3852bc2a-20ca-46ed-962c-776251b3867b.png" }}
+            style={styles.businessImage}
+          />
+          <View style={styles.businessContent}>
+            <ThemedText size="lg" weight="bold">GreenStake Business Account</ThemedText>
+            <ThemedText style={styles.businessText}>
+              Your business can earn interest on uninvested cash and get the flexibility to spend whenever you need it.
+            </ThemedText>
+            <ThemedText style={styles.apyText}>1.5% APY</ThemedText>
+          </View>
+        </View>
+
+        {/* Popular Products Section */}
+        <ThemedText size="lg" weight="bold" style={styles.productsTitle}>
+          Popular products
+        </ThemedText>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.productsScroll}>
+          {[
+            'Wind Power', 'Solar Power', 'Reforestation',
+            'Energy Efficiency', 'Carbon Capture', 'Aviation', 'Trucking'
+          ].map((product, index) => (
+            <View key={product} style={styles.productCard}>
+              <Image
+                source={{ uri: `https://cdn.usegalileo.ai/sdxl10/product-${index}.png` }}
+                style={styles.productImage}
+              />
+              <ThemedText style={styles.productTitle}>{product}</ThemedText>
+            </View>
+          ))}
+        </ScrollView>
+      </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        {[
+          { icon: 'home', label: 'Home' },
+          { icon: 'walk', label: 'For You' },
+          { icon: 'search', label: 'Search' },
+          { icon: 'receipt', label: 'Transactions' },
+          { icon: 'person-circle', label: 'Profile' }
+        ].map((item) => (
+          <Link key={item.label} href={`/${item.label.toLowerCase()}`} style={styles.navItem}>
+            <Ionicons name={item.icon as any} size={24} color={colors.secondary} />
+            <ThemedText style={styles.navLabel}>{item.label}</ThemedText>
+          </Link>
+        ))}
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
-  header: {
-    padding: 32,
-    paddingTop: 64,
+  searchHeader: {
+    padding: 16,
+    alignItems: 'flex-end',
   },
-  welcomeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  searchButton: {
+    padding: 8,
+  },
+  hero: {
+    height: 480,
+    justifyContent: 'flex-end',
+    padding: 16,
+  },
+  heroImage: {
+    borderRadius: 12,
+  },
+  heroContent: {
     gap: 8,
+    marginBottom: 40,
+  },
+  heroTitle: {
+    color: 'white',
+  },
+  heroSubtitle: {
+    color: 'white',
   },
   section: {
-    padding: 32,
+    padding: 16,
+    gap: 24,
+  },
+  sectionHeader: {
     gap: 16,
   },
-  card: {
+  learnMoreButton: {
+    backgroundColor: '#19e619',
     padding: 16,
     borderRadius: 12,
-    gap: 8,
+    alignSelf: 'flex-start',
   },
-  typographyDemo: {
-    gap: 8,
+  buttonText: {
+    fontWeight: 'bold',
   },
-  links: {
+  cards: {
+    flexDirection: 'row',
+    gap: 12,
+    flexWrap: 'wrap',
+  },
+  card: {
+    flex: 1,
+    minWidth: 158,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#dce5dc',
     gap: 12,
   },
-  link: {
-    fontSize: 16,
+  businessSection: {
+    margin: 16,
+    borderRadius: 12,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  businessImage: {
+    height: 200,
+    borderRadius: 12,
+  },
+  businessContent: {
+    padding: 16,
+    gap: 8,
+  },
+  businessText: {
+    color: '#638863',
+  },
+  apyText: {
+    color: '#638863',
+  },
+  productsTitle: {
+    padding: 16,
+  },
+  productsScroll: {
+    paddingHorizontal: 16,
+  },
+  productCard: {
+    width: 160,
+    marginRight: 12,
+  },
+  productImage: {
+    width: '100%',
+    aspectRatio: 1,
+    borderRadius: 12,
+    marginBottom: 16,
+  },
+  productTitle: {
     fontWeight: '500',
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    borderTopWidth: 1,
+    borderTopColor: '#f0f4f0',
+    paddingVertical: 8,
+    paddingBottom: 20,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 4,
+  },
+  navLabel: {
+    fontSize: 12,
+    color: '#638863',
   },
 }); 
