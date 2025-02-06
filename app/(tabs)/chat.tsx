@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, TextInput, ScrollView, Pressable, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, TextInput, ScrollView, Pressable, ActivityIndicator, Platform } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -30,13 +30,18 @@ export default function ChatScreen() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://192.168.115.99:11434/api/generate', {
+      const API_URL = Platform.select({
+        ios: 'http://localhost:11434/api/generate',
+        android: 'http://10.0.2.2:11434/api/generate',
+      });
+
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'llama3.2:latest',
+          model: 'llama2',
           prompt: input.trim(),
           stream: true,
         }),
