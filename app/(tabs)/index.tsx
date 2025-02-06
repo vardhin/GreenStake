@@ -13,7 +13,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.header}>
         <View style={styles.welcomeContainer}>
           <ThemedText size="display" weight="bold">
-            Welcome
+            CarbonTrade
           </ThemedText>
           <HelloWave />
         </View>
@@ -23,63 +23,63 @@ export default function HomeScreen() {
           size="lg" 
           style={{ marginTop: spacing.sm }}
         >
-          Your new React Native app with standardized theming
+          Your trusted platform for carbon credit trading and climate impact
         </ThemedText>
       </ThemedView>
 
       <ThemedView style={styles.section}>
         <ThemedText size="xl" weight="semibold">
-          Getting Started
+          Market Overview
         </ThemedText>
         
         <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Theme System</ThemedText>
+          <ThemedText weight="semibold">Carbon Credit Price</ThemedText>
           <ThemedText variant="secondary">
-            This app uses a standardized theme system that automatically adapts to system preferences.
-            Try switching your device's theme!
+            Current market price: $25.50 per credit
+            Daily trading volume: 150,000 credits
           </ThemedText>
         </ThemedView>
 
         <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Components</ThemedText>
+          <ThemedText weight="semibold">Available Projects</ThemedText>
           <ThemedText variant="secondary">
-            Explore themed components like ThemedView and ThemedText with various variants and styles.
+            Browse verified carbon reduction projects across reforestation,
+            renewable energy, and sustainable agriculture sectors.
           </ThemedText>
         </ThemedView>
 
         <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Typography</ThemedText>
+          <ThemedText weight="semibold">Impact Statistics</ThemedText>
           <View style={styles.typographyDemo}>
-            <ThemedText size="xs">Extra Small Text</ThemedText>
-            <ThemedText size="sm">Small Text</ThemedText>
-            <ThemedText size="base">Base Text</ThemedText>
-            <ThemedText size="lg">Large Text</ThemedText>
-            <ThemedText size="xl">Extra Large Text</ThemedText>
+            <ThemedText size="sm">🌳 2M+ Trees Planted</ThemedText>
+            <ThemedText size="sm">⚡ 500K MWh Clean Energy Generated</ThemedText>
+            <ThemedText size="sm">🌍 1M+ Tons CO₂ Offset</ThemedText>
+            <ThemedText size="sm">👥 10K+ Active Traders</ThemedText>
           </View>
         </ThemedView>
       </ThemedView>
 
       <ThemedView style={styles.section}>
         <ThemedText size="xl" weight="semibold">
-          Resources
+          Quick Links
         </ThemedText>
         
         <View style={styles.links}>
-          <ExternalLink href="https://docs.expo.dev">
+          <ExternalLink href="/marketplace">
             <ThemedText style={styles.link} variant="primary">
-              📚 Expo Documentation
+              💹 Trading Dashboard
             </ThemedText>
           </ExternalLink>
           
-          <ExternalLink href="https://reactnative.dev">
+          <ExternalLink href="/projects">
             <ThemedText style={styles.link} variant="primary">
-              ⚛️ React Native Documentation
+              🌱 Browse Projects
             </ThemedText>
           </ExternalLink>
           
-          <ExternalLink href="https://github.com/expo/expo">
+          <ExternalLink href="/learn">
             <ThemedText style={styles.link} variant="primary">
-              🐙 Expo GitHub Repository
+              📚 Carbon Credit Guide
             </ThemedText>
           </ExternalLink>
         </View>
