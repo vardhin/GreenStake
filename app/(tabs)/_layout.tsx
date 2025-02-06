@@ -17,7 +17,6 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        header: () => null,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: {
@@ -27,7 +26,6 @@ export default function TabLayout() {
           paddingTop: 8,
           paddingBottom: Platform.OS === 'ios' ? 24 : 16,
           height: Platform.OS === 'ios' ? 80 : 70,
-          bottom: 0,
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -40,7 +38,6 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <IconSymbol name="house.fill" size={size} color={color} />
           ),
@@ -50,9 +47,8 @@ export default function TabLayout() {
         name="for-you"
         options={{
           title: 'For You',
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <IconSymbol name="figure.walk" size={size} color={color} />
+            <IconSymbol name="paperplane.fill" size={size} color={color} />
           ),
         }}
       />
@@ -60,7 +56,6 @@ export default function TabLayout() {
         name="search"
         options={{
           title: 'Search',
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <IconSymbol name="magnifyingglass" size={size} color={color} />
           ),
@@ -70,7 +65,6 @@ export default function TabLayout() {
         name="transactions"
         options={{
           title: 'Transactions',
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <IconSymbol name="doc.text" size={size} color={color} />
           ),
@@ -80,7 +74,6 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: 'Profile',
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <IconSymbol name="person.circle" size={size} color={color} />
           ),

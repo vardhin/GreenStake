@@ -12,10 +12,6 @@ export default function HomeScreen() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
-  const handleSearch = () => {
-    router.push('/search');
-  };
-
   const handleLearnMore = () => {
     // Implement learn more action
   };
@@ -28,15 +24,6 @@ export default function HomeScreen() {
     },
     scrollContent: {
       paddingBottom: 100,
-    },
-    searchHeader: {
-      padding: 12,
-      alignItems: 'flex-end',
-    },
-    searchButton: {
-      padding: 8,
-      backgroundColor: '#f5f5f5',
-      borderRadius: 8,
     },
     hero: {
       height: 400,
@@ -156,16 +143,6 @@ export default function HomeScreen() {
   return (
     <View style={[styles.container, { backgroundColor: isDark ? '#151718' : 'white' }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Header Search */}
-        <View style={styles.searchHeader}>
-          <Pressable 
-            style={[styles.searchButton, { backgroundColor: isDark ? '#2D3133' : '#f5f5f5' }]}
-            onPress={handleSearch}
-          >
-            <IconSymbol name="magnifyingglass" size={20} color={colors.text} />
-          </Pressable>
-        </View>
-
         {/* Hero Section */}
         <ImageBackground
           source={{ uri: "https://cdn.usegalileo.ai/sdxl10/55c46daa-6b15-4e31-97dc-29e74e789638.png" }}
