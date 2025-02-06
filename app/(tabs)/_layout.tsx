@@ -14,11 +14,14 @@ export default function TabLayout() {
         tabBarInactiveTintColor: theme.colors.navigation.inactive,
         headerShown: false,
         tabBarButton: HapticTab,
-        sceneContainerStyle: {
+        contentStyle: {
           backgroundColor: theme.colors.background
         },
-        animation: 'slide_from_right',
-        animationDuration: 200,
+        animation: Platform.select({
+          ios: 'default',
+          android: 'fade',
+          default: 'default'
+        }),
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
