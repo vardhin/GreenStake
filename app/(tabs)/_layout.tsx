@@ -23,27 +23,59 @@ export default function TabLayout() {
           ios: {
             position: 'absolute',
             backgroundColor: colorScheme === 'dark' ? '#151718' : '#ffffff',
+            borderTopWidth: 1,
+            borderTopColor: '#f0f4f0',
+            paddingVertical: 8,
+            paddingBottom: 20,
           },
           default: {
             backgroundColor: colorScheme === 'dark' ? '#151718' : '#ffffff',
+            borderTopWidth: 1,
+            borderTopColor: '#f0f4f0',
+            paddingVertical: 8,
+            paddingBottom: 20,
           },
         }),
-        tabBarInactiveTintColor: colorScheme === 'dark' ? '#787E83' : '#687076',
+        tabBarInactiveTintColor: colorScheme === 'dark' ? '#787E83' : '#638863',
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
           headerShown: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={24} name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="for-you"
         options={{
-          title: 'Explore',
+          title: 'For You',
           headerShown: false,
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <IconSymbol size={24} name="figure.walk" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: 'Search',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <IconSymbol size={24} name="magnifyingglass" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="transactions"
+        options={{
+          title: 'Transactions',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <IconSymbol size={24} name="doc.text" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <IconSymbol size={24} name="person.circle" color={color} />,
         }}
       />
     </Tabs>

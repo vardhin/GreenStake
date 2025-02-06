@@ -1,8 +1,6 @@
 import { ScrollView, StyleSheet, View, Image, ImageBackground, Pressable } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { useTheme } from '@/hooks/useTheme';
-import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
@@ -88,22 +86,6 @@ export default function HomeScreen() {
           ))}
         </ScrollView>
       </ScrollView>
-
-      {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
-        {[
-          { icon: 'home', label: 'Home' },
-          { icon: 'walk', label: 'For You' },
-          { icon: 'search', label: 'Search' },
-          { icon: 'receipt', label: 'Transactions' },
-          { icon: 'person-circle', label: 'Profile' }
-        ].map((item) => (
-          <Link key={item.label} href={`/${item.label.toLowerCase()}`} style={styles.navItem}>
-            <Ionicons name={item.icon as any} size={24} color={colors.secondary} />
-            <ThemedText style={styles.navLabel}>{item.label}</ThemedText>
-          </Link>
-        ))}
-      </View>
     </View>
   );
 }
@@ -196,6 +178,7 @@ const styles = StyleSheet.create({
   },
   productsScroll: {
     paddingHorizontal: 16,
+    paddingBottom: 16,
   },
   productCard: {
     width: 160,
@@ -209,21 +192,5 @@ const styles = StyleSheet.create({
   },
   productTitle: {
     fontWeight: '500',
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    borderTopWidth: 1,
-    borderTopColor: '#f0f4f0',
-    paddingVertical: 8,
-    paddingBottom: 20,
-  },
-  navItem: {
-    flex: 1,
-    alignItems: 'center',
-    gap: 4,
-  },
-  navLabel: {
-    fontSize: 12,
-    color: '#638863',
   },
 }); 
