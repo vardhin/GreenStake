@@ -78,14 +78,14 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, focused }) => (
             <Animated.View
               style={{
                 transform: [{
                   scale: focused ? tabPressScale : 1,
                 }],
               }}>
-              <MaterialCommunityIcons name="home" size={size} color={color} />
+              <MaterialCommunityIcons name="home" size={22} color={color} />
             </Animated.View>
           ),
         }}
