@@ -5,11 +5,23 @@ import { Platform } from 'react-native';
 import { HapticTab } from '../../components/HapticTab';
 import { useTheme } from '../styles/theme';
 import { ThemeProvider } from '../providers/ThemeProvider';
+import { Stack } from 'expo-router';
 
-export default function TabLayout() {
+export default function RootLayout() {
+  const theme = useTheme();
+
   return (
     <ThemeProvider>
-      <TabNavigator />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: theme.colors.background,
+          },
+        }}
+      >
+        <TabNavigator />
+      </Stack>
     </ThemeProvider>
   );
 }
