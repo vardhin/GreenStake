@@ -152,12 +152,12 @@ export default function ProfileScreen() {
         <View style={styles.profileSection}>
           <View style={styles.profileContent}>
             <Image
-              source={{ uri: "https://cdn-icons-png.flaticon.com/512/219/219969.png" }}
+              source={{ uri: "https://cdn-icons-png.flaticon.com/512/4140/4140048.png" }}
               style={styles.profileImage}
             />
             <View style={styles.profileInfo}>
               <ThemedText size="xl" weight="bold">Vardhin</ThemedText>
-              <ThemedText variant="secondary">ameliagreen@gmail.com</ThemedText>
+              <ThemedText variant="secondary">suryavardhin@gmail.com</ThemedText>
             </View>
           </View>
         </View>
