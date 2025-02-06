@@ -267,9 +267,15 @@ export type Theme = typeof lightTheme;
 export const ThemeContext = createContext<Theme>(lightTheme);
 
 // Add a hook to use the theme
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => {
+  const theme = useContext(ThemeContext);
+  if (!theme) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return theme;
+};
 
-// Export the theme directly
+// Export the createCommonStyles function
 export const createCommonStyles = (theme: Theme) => StyleSheet.create({
   // Layout
   container: {
@@ -447,4 +453,6 @@ export const createCommonStyles = (theme: Theme) => StyleSheet.create({
   fullWidth: {
     width: '100%',
   },
-}); 
+});
+
+export { lightTheme, darkTheme }; 
