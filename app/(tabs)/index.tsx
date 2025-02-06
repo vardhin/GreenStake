@@ -37,18 +37,21 @@ export default function HomeScreen() {
     heroContent: {
       gap: 8,
       marginBottom: 24,
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+      padding: 16,
+      borderRadius: 12,
     },
     heroTitle: {
       color: 'white',
-      textShadowColor: 'rgba(0, 0, 0, 0.3)',
+      textShadowColor: 'rgba(0, 0, 0, 0.5)',
       textShadowOffset: { width: 0, height: 1 },
-      textShadowRadius: 2,
+      textShadowRadius: 3,
     },
     heroSubtitle: {
       color: 'white',
-      textShadowColor: 'rgba(0, 0, 0, 0.3)',
+      textShadowColor: 'rgba(0, 0, 0, 0.5)',
       textShadowOffset: { width: 0, height: 1 },
-      textShadowRadius: 2,
+      textShadowRadius: 3,
     },
     section: {
       padding: 16,
@@ -59,14 +62,14 @@ export default function HomeScreen() {
       gap: 8,
     },
     learnMoreButton: {
-      backgroundColor: '#19e619',
+      backgroundColor: isDark ? '#2D3133' : '#dce5dc',
       padding: 12,
       borderRadius: 12,
       alignSelf: 'flex-start',
     },
     buttonText: {
       fontWeight: 'bold',
-      color: 'white',
+      color: isDark ? '#FFFFFF' : '#638863',
     },
     cards: {
       flexDirection: 'row',
