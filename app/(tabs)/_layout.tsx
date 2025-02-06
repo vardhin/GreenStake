@@ -24,6 +24,9 @@ function TabNavigator() {
         tabBarInactiveTintColor: theme.colors.navigation.inactive,
         headerShown: false,
         tabBarButton: HapticTab,
+        sceneContainerStyle: {
+          backgroundColor: theme.colors.background
+        },
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
