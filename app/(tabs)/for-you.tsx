@@ -4,7 +4,6 @@ import { ThemedText } from '@/components/ThemedText';
 import Slider from '@react-native-community/slider';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { api } from '../../services/api';
 
 const FILTER_TABS = ['All', 'Favorites', 'Invested'];
 const PROJECT_TYPES = ['Trees', 'Solar', 'Wind', 'Methane'];
@@ -14,6 +13,9 @@ interface Project {
   returns: string;
   investors: number;
   type: typeof PROJECT_TYPES[number];
+  description?: string;
+  category?: string;
+  fundingGoal?: number;
 }
 
 interface Transaction {
@@ -58,8 +60,22 @@ export default function ForYouScreen() {
   const loadProjects = async () => {
     try {
       setIsLoading(true);
-      const response = await api.getAvailableCredits();
-      setProjects(response.data);
+      const response = await fetch('http://localhost:3000/api/projects');
+      const data = await response.json();
+      
+      // Transform API data to match Project interface
+      const formattedProjects: Project[] = data.map((project: any) => ({
+        title: project.title,
+        returns: '5-10', // You might want to calculate this based on project data
+        investors: project.investors?.length || 0,
+        type: project.category === 'WIND' ? 'Wind' : 
+              project.category === 'SOLAR' ? 'Solar' : 
+              project.category === 'METHANE' ? 'Methane' : 'Trees',
+        description: project.description,
+        fundingGoal: project.fundingGoal
+      }));
+      
+      setProjects(formattedProjects);
     } catch (err) {
       console.error('Failed to load projects:', err);
     } finally {
@@ -81,7 +97,7 @@ export default function ForYouScreen() {
     return true;
   });
 
-  const handleInvestment = () => {
+  const handleInvestment = async () => {
     if (!selectedProject || !investmentAmount) return;
     
     const amount = parseFloat(investmentAmount);
@@ -96,29 +112,48 @@ export default function ForYouScreen() {
       return;
     }
 
-    // Update user balance
-    setUserBalance(prev => ({
-      available: prev.available - amount,
-      invested: prev.invested + amount,
-    }));
+    try {
+      // Replace PROJECT_ID and INVESTOR_TOKEN with actual values
+      const response = await fetch(`http://localhost:3000/api/projects/PROJECT_ID/invest`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer INVESTOR_TOKEN',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount })
+      });
 
-    // Add to transactions
-    setTransactions(prev => [...prev, {
-      projectTitle: selectedProject.title,
-      amount,
-      date: new Date(),
-      type: 'investment',
-    }]);
+      if (!response.ok) {
+        throw new Error('Investment failed');
+      }
 
-    // Add to invested projects
-    setInvestedProjects(prev => [...prev, selectedProject.title]);
+      // Update user balance
+      setUserBalance(prev => ({
+        available: prev.available - amount,
+        invested: prev.invested + amount,
+      }));
 
-    // Close modal and reset
-    setShowInvestModal(false);
-    setSelectedProject(null);
-    setInvestmentAmount('');
+      // Add to transactions
+      setTransactions(prev => [...prev, {
+        projectTitle: selectedProject.title,
+        amount,
+        date: new Date(),
+        type: 'investment',
+      }]);
 
-    Alert.alert('Success', 'Investment completed successfully!');
+      // Add to invested projects
+      setInvestedProjects(prev => [...prev, selectedProject.title]);
+
+      // Close modal and reset
+      setShowInvestModal(false);
+      setSelectedProject(null);
+      setInvestmentAmount('');
+
+      Alert.alert('Success', 'Investment completed successfully!');
+    } catch (error) {
+      console.error('Investment failed:', error);
+      Alert.alert('Error', 'Failed to complete investment. Please try again.');
+    }
   };
 
   const styles = StyleSheet.create({
