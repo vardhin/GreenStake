@@ -5,7 +5,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 
 export default function HomeScreen() {
-  const colorScheme: 'light' | 'dark' = useColorScheme() ?? 'light';
+  // Ensure we always have a valid color scheme
+  const rawColorScheme = useColorScheme();
+  const colorScheme = (rawColorScheme ?? 'light') as 'light' | 'dark';
   const themeColors = Colors[colorScheme];
 
   return (
