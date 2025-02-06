@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, ScrollView, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, ScrollView, TouchableOpacity, StyleSheet, Platform, TextInput } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import Slider from '@react-native-community/slider';
 import { useTheme } from '@/hooks/useTheme';
@@ -44,8 +44,16 @@ export default function ForYouScreen() {
   const [activeFilter, setActiveFilter] = useState(FILTER_TABS[0]);
   const [activeType, setActiveType] = useState<string | null>(null);
   const [returnExpectation, setReturnExpectation] = useState(1);
+  const [favoriteProjects, setFavoriteProjects] = useState<string[]>([]);
+  const [investedProjects, setInvestedProjects] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const filteredProjects = PROJECTS.filter(project => {
+    if (searchQuery && !project.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+    
+    if (activeFilter === 'Favorites' && !favoriteProjects.includes(project.title)) return false;
+    if (activeFilter === 'Invested' && !investedProjects.includes(project.title)) return false;
+    
     if (activeType && project.type !== activeType) return false;
     
     const [minReturn] = project.returns.split('-').map(r => parseFloat(r));
@@ -110,9 +118,6 @@ export default function ForYouScreen() {
       marginBottom: 16,
     },
     projectCard: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
       padding: 16,
       marginBottom: 12,
       backgroundColor: isDark ? '#1A1D1E' : '#fff',
@@ -123,13 +128,31 @@ export default function ForYouScreen() {
       shadowRadius: 4,
       elevation: 2,
     },
+    projectContent: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    projectInfo: {
+      flex: 1,
+      marginRight: 12,
+    },
     projectTitle: {
       fontSize: 16,
       fontWeight: '500',
       marginBottom: 4,
+      flexWrap: 'wrap',
+    },
+    projectDetails: {
+      marginTop: 8,
     },
     returns: {
-      color: '#666',
+      color: isDark ? '#999' : '#666',
+      fontSize: 14,
+      marginBottom: 4,
+    },
+    investors: {
+      color: isDark ? '#999' : '#666',
       fontSize: 14,
     },
     investButton: {
@@ -137,9 +160,12 @@ export default function ForYouScreen() {
       paddingHorizontal: 16,
       paddingVertical: 8,
       borderRadius: 20,
+      minWidth: 100,
+      alignItems: 'center',
     },
     investButtonText: {
       color: '#fff',
+      fontWeight: '500',
     },
     sliderValue: {
       marginTop: 8,
@@ -151,12 +177,30 @@ export default function ForYouScreen() {
       fontSize: 16,
       color: '#666',
     },
+    searchContainer: {
+      marginBottom: 16,
+    },
+    searchInput: {
+      backgroundColor: isDark ? '#1A1D1E' : '#f0f0f0',
+      padding: 12,
+      borderRadius: 8,
+      color: isDark ? '#fff' : '#000',
+    },
   });
 
   return (
     <View style={[styles.container, { backgroundColor: isDark ? '#151718' : 'white' }]}>
       <ScrollView>
-        {/* Main Filter Tabs */}
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search projects..."
+            placeholderTextColor={isDark ? '#666' : '#999'}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
+
         <View style={styles.filterTabs}>
           {FILTER_TABS.map((tab) => (
             <TouchableOpacity 
@@ -171,7 +215,6 @@ export default function ForYouScreen() {
           ))}
         </View>
 
-        {/* Project Type Filters */}
         <ScrollView horizontal style={styles.projectTypes}>
           {PROJECT_TYPES.map((type) => (
             <TouchableOpacity 
@@ -187,7 +230,6 @@ export default function ForYouScreen() {
           ))}
         </ScrollView>
 
-        {/* Return Expectation Slider */}
         <View style={styles.sliderContainer}>
           <ThemedText style={styles.sliderTitle}>Return Expectation</ThemedText>
           <Slider
@@ -205,26 +247,34 @@ export default function ForYouScreen() {
           </ThemedText>
         </View>
 
-        {/* Projects List */}
         <View style={styles.projectsContainer}>
           <ThemedText style={styles.projectsTitle}>Projects</ThemedText>
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project) => (
               <View key={project.title} style={styles.projectCard}>
-                <View>
-                  <ThemedText style={styles.projectTitle}>{project.title}</ThemedText>
-                  <ThemedText style={styles.returns}>
-                    Expected returns: {project.returns}
-                  </ThemedText>
+                <View style={styles.projectContent}>
+                  <View style={styles.projectInfo}>
+                    <ThemedText style={styles.projectTitle} numberOfLines={2}>
+                      {project.title}
+                    </ThemedText>
+                    <View style={styles.projectDetails}>
+                      <ThemedText style={styles.returns}>
+                        Expected returns: {project.returns}
+                      </ThemedText>
+                      <ThemedText style={styles.investors}>
+                        {project.investors} investors
+                      </ThemedText>
+                    </View>
+                  </View>
+                  <TouchableOpacity 
+                    style={styles.investButton}
+                    onPress={() => {
+                      console.log(`Investing in ${project.title}`);
+                    }}
+                  >
+                    <ThemedText style={styles.investButtonText}>Invest Now</ThemedText>
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity 
-                  style={styles.investButton}
-                  onPress={() => {
-                    console.log(`Investing in ${project.title}`);
-                  }}
-                >
-                  <ThemedText style={styles.investButtonText}>Invest Now</ThemedText>
-                </TouchableOpacity>
               </View>
             ))
           ) : (
