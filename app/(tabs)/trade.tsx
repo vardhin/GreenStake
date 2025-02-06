@@ -2,7 +2,7 @@ import { View, Text, TextInput, Pressable, FlatList } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { theme, commonStyles } from '../styles/theme';
+import { useTheme } from '../hooks/useTheme';
 
 // You'll want to move these types to a separate types file later
 type Project = {
@@ -33,6 +33,7 @@ const MOCK_PROJECTS: Project[] = [
 ];
 
 export default function TradeScreen() {
+  const theme = useTheme();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [investmentAmount, setInvestmentAmount] = useState('');
   const [userBalance, setUserBalance] = useState(10000); // Mock initial balance
@@ -66,6 +67,43 @@ export default function TradeScreen() {
     setInvestmentAmount('');
     setSelectedProject(null);
   };
+
+  const styles = StyleSheet.create({
+    balance: {
+      ...theme.typography.h2,
+      color: theme.colors.text.primary,
+      padding: theme.spacing.md,
+    },
+    description: {
+      ...theme.typography.body1,
+      color: theme.colors.text.primary,
+      marginBottom: theme.spacing.sm,
+    },
+    price: {
+      ...theme.typography.subtitle1,
+      color: theme.colors.text.primary,
+      fontWeight: '600',
+    },
+    available: {
+      ...theme.typography.body2,
+      color: theme.colors.text.secondary,
+    },
+    backButton: {
+      position: 'absolute',
+      top: theme.spacing.md,
+      left: theme.spacing.md,
+      zIndex: 1,
+    },
+    inputContainer: {
+      marginBottom: theme.spacing.lg,
+    },
+    calculatedCredits: {
+      ...theme.typography.h3,
+      color: theme.colors.text.primary,
+      textAlign: 'center',
+      marginVertical: theme.spacing.lg,
+    },
+  });
 
   return (
     <View style={[commonStyles.container, commonStyles.gap]}>
@@ -119,41 +157,4 @@ export default function TradeScreen() {
       )}
     </View>
   );
-}
-
-const styles = StyleSheet.create({
-  balance: {
-    ...theme.typography.h2,
-    color: theme.colors.text.primary,
-    padding: theme.spacing.md,
-  },
-  description: {
-    ...theme.typography.body1,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.sm,
-  },
-  price: {
-    ...theme.typography.subtitle1,
-    color: theme.colors.text.primary,
-    fontWeight: '600',
-  },
-  available: {
-    ...theme.typography.body2,
-    color: theme.colors.text.secondary,
-  },
-  backButton: {
-    position: 'absolute',
-    top: theme.spacing.md,
-    left: theme.spacing.md,
-    zIndex: 1,
-  },
-  inputContainer: {
-    marginBottom: theme.spacing.lg,
-  },
-  calculatedCredits: {
-    ...theme.typography.h3,
-    color: theme.colors.text.primary,
-    textAlign: 'center',
-    marginVertical: theme.spacing.lg,
-  },
-}); 
+} 

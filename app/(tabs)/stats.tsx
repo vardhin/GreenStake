@@ -1,14 +1,12 @@
 import { View, Text, Dimensions, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { StyleSheet } from 'react-native';
-import { theme, commonStyles } from '../styles/theme';
-import { useContext } from 'react';
-import { ThemeContext } from '../styles/theme';
+import { useTheme } from '../hooks/useTheme';
 
 const { width } = Dimensions.get('window');
 
 export default function StatsScreen() {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
   
   const CONTAINER_PADDING = theme.spacing.lg;
   const CHART_CONTAINER_PADDING = theme.spacing.lg;
@@ -25,19 +23,79 @@ export default function StatsScreen() {
     ],
   };
 
+  const styles = StyleSheet.create({
+    scrollContent: {
+      flexGrow: 1,
+    },
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+      paddingHorizontal: theme.spacing.lg,
+      paddingTop: theme.spacing.lg,
+      paddingBottom: theme.spacing.xxl,
+    },
+    chartContainer: {
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.borderRadius.lg,
+      padding: theme.spacing.lg,
+      ...theme.elevation.medium,
+    },
+    chartHeader: {
+      marginBottom: theme.spacing.lg,
+    },
+    chartWrapper: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginHorizontal: -theme.spacing.xs,
+    },
+    chart: {
+      borderRadius: theme.borderRadius.lg,
+      marginLeft: -theme.spacing.md,
+    },
+    statsContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: theme.spacing.xl,
+      paddingTop: theme.spacing.lg,
+      borderTopWidth: 1,
+      borderTopColor: theme.colors.border,
+    },
+    statItem: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    statItemBorder: {
+      borderLeftWidth: 1,
+      borderRightWidth: 1,
+      borderColor: theme.colors.border,
+      paddingHorizontal: theme.spacing.md,
+    },
+    statValue: {
+      ...theme.typography.h3,
+      color: theme.colors.primary,
+      marginBottom: theme.spacing.xs,
+    },
+    statLabel: {
+      ...theme.typography.caption,
+      color: theme.colors.text.secondary,
+      textAlign: 'center',
+    },
+  });
+
   return (
     <ScrollView 
-      style={commonStyles.safeArea}
+      style={styles.scrollContent}
       contentContainerStyle={styles.scrollContent}
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.container}>
-        <Text style={commonStyles.h2}>Market Analytics</Text>
+        <Text style={theme.typography.h2}>Market Analytics</Text>
         
         <View style={styles.chartContainer}>
           <View style={styles.chartHeader}>
-            <Text style={commonStyles.subtitle1}>Project Activity Trends</Text>
-            <Text style={commonStyles.caption}>Monthly performance metrics</Text>
+            <Text style={theme.typography.subtitle1}>Project Activity Trends</Text>
+            <Text style={theme.typography.caption}>Monthly performance metrics</Text>
           </View>
           
           <View style={styles.chartWrapper}>
@@ -104,64 +162,4 @@ export default function StatsScreen() {
       </View>
     </ScrollView>
   );
-}
-
-const styles = StyleSheet.create({
-  scrollContent: {
-    flexGrow: 1,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-    paddingHorizontal: theme.spacing.lg,
-    paddingTop: theme.spacing.lg,
-    paddingBottom: theme.spacing.xxl,
-  },
-  chartContainer: {
-    backgroundColor: theme.colors.surface,
-    borderRadius: theme.borderRadius.lg,
-    padding: theme.spacing.lg,
-    ...theme.elevation.medium,
-  },
-  chartHeader: {
-    marginBottom: theme.spacing.lg,
-  },
-  chartWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: -theme.spacing.xs,
-  },
-  chart: {
-    borderRadius: theme.borderRadius.lg,
-    marginLeft: -theme.spacing.md,
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: theme.spacing.xl,
-    paddingTop: theme.spacing.lg,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
-  },
-  statItem: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  statItemBorder: {
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderColor: theme.colors.border,
-    paddingHorizontal: theme.spacing.md,
-  },
-  statValue: {
-    ...theme.typography.h3,
-    color: theme.colors.primary,
-    marginBottom: theme.spacing.xs,
-  },
-  statLabel: {
-    ...theme.typography.caption,
-    color: theme.colors.text.secondary,
-    textAlign: 'center',
-  },
-}); 
+} 
