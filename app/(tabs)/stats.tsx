@@ -2,19 +2,24 @@ import { View, Text, Dimensions, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { StyleSheet } from 'react-native';
 import { theme, commonStyles } from '../styles/theme';
+import { useContext } from 'react';
+import { ThemeContext } from '../styles/theme';
 
 const { width } = Dimensions.get('window');
-const CONTAINER_PADDING = theme.spacing.lg;
-const CHART_CONTAINER_PADDING = theme.spacing.lg;
-const CHART_WIDTH = width - (CONTAINER_PADDING * 2) - (CHART_CONTAINER_PADDING * 2);
 
 export default function StatsScreen() {
+  const theme = useContext(ThemeContext);
+  
+  const CONTAINER_PADDING = theme.spacing.lg;
+  const CHART_CONTAINER_PADDING = theme.spacing.lg;
+  const CHART_WIDTH = width - (CONTAINER_PADDING * 2) - (CHART_CONTAINER_PADDING * 2);
+
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
       {
         data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `rgba(25, 118, 210, ${opacity})`, // Professional blue
+        color: (opacity = 1) => `rgba(46, 125, 50, ${opacity})`, // Using theme primary color
         strokeWidth: 2,
       },
     ],
@@ -27,12 +32,12 @@ export default function StatsScreen() {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.container}>
-        <Text style={styles.header}>Market Analytics</Text>
+        <Text style={commonStyles.h2}>Market Analytics</Text>
         
         <View style={styles.chartContainer}>
           <View style={styles.chartHeader}>
-            <Text style={styles.chartTitle}>Project Activity Trends</Text>
-            <Text style={styles.chartSubtitle}>Monthly performance metrics</Text>
+            <Text style={commonStyles.subtitle1}>Project Activity Trends</Text>
+            <Text style={commonStyles.caption}>Monthly performance metrics</Text>
           </View>
           
           <View style={styles.chartWrapper}>
@@ -45,7 +50,7 @@ export default function StatsScreen() {
                 backgroundGradientFrom: theme.colors.surface,
                 backgroundGradientTo: theme.colors.surface,
                 decimalPlaces: 0,
-                color: (opacity = 1) => `rgba(25, 118, 210, ${opacity})`,
+                color: (opacity = 1) => `rgba(46, 125, 50, ${opacity})`,
                 labelColor: () => theme.colors.text.secondary,
                 strokeWidth: 2,
                 propsForDots: {
@@ -54,14 +59,6 @@ export default function StatsScreen() {
                   stroke: theme.colors.primary,
                 },
                 propsForLabels: {
-                  fontSize: 11,
-                  fontWeight: '500',
-                },
-                propsForVerticalLabels: {
-                  fontSize: 11,
-                  fontWeight: '500',
-                },
-                propsForHorizontalLabels: {
                   fontSize: 11,
                   fontWeight: '500',
                 },
@@ -116,32 +113,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background,
-    paddingHorizontal: CONTAINER_PADDING,
+    paddingHorizontal: theme.spacing.lg,
     paddingTop: theme.spacing.lg,
     paddingBottom: theme.spacing.xxl,
-  },
-  header: {
-    ...theme.typography.h2,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.lg,
   },
   chartContainer: {
     backgroundColor: theme.colors.surface,
     borderRadius: theme.borderRadius.lg,
-    padding: CHART_CONTAINER_PADDING,
+    padding: theme.spacing.lg,
     ...theme.elevation.medium,
   },
   chartHeader: {
     marginBottom: theme.spacing.lg,
-  },
-  chartTitle: {
-    ...theme.typography.subtitle1,
-    color: theme.colors.text.primary,
-    marginBottom: theme.spacing.xs,
-  },
-  chartSubtitle: {
-    ...theme.typography.caption,
-    color: theme.colors.text.secondary,
   },
   chartWrapper: {
     alignItems: 'center',
@@ -150,7 +133,7 @@ const styles = StyleSheet.create({
   },
   chart: {
     borderRadius: theme.borderRadius.lg,
-    marginLeft: -theme.spacing.md, // Adjust for chart padding
+    marginLeft: -theme.spacing.md,
   },
   statsContainer: {
     flexDirection: 'row',
