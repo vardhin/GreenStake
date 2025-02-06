@@ -13,7 +13,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.header}>
         <View style={styles.welcomeContainer}>
           <ThemedText size="display" weight="bold">
-            CarbonTrade
+            GreenStake
           </ThemedText>
           <HelloWave />
         </View>
@@ -23,63 +23,64 @@ export default function HomeScreen() {
           size="lg" 
           style={{ marginTop: spacing.sm }}
         >
-          Your trusted platform for carbon credit trading and climate impact
+          Leading institutional-grade carbon credit exchange platform
         </ThemedText>
       </ThemedView>
 
       <ThemedView style={styles.section}>
         <ThemedText size="xl" weight="semibold">
-          Market Overview
+          Market Insights
         </ThemedText>
         
         <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Carbon Credit Price</ThemedText>
+          <ThemedText weight="semibold">Market Performance</ThemedText>
           <ThemedText variant="secondary">
-            Current market price: $25.50 per credit
-            Daily trading volume: 150,000 credits
+            VCU Spot Price: $25.50/tCO₂e
+            24h Volume: 150,000 VCUs
+            7d Price Change: +2.3%
           </ThemedText>
         </ThemedView>
 
         <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Available Projects</ThemedText>
+          <ThemedText weight="semibold">Project Portfolio</ThemedText>
           <ThemedText variant="secondary">
-            Browse verified carbon reduction projects across reforestation,
-            renewable energy, and sustainable agriculture sectors.
+            Access a diverse range of verified carbon projects meeting international standards.
+            Featuring VERRA, Gold Standard, and ACR certified initiatives across multiple sectors.
           </ThemedText>
         </ThemedView>
 
         <ThemedView variant="secondary" style={styles.card}>
-          <ThemedText weight="semibold">Impact Statistics</ThemedText>
+          <ThemedText weight="semibold">Platform Metrics</ThemedText>
           <View style={styles.typographyDemo}>
-            <ThemedText size="sm">🌳 2M+ Trees Planted</ThemedText>
-            <ThemedText size="sm">⚡ 500K MWh Clean Energy Generated</ThemedText>
-            <ThemedText size="sm">🌍 1M+ Tons CO₂ Offset</ThemedText>
-            <ThemedText size="sm">👥 10K+ Active Traders</ThemedText>
+            <ThemedText size="sm">$2.5B+ Total Trading Volume</ThemedText>
+            <ThemedText size="sm">15M+ Carbon Credits Traded</ThemedText>
+            <ThemedText size="sm">500+ Verified Projects</ThemedText>
+            <ThemedText size="sm">200+ Institutional Clients</ThemedText>
           </View>
         </ThemedView>
       </ThemedView>
 
       <ThemedView style={styles.section}>
         <ThemedText size="xl" weight="semibold">
-          Quick Links
+          Platform Access
         </ThemedText>
         
         <View style={styles.links}>
-          <ExternalLink href="/marketplace">
+          <ExternalLink href="/trading">
             <ThemedText style={styles.link} variant="primary">
-              💹 Trading Dashboard
+              Trading Platform
             </ThemedText>
           </ExternalLink>
           
-          <ExternalLink href="/projects">
+          <ExternalLink href="/portfolio">
             <ThemedText style={styles.link} variant="primary">
-              🌱 Browse Projects
+              Project Portfolio
             </ThemedText>
           </ExternalLink>
           
-          <ExternalLink href="/learn">
+          <ExternalLink href="/insights">
             <ThemedText style={styles.link} variant="primary">
-              📚 Carbon Credit Guide
+              Market Intelligence
             </ThemedText>
           </ExternalLink>
         </View>
