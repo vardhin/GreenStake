@@ -101,7 +101,7 @@ export default function TabLayout() {
                   scale: focused ? tabPressScale : 1,
                 }],
               }}>
-              <MaterialCommunityIcons name="wallet" size={size} color={color} />
+              <MaterialCommunityIcons name="information" size={size} color={color} />
             </Animated.View>
           ),
         }}
