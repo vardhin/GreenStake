@@ -18,7 +18,7 @@ const ArrowRightIcon = () => (
   </Svg>
 );
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }: { navigation: any }) {
   const { spacing, colors } = useTheme();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
@@ -128,18 +128,15 @@ export default function ProfileScreen() {
   );
 
   const handlePortfolioPress = () => {
-    // Add your navigation or action logic here
-    console.log('Portfolio pressed');
+    navigation.navigate('Portfolio');
   };
 
   const handleCarbonCreditsPress = () => {
-    // Add your navigation or action logic here
-    console.log('Carbon Credits pressed');
+    navigation.navigate('CarbonCredits');
   };
 
   const handleCO2OffsetPress = () => {
-    // Add your navigation or action logic here
-    console.log('CO2 Offset pressed');
+    navigation.navigate('CO2Offset');
   };
 
   return (
