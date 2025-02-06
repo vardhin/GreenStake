@@ -13,7 +13,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
-  // Add animation value for tab press
+  // Add animation value for tab press (only for icons now)
   const tabPressScale = new Animated.Value(1);
 
   const animateTabPress = () => {
@@ -64,10 +64,8 @@ export default function TabLayout() {
           shadowOpacity: 0.1,
           shadowRadius: 3,
           elevation: 5,
-          transform: [{ scale: tabPressScale }],
         },
         tabBarItemStyle: {
-          transform: [{ scale: 1 }],
         },
         tabBarLabelStyle: {
           fontSize: 12,
