@@ -4,11 +4,9 @@ import React from 'react';
 import { Platform } from 'react-native';
 
 import { HapticTab } from '../../components/HapticTab';
-import { useTheme } from '../hooks/useTheme';
+import { theme } from '../styles/theme';
 
 export default function TabLayout() {
-  const theme = useTheme();
-
   return (
     <Tabs
       screenOptions={{

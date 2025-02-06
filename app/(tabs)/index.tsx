@@ -2,10 +2,11 @@ import { ScrollView, Pressable, View, Text } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { theme, commonStyles } from '../styles/theme';
+import { theme, commonStyles, useTheme } from '../styles/theme';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const currentTheme = useTheme();
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -72,16 +73,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   subtitle: {
-    ...theme.typography.subtitle,
+    fontSize: theme.typography.subtitle1.fontSize,
+    fontWeight: theme.typography.subtitle1.fontWeight,
     textAlign: 'center',
     marginTop: theme.spacing.sm,
-    color: theme.colors.text,
+    color: theme.colors.text.primary,
   },
   actionContainer: {
     justifyContent: 'space-around',
   },
   actionButton: {
-    ...commonStyles.centerContent,
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: theme.spacing.md,
     borderRadius: theme.borderRadius.md,
     width: '30%',
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
     ...theme.typography.caption,
     marginTop: theme.spacing.sm,
     textAlign: 'center',
-    color: theme.colors.text,
+    color: theme.colors.text.primary,
     fontWeight: '600',
   },
 });

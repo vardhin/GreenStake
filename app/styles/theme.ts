@@ -263,20 +263,26 @@ export const darkTheme = {
 // Create a type for our theme
 export type Theme = typeof lightTheme;
 
-// Create a context to manage the theme
+// Create a context with the default theme
 export const ThemeContext = createContext<Theme>(lightTheme);
+
+// Add a hook to use the theme
+export const useTheme = () => useContext(ThemeContext);
+
+// Export the theme directly
+export const theme = lightTheme;
 
 export const commonStyles = StyleSheet.create({
   // Layout
   container: {
     flex: 1,
-    paddingHorizontal: lightTheme.spacing.lg,
-    paddingVertical: lightTheme.spacing.md,
-    backgroundColor: lightTheme.colors.background,
+    paddingHorizontal: theme.spacing.lg,
+    paddingVertical: theme.spacing.md,
+    backgroundColor: theme.colors.background,
   },
   safeArea: {
     flex: 1,
-    backgroundColor: lightTheme.colors.background,
+    backgroundColor: theme.colors.background,
   },
   scrollView: {
     flexGrow: 1,
@@ -296,146 +302,146 @@ export const commonStyles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   gap: {
-    gap: lightTheme.spacing.md,
+    gap: theme.spacing.md,
   },
 
   // Margins
   marginHorizontal: {
-    marginHorizontal: lightTheme.spacing.md,
+    marginHorizontal: theme.spacing.md,
   },
   marginVertical: {
-    marginVertical: lightTheme.spacing.md,
+    marginVertical: theme.spacing.md,
   },
   marginTop: {
-    marginTop: lightTheme.spacing.md,
+    marginTop: theme.spacing.md,
   },
   marginBottom: {
-    marginBottom: lightTheme.spacing.md,
+    marginBottom: theme.spacing.md,
   },
   marginLeft: {
-    marginLeft: lightTheme.spacing.md,
+    marginLeft: theme.spacing.md,
   },
   marginRight: {
-    marginRight: lightTheme.spacing.md,
+    marginRight: theme.spacing.md,
   },
 
   // Padding
   paddingHorizontal: {
-    paddingHorizontal: lightTheme.spacing.md,
+    paddingHorizontal: theme.spacing.md,
   },
   paddingVertical: {
-    paddingVertical: lightTheme.spacing.md,
+    paddingVertical: theme.spacing.md,
   },
   paddingTop: {
-    paddingTop: lightTheme.spacing.md,
+    paddingTop: theme.spacing.md,
   },
   paddingBottom: {
-    paddingBottom: lightTheme.spacing.md,
+    paddingBottom: theme.spacing.md,
   },
   paddingLeft: {
-    paddingLeft: lightTheme.spacing.md,
+    paddingLeft: theme.spacing.md,
   },
   paddingRight: {
-    paddingRight: lightTheme.spacing.md,
+    paddingRight: theme.spacing.md,
   },
 
   // Typography
   h1: {
-    ...lightTheme.typography.h1,
-    color: lightTheme.colors.text.primary,
-    marginBottom: lightTheme.spacing.md,
+    ...theme.typography.h1,
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.md,
   },
   h2: {
-    ...lightTheme.typography.h2,
-    color: lightTheme.colors.text.primary,
-    marginBottom: lightTheme.spacing.sm,
+    ...theme.typography.h2,
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.sm,
   },
   h3: {
-    ...lightTheme.typography.h3,
-    color: lightTheme.colors.text.primary,
-    marginBottom: lightTheme.spacing.sm,
+    ...theme.typography.h3,
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.sm,
   },
   subtitle1: {
-    ...lightTheme.typography.subtitle1,
-    color: lightTheme.colors.text.primary,
-    marginBottom: lightTheme.spacing.xs,
+    ...theme.typography.subtitle1,
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.xs,
   },
   subtitle2: {
-    ...lightTheme.typography.subtitle2,
-    color: lightTheme.colors.text.primary,
-    marginBottom: lightTheme.spacing.xs,
+    ...theme.typography.subtitle2,
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.xs,
   },
   body1: {
-    ...lightTheme.typography.body1,
-    color: lightTheme.colors.text.primary,
+    ...theme.typography.body1,
+    color: theme.colors.text.primary,
   },
   body2: {
-    ...lightTheme.typography.body2,
-    color: lightTheme.colors.text.primary,
+    ...theme.typography.body2,
+    color: theme.colors.text.primary,
   },
   caption: {
-    ...lightTheme.typography.caption,
-    color: lightTheme.colors.text.secondary,
+    ...theme.typography.caption,
+    color: theme.colors.text.secondary,
   },
 
   // Components
   card: {
-    backgroundColor: lightTheme.colors.surface,
-    borderRadius: lightTheme.borderRadius.lg,
-    padding: lightTheme.spacing.lg,
-    marginVertical: lightTheme.spacing.sm,
-    ...lightTheme.elevation.small,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.lg,
+    marginVertical: theme.spacing.sm,
+    ...theme.elevation.small,
   },
   cardVariant: {
-    backgroundColor: lightTheme.colors.surfaceVariant,
-    borderRadius: lightTheme.borderRadius.lg,
-    padding: lightTheme.spacing.lg,
-    marginVertical: lightTheme.spacing.sm,
-    ...lightTheme.elevation.small,
+    backgroundColor: theme.colors.surfaceVariant,
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.lg,
+    marginVertical: theme.spacing.sm,
+    ...theme.elevation.small,
   },
   button: {
-    backgroundColor: lightTheme.colors.primary,
-    borderRadius: lightTheme.borderRadius.md,
-    paddingVertical: lightTheme.spacing.sm,
-    paddingHorizontal: lightTheme.spacing.lg,
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.borderRadius.md,
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.lg,
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: Math.round(48 * scale),
-    ...lightTheme.elevation.small,
+    ...theme.elevation.small,
   },
   buttonText: {
-    color: lightTheme.colors.text.inverse,
-    ...lightTheme.typography.subtitle2,
+    color: theme.colors.text.inverse,
+    ...theme.typography.subtitle2,
     textAlign: 'center',
   },
   input: {
-    backgroundColor: lightTheme.colors.surface,
-    borderRadius: lightTheme.borderRadius.md,
-    paddingVertical: lightTheme.spacing.sm,
-    paddingHorizontal: lightTheme.spacing.md,
-    ...lightTheme.typography.body1,
-    color: lightTheme.colors.text.primary,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.borderRadius.md,
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
+    ...theme.typography.body1,
+    color: theme.colors.text.primary,
     borderWidth: 1,
-    borderColor: lightTheme.colors.border,
+    borderColor: theme.colors.border,
     minHeight: Math.round(48 * scale),
   },
   inputLabel: {
-    ...lightTheme.typography.body2,
-    color: lightTheme.colors.text.secondary,
-    marginBottom: lightTheme.spacing.xs,
+    ...theme.typography.body2,
+    color: theme.colors.text.secondary,
+    marginBottom: theme.spacing.xs,
   },
   
   // Utility
-  shadow: lightTheme.elevation.small,
-  shadowMedium: lightTheme.elevation.medium,
-  shadowLarge: lightTheme.elevation.large,
+  shadow: theme.elevation.small,
+  shadowMedium: theme.elevation.medium,
+  shadowLarge: theme.elevation.large,
   rounded: {
-    borderRadius: lightTheme.borderRadius.round,
+    borderRadius: theme.borderRadius.round,
   },
   divider: {
     height: 1,
-    backgroundColor: lightTheme.colors.border,
-    marginVertical: lightTheme.spacing.md,
+    backgroundColor: theme.colors.border,
+    marginVertical: theme.spacing.md,
   },
   flexGrow: {
     flexGrow: 1,
