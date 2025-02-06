@@ -2,7 +2,7 @@ import { View, Text, TextInput, Pressable, FlatList } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme, createCommonStyles } from '../hooks/useTheme';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 
@@ -36,6 +36,7 @@ const MOCK_PROJECTS: Project[] = [
 
 export default function TradeScreen() {
   const theme = useTheme();
+  const commonStyles = createCommonStyles(theme);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [investmentAmount, setInvestmentAmount] = useState('');
   const [userBalance, setUserBalance] = useState(10000); // Mock initial balance
@@ -71,76 +72,42 @@ export default function TradeScreen() {
   };
 
   const styles = StyleSheet.create({
-    balance: {
-      ...theme.typography.h2,
-      color: theme.colors.text.primary,
-      padding: theme.spacing.md,
-    },
-    description: {
-      ...theme.typography.body1,
-      color: theme.colors.text.primary,
-      marginBottom: theme.spacing.sm,
-    },
-    price: {
-      ...theme.typography.subtitle1,
-      color: theme.colors.text.primary,
-      fontWeight: '600',
-    },
-    available: {
-      ...theme.typography.body2,
-      color: theme.colors.text.secondary,
-    },
     backButton: {
       position: 'absolute',
       top: theme.spacing.md,
       left: theme.spacing.md,
       zIndex: 1,
     },
-    inputContainer: {
-      marginBottom: theme.spacing.lg,
-    },
     calculatedCredits: {
       ...theme.typography.h3,
-      color: theme.colors.text.primary,
       textAlign: 'center',
       marginVertical: theme.spacing.lg,
     },
   });
 
   return (
-    <ThemedView style={{ flex: 1, padding: theme.spacing.lg }}>
+    <View style={commonStyles.container}>
       {!selectedProject ? (
         <FlatList
           data={MOCK_PROJECTS}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Pressable
-              style={{
-                backgroundColor: theme.colors.surface,
-                borderRadius: theme.borderRadius.lg,
-                padding: theme.spacing.lg,
-                marginVertical: theme.spacing.sm,
-                ...theme.elevation.small,
-              }}
+              style={commonStyles.card}
               onPress={() => setSelectedProject(item)}>
-              <ThemedText type="title">{item.name}</ThemedText>
-              <ThemedText style={styles.description}>{item.description}</ThemedText>
-              <ThemedText style={styles.price}>
+              <ThemedText style={commonStyles.h2}>{item.name}</ThemedText>
+              <ThemedText style={commonStyles.body1}>{item.description}</ThemedText>
+              <ThemedText style={commonStyles.subtitle1}>
                 Price per credit: ${item.creditPrice}
               </ThemedText>
-              <ThemedText style={styles.available}>
+              <ThemedText style={commonStyles.body2}>
                 Available: {item.availableCredits} credits
               </ThemedText>
             </Pressable>
           )}
         />
       ) : (
-        <ThemedView style={{
-          backgroundColor: theme.colors.surface,
-          borderRadius: theme.borderRadius.lg,
-          padding: theme.spacing.lg,
-          ...theme.elevation.small,
-        }}>
+        <ThemedView style={commonStyles.card}>
           <Pressable
             style={styles.backButton}
             onPress={() => setSelectedProject(null)}>
@@ -186,6 +153,6 @@ export default function TradeScreen() {
           </Pressable>
         </ThemedView>
       )}
-    </ThemedView>
+    </View>
   );
 } 

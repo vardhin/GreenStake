@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
 import { HapticTab } from '../../components/HapticTab';
 
-export default function TabLayout() {
+const TabLayout = () => {
   const theme = useTheme();
 
   return (
@@ -82,4 +82,6 @@ export default function TabLayout() {
       />
     </Tabs>
   );
-}
+};
+
+export default TabLayout;
