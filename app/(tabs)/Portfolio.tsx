@@ -140,13 +140,14 @@ const InsightCard: React.FC<InsightCardProps> = ({ title, value, change, isBoxed
       color: isDark ? 'white' : '#111811',
       fontSize: 18,
       fontWeight: '600',
-      marginBottom: 12,
+      marginBottom: 16,
     },
     value: {
       color: isDark ? 'white' : '#111811',
-      fontSize: 36,
+      fontSize: 32,
       fontWeight: 'bold',
-      marginBottom: 8,
+      marginBottom: 12,
+      paddingTop: 8,
     },
     periodContainer: {
       flexDirection: 'row',
