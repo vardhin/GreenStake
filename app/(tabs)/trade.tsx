@@ -68,7 +68,7 @@ export default function TradeScreen() {
   };
 
   return (
-    <View style={commonStyles.container}>
+    <View style={[commonStyles.container, commonStyles.gap]}>
       <Text style={styles.balance}>Balance: ${userBalance}</Text>
       
       {!selectedProject ? (
@@ -91,7 +91,7 @@ export default function TradeScreen() {
           <Pressable
             style={styles.backButton}
             onPress={() => setSelectedProject(null)}>
-            <FontAwesome name="arrow-left" size={24} color={theme.colors.text} />
+            <FontAwesome name="arrow-left" size={24} color={theme.colors.text.primary} />
           </Pressable>
           
           <Text style={commonStyles.title}>{selectedProject.name}</Text>
@@ -123,23 +123,23 @@ export default function TradeScreen() {
 
 const styles = StyleSheet.create({
   balance: {
-    ...theme.typography.title,
-    color: theme.colors.text,
+    ...theme.typography.h2,
+    color: theme.colors.text.primary,
     padding: theme.spacing.md,
   },
   description: {
-    ...theme.typography.body,
-    color: theme.colors.text,
+    ...theme.typography.body1,
+    color: theme.colors.text.primary,
     marginBottom: theme.spacing.sm,
   },
   price: {
-    ...theme.typography.subtitle,
-    color: theme.colors.text,
+    ...theme.typography.subtitle1,
+    color: theme.colors.text.primary,
     fontWeight: '600',
   },
   available: {
-    ...theme.typography.body,
-    color: theme.colors.textSecondary,
+    ...theme.typography.body2,
+    color: theme.colors.text.secondary,
   },
   backButton: {
     position: 'absolute',
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.lg,
   },
   calculatedCredits: {
-    ...theme.typography.title,
-    color: theme.colors.text,
+    ...theme.typography.h3,
+    color: theme.colors.text.primary,
     textAlign: 'center',
     marginVertical: theme.spacing.lg,
   },
