@@ -30,7 +30,7 @@ interface UserBalance {
   invested: number;
 }
 
-const API_BASE_URL = 'http://192.168.115.59:3000';
+const API_BASE_URL = 'http://192.168.115.99:3000';
 
 // Add mock data
 const MOCK_PROJECTS: Project[] = [
