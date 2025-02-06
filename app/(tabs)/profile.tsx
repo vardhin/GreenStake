@@ -129,7 +129,7 @@ export default function ProfileScreen() {
   );
 
   const handlePortfolioPress = () => {
-    router.push('/(tabs)/portfolio');
+    router.push('/(tabs)/Portfolio');
   };
 
   const handleCarbonCreditsPress = () => {

@@ -4,6 +4,8 @@ import { LineChart } from 'react-native-chart-kit';
 import { ThemedText } from '@/components/ThemedText';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Ionicons } from '@expo/vector-icons';
+import { Stack } from 'expo-router';
 
 interface ChartComponentProps {
   width?: number;
@@ -123,45 +125,50 @@ const InsightCard: React.FC<InsightCardProps> = ({ title, value, change, isBoxed
   const styles: Record<string, ViewStyle | TextStyle> = {
     container: {
       width: '100%',
-      gap: 8,
-      padding: 20,
+      padding: 24,
       backgroundColor: isDark ? '#151718' : '#ffffff',
-      borderRadius: 16,
+      borderRadius: 20,
       borderWidth: 1,
       borderColor: isDark ? '#2d2d2d' : '#dce5dc',
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.05,
-      shadowRadius: 8,
-      elevation: 3,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.08,
+      shadowRadius: 12,
+      elevation: 4,
     },
     title: {
       color: isDark ? 'white' : '#111811',
-      fontSize: 16,
-      fontWeight: '500',
+      fontSize: 18,
+      fontWeight: '600',
+      marginBottom: 12,
     },
     value: {
       color: isDark ? 'white' : '#111811',
-      fontSize: 32,
+      fontSize: 36,
       fontWeight: 'bold',
-      marginTop: 4,
+      marginBottom: 8,
     },
     periodContainer: {
       flexDirection: 'row',
-      gap: 4,
-      marginTop: 4,
+      alignItems: 'center',
+      gap: 8,
+      marginBottom: 16,
     },
     period: {
-      color: '#638863',
+      color: isDark ? '#a0a0a0' : '#666666',
       fontSize: 14,
     },
     change: {
+      backgroundColor: '#e6f4e6',
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 12,
       color: '#078823',
       fontSize: 14,
-      fontWeight: '500',
+      fontWeight: '600',
     },
     chartContainer: {
-      height: 140,
+      height: 160,
       marginTop: 8,
     },
   };
@@ -184,6 +191,26 @@ const InsightCard: React.FC<InsightCardProps> = ({ title, value, change, isBoxed
 const Projects: React.FC = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
+  const navigation = Stack.useNavigation();
+
+  React.useEffect(() => {
+    Platform.select({
+      ios: () => {
+        navigation?.setOptions({
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="wallet-outline" size={size} color={color} />
+          ),
+        });
+      },
+      android: () => {
+        navigation?.setOptions({
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="wallet-outline" size={size} color={color} />
+          ),
+        });
+      },
+    })();
+  }, [navigation]);
 
   const styles: Record<string, ViewStyle | TextStyle> = {
     container: {
@@ -195,31 +222,31 @@ const Projects: React.FC = () => {
       color: isDark ? 'white' : '#111811',
       fontSize: 24,
       fontWeight: 'bold',
-      paddingHorizontal: 20,
-      paddingTop: 24,
-      paddingBottom: 16,
+      paddingHorizontal: 24,
+      paddingTop: 32,
+      paddingBottom: 20,
     },
     insightsContainer: {
-      padding: 20,
-      gap: 16,
+      padding: 24,
+      gap: 24,
     },
     personalizedContainer: {
-      padding: 20,
-      gap: 16,
+      padding: 24,
+      gap: 24,
     },
     recommendedContainer: {
       backgroundColor: isDark ? '#151718' : '#ffffff',
-      borderRadius: 16,
-      marginHorizontal: 20,
-      marginBottom: 24,
+      borderRadius: 20,
+      marginHorizontal: 24,
+      marginBottom: 32,
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.05,
-      shadowRadius: 8,
-      elevation: 3,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.08,
+      shadowRadius: 12,
+      elevation: 4,
     },
     bottomSpacing: {
-      height: 32,
+      height: 40,
     },
   };
 
