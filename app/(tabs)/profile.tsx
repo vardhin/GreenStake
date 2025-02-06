@@ -4,6 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Platform } from 'react-native';
+import { router } from 'expo-router';
 
 // SVG Components can be moved to separate files
 const GearIcon = () => (
@@ -18,7 +19,7 @@ const ArrowRightIcon = () => (
   </Svg>
 );
 
-export default function ProfileScreen({ navigation }: { navigation: any }) {
+export default function ProfileScreen() {
   const { spacing, colors } = useTheme();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
@@ -128,15 +129,15 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
   );
 
   const handlePortfolioPress = () => {
-    navigation.navigate('portfolio');
+    router.push('/(tabs)/portfolio');
   };
 
   const handleCarbonCreditsPress = () => {
-    navigation.navigate('transactions');
+    router.push('/(tabs)/transactions');
   };
 
   const handleCO2OffsetPress = () => {
-    navigation.navigate('for-you');
+    router.push('/(tabs)/for-you');
   };
 
   return (
