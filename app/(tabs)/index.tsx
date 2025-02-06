@@ -5,8 +5,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import Colors from '@/constants/Colors';
 
 export default function HomeScreen() {
-  const colorScheme = useColorScheme() ?? 'light';
-  const themeColors = Colors[colorScheme as keyof typeof Colors];
+  const colorScheme: 'light' | 'dark' = useColorScheme() ?? 'light';
+  const themeColors = Colors[colorScheme];
 
   return (
     <ScrollView style={styles.scrollView}>
