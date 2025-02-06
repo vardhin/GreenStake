@@ -8,11 +8,11 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Header Search */}
         <View style={styles.searchHeader}>
           <Pressable style={styles.searchButton}>
-            <Ionicons name="search" size={24} color={colors.text} />
+            <Ionicons name="search" size={20} color={colors.text} />
           </Pressable>
         </View>
 
@@ -23,7 +23,7 @@ export default function HomeScreen() {
           imageStyle={styles.heroImage}
         >
           <View style={styles.heroContent}>
-            <ThemedText size="2xl" weight="bold" style={styles.heroTitle}>
+            <ThemedText size="xl" weight="bold" style={styles.heroTitle}>
               Welcome to GreenStake, the carbon credit exchange platform
             </ThemedText>
             <ThemedText style={styles.heroSubtitle}>
@@ -35,18 +35,18 @@ export default function HomeScreen() {
         {/* How it Works Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <ThemedText size="xl" weight="bold">How it works</ThemedText>
-            <ThemedText>We make it easy for businesses to take action on climate change.</ThemedText>
+            <ThemedText size="lg" weight="bold">How it works</ThemedText>
+            <ThemedText size="sm">We make it easy for businesses to take action on climate change.</ThemedText>
             <Pressable style={styles.learnMoreButton}>
-              <ThemedText style={styles.buttonText}>Learn More</ThemedText>
+              <ThemedText style={styles.buttonText} size="sm">Learn More</ThemedText>
             </Pressable>
           </View>
 
           <View style={styles.cards}>
             {['Measure your emissions', 'Buy credits', 'Plant trees'].map((title) => (
               <View key={title} style={styles.card}>
-                <Ionicons name="leaf" size={24} color={colors.text} />
-                <ThemedText weight="bold">{title}</ThemedText>
+                <Ionicons name="leaf" size={20} color={colors.text} />
+                <ThemedText weight="bold" size="sm">{title}</ThemedText>
               </View>
             ))}
           </View>
@@ -60,10 +60,10 @@ export default function HomeScreen() {
           />
           <View style={styles.businessContent}>
             <ThemedText size="lg" weight="bold">GreenStake Business Account</ThemedText>
-            <ThemedText style={styles.businessText}>
+            <ThemedText style={styles.businessText} size="sm">
               Your business can earn interest on uninvested cash and get the flexibility to spend whenever you need it.
             </ThemedText>
-            <ThemedText style={styles.apyText}>1.5% APY</ThemedText>
+            <ThemedText style={styles.apyText} size="sm">1.5% APY</ThemedText>
           </View>
         </View>
 
@@ -71,7 +71,12 @@ export default function HomeScreen() {
         <ThemedText size="lg" weight="bold" style={styles.productsTitle}>
           Popular products
         </ThemedText>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.productsScroll}>
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false} 
+          style={styles.productsScroll}
+          contentContainerStyle={styles.productsScrollContent}
+        >
           {[
             'Wind Power', 'Solar Power', 'Reforestation',
             'Energy Efficiency', 'Carbon Capture', 'Aviation', 'Trucking'
@@ -81,7 +86,7 @@ export default function HomeScreen() {
                 source={{ uri: `https://cdn.usegalileo.ai/sdxl10/product-${index}.png` }}
                 style={styles.productImage}
               />
-              <ThemedText style={styles.productTitle}>{product}</ThemedText>
+              <ThemedText style={styles.productTitle} size="sm">{product}</ThemedText>
             </View>
           ))}
         </ScrollView>
@@ -95,76 +100,90 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  scrollContent: {
+    paddingBottom: 80, // Add padding for tab bar
+  },
   searchHeader: {
-    padding: 16,
+    padding: 12,
     alignItems: 'flex-end',
   },
   searchButton: {
     padding: 8,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
   },
   hero: {
-    height: 480,
+    height: 400,
     justifyContent: 'flex-end',
     padding: 16,
+    marginHorizontal: 12,
   },
   heroImage: {
-    borderRadius: 12,
+    borderRadius: 16,
   },
   heroContent: {
     gap: 8,
-    marginBottom: 40,
+    marginBottom: 24,
   },
   heroTitle: {
     color: 'white',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   heroSubtitle: {
     color: 'white',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   section: {
-    padding: 16,
-    gap: 24,
+    padding: 12,
+    gap: 16,
   },
   sectionHeader: {
-    gap: 16,
+    gap: 8,
   },
   learnMoreButton: {
     backgroundColor: '#19e619',
-    padding: 16,
+    padding: 12,
     borderRadius: 12,
     alignSelf: 'flex-start',
   },
   buttonText: {
     fontWeight: 'bold',
+    color: 'white',
   },
   cards: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 8,
     flexWrap: 'wrap',
   },
   card: {
     flex: 1,
-    minWidth: 158,
-    padding: 16,
+    minWidth: 140,
+    padding: 12,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#dce5dc',
-    gap: 12,
+    gap: 8,
   },
   businessSection: {
-    margin: 16,
-    borderRadius: 12,
+    margin: 12,
+    borderRadius: 16,
     backgroundColor: 'white',
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    overflow: 'hidden',
   },
   businessImage: {
-    height: 200,
-    borderRadius: 12,
+    height: 160,
+    width: '100%',
   },
   businessContent: {
-    padding: 16,
+    padding: 12,
     gap: 8,
   },
   businessText: {
@@ -174,21 +193,23 @@ const styles = StyleSheet.create({
     color: '#638863',
   },
   productsTitle: {
-    padding: 16,
+    padding: 12,
   },
   productsScroll: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
+    marginLeft: 12,
+  },
+  productsScrollContent: {
+    paddingRight: 12,
   },
   productCard: {
-    width: 160,
-    marginRight: 12,
+    width: 140,
+    marginRight: 8,
   },
   productImage: {
     width: '100%',
     aspectRatio: 1,
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 8,
   },
   productTitle: {
     fontWeight: '500',
