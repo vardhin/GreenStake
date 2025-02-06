@@ -4,7 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import Slider from '@react-native-community/slider';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { api } from '@/services/api';
+import { api } from '../../services/api';
 
 const FILTER_TABS = ['All', 'Favorites', 'Invested'];
 const PROJECT_TYPES = ['Trees', 'Solar', 'Wind', 'Methane'];
