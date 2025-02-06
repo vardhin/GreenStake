@@ -1,64 +1,61 @@
-import { StyleSheet, ScrollView, Pressable, View, Text } from 'react-native';
+import { ScrollView, Pressable, View, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { theme, commonStyles } from '../styles/theme';
 
 export default function HomeScreen() {
   const router = useRouter();
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
+      <View style={commonStyles.container}>
         {/* Hero Section */}
         <View style={styles.heroSection}>
-          <Text style={styles.title}>Welcome to GreenStake</Text>
+          <Text style={commonStyles.header}>Welcome to GreenStake</Text>
           <Text style={styles.subtitle}>
             Trade carbon credits and make a positive impact on our planet
           </Text>
         </View>
 
         {/* Quick Actions */}
-        <View style={styles.actionContainer}>
+        <View style={[commonStyles.row, styles.actionContainer]}>
           <Pressable 
             style={styles.actionButton}
             onPress={() => router.push('/trade')}
           >
-            <FontAwesome 
-              name="exchange" 
-              size={24} 
-              color="#2E7D32"
-              accessibilityLabel="Trade Credits"
-            />
+            <FontAwesome name="exchange" size={24} color={theme.colors.primary} />
             <Text style={styles.actionText}>Trade Credits</Text>
           </Pressable>
           <Pressable 
             style={styles.actionButton}
             onPress={() => router.push('/projects')}
           >
-            <FontAwesome name="leaf" size={24} color="#2E7D32" />
+            <FontAwesome name="leaf" size={24} color={theme.colors.primary} />
             <Text style={styles.actionText}>View Projects</Text>
           </Pressable>
           <Pressable 
             style={styles.actionButton}
             onPress={() => router.push('/stats')}
           >
-            <FontAwesome name="line-chart" size={24} color="#2E7D32" />
+            <FontAwesome name="line-chart" size={24} color={theme.colors.primary} />
             <Text style={styles.actionText}>Market Stats</Text>
           </Pressable>
         </View>
 
         {/* Market Overview */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Market Overview</Text>
-          <Text>Current Carbon Credit Price: $25/ton</Text>
-          <Text>Available Credits: 1,500</Text>
+        <View style={commonStyles.cardVariant}>
+          <Text style={commonStyles.title}>Market Overview</Text>
+          <Text style={commonStyles.body}>Current Carbon Credit Price: $25/ton</Text>
+          <Text style={commonStyles.body}>Available Credits: 1,500</Text>
         </View>
 
         {/* Featured Projects */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Featured Projects</Text>
-          <Text>Rainforest Conservation - Brazil</Text>
-          <Text>Wind Farm Development - Texas</Text>
-          <Text>Solar Energy Initiative - India</Text>
+        <View style={commonStyles.cardVariant}>
+          <Text style={commonStyles.title}>Featured Projects</Text>
+          <Text style={commonStyles.body}>Rainforest Conservation - Brazil</Text>
+          <Text style={commonStyles.body}>Wind Farm Development - Texas</Text>
+          <Text style={commonStyles.body}>Solar Energy Initiative - India</Text>
         </View>
       </View>
     </ScrollView>
@@ -66,71 +63,36 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#F1F8E9',
-  },
-  heroSection: {
-    alignItems: 'center',
-    padding: 20,
-    marginBottom: 20,
-    backgroundColor: '#C8E6C9',
-    borderRadius: 15,
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 10,
-    color: '#1B5E20',
-  },
-  actionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 20,
-  },
-  actionButton: {
-    alignItems: 'center',
-    padding: 15,
-    borderRadius: 10,
-    width: '30%',
-    backgroundColor: '#A5D6A7',
-    elevation: 3,
-  },
-  actionText: {
-    marginTop: 8,
-    fontSize: 12,
-    textAlign: 'center',
-    color: '#1B5E20',
-    fontWeight: '600',
-  },
-  section: {
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-    backgroundColor: '#C8E6C9',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  sectionTitle: {
-    marginBottom: 10,
-    fontSize: 18,
-    color: '#1B5E20',
-    fontWeight: '600',
-  },
   scrollView: {
     flex: 1,
+    backgroundColor: theme.colors.background,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#1B5E20',
+  heroSection: {
+    ...commonStyles.cardVariant,
+    alignItems: 'center',
+  },
+  subtitle: {
+    ...theme.typography.subtitle,
+    textAlign: 'center',
+    marginTop: theme.spacing.sm,
+    color: theme.colors.text,
+  },
+  actionContainer: {
+    justifyContent: 'space-around',
+  },
+  actionButton: {
+    ...commonStyles.centerContent,
+    padding: theme.spacing.md,
+    borderRadius: theme.borderRadius.md,
+    width: '30%',
+    backgroundColor: theme.colors.primaryLight,
+    ...theme.elevation.small,
+  },
+  actionText: {
+    ...theme.typography.caption,
+    marginTop: theme.spacing.sm,
+    textAlign: 'center',
+    color: theme.colors.text,
+    fontWeight: '600',
   },
 });

@@ -1,5 +1,7 @@
 import { View, Text, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
+import { StyleSheet } from 'react-native';
+import { theme, commonStyles } from '../styles/theme';
 
 export default function StatsScreen() {
   // Sample data - replace with your actual project data
@@ -15,40 +17,57 @@ export default function StatsScreen() {
   };
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
-      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>
-        Project Progress
+    <View style={commonStyles.container}>
+      <Text style={commonStyles.header}>
+        Market Statistics
       </Text>
       
-      <LineChart
-        data={data}
-        width={Dimensions.get('window').width - 32} // Account for padding
-        height={220}
-        chartConfig={{
-          backgroundColor: '#ffffff',
-          backgroundGradientFrom: '#ffffff',
-          backgroundGradientTo: '#ffffff',
-          decimalPlaces: 0,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: '6',
-            strokeWidth: '2',
-            stroke: '#ffa726',
-          },
-        }}
-        bezier // Makes the line curved
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
-      
-      <Text style={{ fontSize: 16, marginTop: 20, textAlign: 'center' }}>
-        Monthly Project Activity
-      </Text>
+      <View style={[commonStyles.card, styles.chartCard]}>
+        <LineChart
+          data={data}
+          width={Dimensions.get('window').width - (theme.spacing.lg * 2)} 
+          height={240}
+          chartConfig={{
+            backgroundColor: theme.colors.surface,
+            backgroundGradientFrom: theme.colors.surface,
+            backgroundGradientTo: theme.colors.surface,
+            decimalPlaces: 0,
+            color: (opacity = 1) => `rgba(46, 125, 50, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(27, 94, 32, ${opacity})`,
+            strokeWidth: 2,
+            propsForDots: {
+              r: '4',
+              strokeWidth: '2',
+              stroke: theme.colors.primary,
+            },
+            propsForLabels: {
+              fontSize: theme.typography.caption.fontSize,
+            },
+          }}
+          bezier
+          style={styles.chart}
+        />
+        
+        <Text style={styles.chartLabel}>
+          Monthly Project Activity
+        </Text>
+      </View>
     </View>
   );
-} 
+}
+
+const styles = StyleSheet.create({
+  chartCard: {
+    padding: theme.spacing.md,
+  },
+  chart: {
+    marginVertical: theme.spacing.sm,
+    borderRadius: theme.borderRadius.lg,
+  },
+  chartLabel: {
+    ...theme.typography.body,
+    color: theme.colors.primary,
+    textAlign: 'center',
+    marginTop: theme.spacing.sm,
+  },
+}); 

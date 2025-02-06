@@ -1,4 +1,6 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { theme, commonStyles } from '../styles/theme';
 
 // Mock data - move to a separate file later
 const MOCK_PURCHASED_CREDITS = [
@@ -14,16 +16,16 @@ const MOCK_PURCHASED_CREDITS = [
 
 export default function ProjectsScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>My Carbon Credits</Text>
+    <View style={commonStyles.container}>
+      <Text style={commonStyles.header}>My Carbon Credits</Text>
       <FlatList
         data={MOCK_PURCHASED_CREDITS}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.card}>
+          <View style={commonStyles.cardVariant}>
             <Text style={styles.projectName}>{item.projectName}</Text>
-            <Text style={styles.credits}>Credits: {item.credits}</Text>
-            <Text style={styles.investment}>Investment: ${item.totalInvestment}</Text>
+            <Text style={styles.details}>Credits: {item.credits}</Text>
+            <Text style={styles.details}>Investment: ${item.totalInvestment}</Text>
             <Text style={styles.date}>Purchased: {item.purchaseDate}</Text>
           </View>
         )}
@@ -33,40 +35,18 @@ export default function ProjectsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#F1F8E9',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1B5E20',
-    marginBottom: 20,
-  },
-  card: {
-    backgroundColor: '#C8E6C9',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
-  },
   projectName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1B5E20',
-    marginBottom: 8,
+    ...theme.typography.title,
+    color: theme.colors.text,
+    marginBottom: theme.spacing.sm,
   },
-  credits: {
-    fontSize: 16,
-    color: '#2E7D32',
-  },
-  investment: {
-    fontSize: 16,
-    color: '#2E7D32',
+  details: {
+    ...theme.typography.subtitle,
+    color: theme.colors.primary,
   },
   date: {
-    fontSize: 14,
-    color: '#558B2F',
-    marginTop: 8,
+    ...theme.typography.body,
+    color: theme.colors.textSecondary,
+    marginTop: theme.spacing.sm,
   },
 }); 

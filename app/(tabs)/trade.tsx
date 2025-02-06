@@ -1,6 +1,8 @@
-import { StyleSheet, View, Text, TextInput, Pressable, ScrollView, FlatList } from 'react-native';
+import { View, Text, TextInput, Pressable, FlatList } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
+import { theme, commonStyles } from '../styles/theme';
 
 // You'll want to move these types to a separate types file later
 type Project = {
@@ -66,7 +68,7 @@ export default function TradeScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.container}>
       <Text style={styles.balance}>Balance: ${userBalance}</Text>
       
       {!selectedProject ? (
@@ -75,9 +77,9 @@ export default function TradeScreen() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Pressable
-              style={styles.card}
+              style={commonStyles.cardVariant}
               onPress={() => setSelectedProject(item)}>
-              <Text style={styles.title}>{item.name}</Text>
+              <Text style={commonStyles.title}>{item.name}</Text>
               <Text style={styles.description}>{item.description}</Text>
               <Text style={styles.price}>Price per credit: ${item.creditPrice}</Text>
               <Text style={styles.available}>Available credits: {item.availableCredits}</Text>
@@ -85,18 +87,18 @@ export default function TradeScreen() {
           )}
         />
       ) : (
-        <View style={styles.card}>
+        <View style={commonStyles.card}>
           <Pressable
             style={styles.backButton}
             onPress={() => setSelectedProject(null)}>
-            <FontAwesome name="arrow-left" size={24} color="#1B5E20" />
+            <FontAwesome name="arrow-left" size={24} color={theme.colors.text} />
           </Pressable>
           
-          <Text style={styles.title}>{selectedProject.name}</Text>
+          <Text style={commonStyles.title}>{selectedProject.name}</Text>
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Investment Amount ($)</Text>
+            <Text style={commonStyles.label}>Investment Amount ($)</Text>
             <TextInput
-              style={styles.input}
+              style={commonStyles.input}
               keyboardType="numeric"
               value={investmentAmount}
               onChangeText={setInvestmentAmount}
@@ -109,9 +111,9 @@ export default function TradeScreen() {
           </Text>
           
           <Pressable
-            style={[styles.button, styles.buyButton]}
+            style={commonStyles.button}
             onPress={handlePurchase}>
-            <Text style={styles.buttonText}>Purchase Credits</Text>
+            <Text style={commonStyles.buttonText}>Purchase Credits</Text>
           </Pressable>
         </View>
       )}
@@ -120,90 +122,38 @@ export default function TradeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#F1F8E9',
-  },
-  card: {
-    backgroundColor: '#C8E6C9',
-    padding: 20,
-    borderRadius: 15,
-    elevation: 5,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1B5E20',
-    marginBottom: 20,
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 16,
-    color: '#1B5E20',
-    marginBottom: 8,
-  },
-  input: {
-    backgroundColor: '#FFFFFF',
-    padding: 12,
-    borderRadius: 8,
-    fontSize: 16,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  button: {
-    flex: 1,
-    padding: 15,
-    borderRadius: 8,
-    marginHorizontal: 5,
-    alignItems: 'center',
-  },
-  buyButton: {
-    backgroundColor: '#2E7D32',
-  },
-  sellButton: {
-    backgroundColor: '#558B2F',
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
-  },
   balance: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1B5E20',
-    padding: 16,
+    ...theme.typography.title,
+    color: theme.colors.text,
+    padding: theme.spacing.md,
   },
   description: {
-    fontSize: 14,
-    color: '#1B5E20',
-    marginBottom: 8,
+    ...theme.typography.body,
+    color: theme.colors.text,
+    marginBottom: theme.spacing.sm,
   },
   price: {
-    fontSize: 16,
-    color: '#1B5E20',
+    ...theme.typography.subtitle,
+    color: theme.colors.text,
     fontWeight: '600',
   },
   available: {
-    fontSize: 14,
-    color: '#558B2F',
+    ...theme.typography.body,
+    color: theme.colors.textSecondary,
   },
   backButton: {
     position: 'absolute',
-    top: 20,
-    left: 20,
+    top: theme.spacing.md,
+    left: theme.spacing.md,
     zIndex: 1,
   },
+  inputContainer: {
+    marginBottom: theme.spacing.lg,
+  },
   calculatedCredits: {
-    fontSize: 18,
-    color: '#1B5E20',
+    ...theme.typography.title,
+    color: theme.colors.text,
     textAlign: 'center',
-    marginVertical: 20,
-    fontWeight: '600',
+    marginVertical: theme.spacing.lg,
   },
 }); 
