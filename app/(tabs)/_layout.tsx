@@ -3,10 +3,12 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
-import { theme } from '../styles/theme';
+import { HapticTab } from '../../components/HapticTab';
+import { useTheme } from '../hooks/useTheme';
 
 export default function TabLayout() {
+  const theme = useTheme();
+
   return (
     <Tabs
       screenOptions={{
@@ -19,10 +21,20 @@ export default function TabLayout() {
             position: 'absolute',
             backgroundColor: theme.colors.navigation.background,
             borderTopColor: theme.colors.navigation.border,
+            borderTopWidth: 0.5,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          android: {
+            backgroundColor: theme.colors.navigation.background,
+            borderTopColor: theme.colors.navigation.border,
+            borderTopWidth: 0.5,
+            elevation: 8,
           },
           default: {
             backgroundColor: theme.colors.navigation.background,
             borderTopColor: theme.colors.navigation.border,
+            borderTopWidth: 0.5,
           },
         }),
       }}>
@@ -30,28 +42,36 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome name="home" size={24} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="home" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="trade"
         options={{
           title: 'Trade',
-          tabBarIcon: ({ color }) => <FontAwesome name="exchange" size={24} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="exchange" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="projects"
         options={{
           title: 'Projects',
-          tabBarIcon: ({ color }) => <FontAwesome name="leaf" size={24} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="leaf" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="stats"
         options={{
           title: 'Stats',
-          tabBarIcon: ({ color }) => <FontAwesome name="line-chart" size={24} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="line-chart" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
