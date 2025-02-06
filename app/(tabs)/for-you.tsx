@@ -112,39 +112,32 @@ export default function ForYouScreen() {
       
       console.log('Response status:', response.status);
       const data = await response.json();
-      console.log('Raw API response:', JSON.stringify(data, null, 2));
       
-      // Handle different response structures
-      let projectsData = data;
-      if (data.data) {
-        console.log('Found data property in response');
-        projectsData = data.data;
-      }
-      if (data.projects) {
-        console.log('Found projects property in response');
-        projectsData = data.projects;
+      // Extract projects from the nested structure
+      let projectsData = [];
+      if (Array.isArray(data)) {
+        projectsData = data.flatMap(item => item.projects || []);
+      } else if (data.projects) {
+        projectsData = data.projects.flatMap(item => item.projects || []);
       }
       
-      if (!Array.isArray(projectsData)) {
-        console.error('Projects data is not an array:', projectsData);
-        console.log('Falling back to mock data');
+      if (!projectsData.length) {
+        console.log('No projects found, falling back to mock data');
         setProjects(MOCK_PROJECTS);
         return;
       }
       
-      const formattedProjects: Project[] = projectsData.map((project: any) => {
-        console.log('Processing project:', project);
-        return {
-          title: project.title || 'Untitled Project',
-          returns: '5-10',
-          investors: project.investors?.length || 0,
-          type: project.category === 'WIND' ? 'Wind' : 
-                project.category === 'SOLAR' ? 'Solar' : 
-                project.category === 'METHANE' ? 'Methane' : 'Trees',
-          description: project.description || '',
-          fundingGoal: project.fundingGoal || 0
-        };
-      });
+      const formattedProjects: Project[] = projectsData.map((project: any) => ({
+        title: project.title || 'Untitled Project',
+        returns: '5-10', // You might want to calculate this based on other metrics
+        investors: project.investments?.length || 0,
+        type: project.category === 'WIND' ? 'Wind' : 
+              project.category === 'SOLAR' ? 'Solar' : 
+              project.category === 'METHANE' ? 'Methane' : 'Trees',
+        description: project.description || '',
+        fundingGoal: project.fundingGoal || 0,
+        category: project.category || ''
+      }));
       
       console.log('Formatted projects:', formattedProjects);
       setProjects(formattedProjects);
