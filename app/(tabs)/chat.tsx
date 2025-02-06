@@ -30,17 +30,21 @@ export default function ChatScreen() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://192.168.115.99:11434/api/generate', {
+      const response = await fetch('http://YOUR_COMPUTER_IP:11434/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'llama2',
+          model: 'llama3.2:latest',
           prompt: input.trim(),
           stream: true,
         }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const reader = response.body?.getReader();
       let assistantMessage = { role: 'assistant', content: '' };
@@ -70,6 +74,10 @@ export default function ChatScreen() {
       }
     } catch (error) {
       console.error('Error:', error);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: 'Sorry, there was an error connecting to the AI. Please try again.'
+      }]);
     } finally {
       setIsLoading(false);
     }
