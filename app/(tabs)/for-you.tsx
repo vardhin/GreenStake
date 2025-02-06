@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, ScrollView, TouchableOpacity, StyleSheet, Platform, TextInput, Modal, Alert } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import Slider from '@react-native-community/slider';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { api } from '@/services/api';
 
 const FILTER_TABS = ['All', 'Favorites', 'Invested'];
 const PROJECT_TYPES = ['Trees', 'Solar', 'Wind', 'Methane'];
@@ -27,27 +28,6 @@ interface UserBalance {
   invested: number;
 }
 
-const PROJECTS: Project[] = [
-  {
-    title: 'Solar Project in California',
-    returns: '2-3%',
-    investors: 3,
-    type: 'Solar',
-  },
-  {
-    title: 'Solar Project in Texas',
-    returns: '3-4%',
-    investors: 3,
-    type: 'Solar',
-  },
-  {
-    title: 'Tree Planting in Brazil',
-    returns: '3-4%',
-    investors: 3,
-    type: 'Trees',
-  },
-];
-
 export default function ForYouScreen() {
   const { spacing } = useTheme();
   const colorScheme = useColorScheme();
@@ -67,8 +47,27 @@ export default function ForYouScreen() {
     invested: 0,
   });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filteredProjects = PROJECTS.filter(project => {
+  // Load projects when component mounts
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  const loadProjects = async () => {
+    try {
+      setIsLoading(true);
+      const response = await api.getAvailableCredits();
+      setProjects(response.data);
+    } catch (err) {
+      console.error('Failed to load projects:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const filteredProjects = projects.filter(project => {
     if (searchQuery && !project.title.toLowerCase().includes(searchQuery.toLowerCase())) return false;
     
     if (activeFilter === 'Favorites' && !favoriteProjects.includes(project.title)) return false;
@@ -361,7 +360,9 @@ export default function ForYouScreen() {
 
         <View style={styles.projectsContainer}>
           <ThemedText style={styles.projectsTitle}>Projects</ThemedText>
-          {filteredProjects.length > 0 ? (
+          {isLoading ? (
+            <ThemedText style={styles.noProjects}>Loading projects...</ThemedText>
+          ) : filteredProjects.length > 0 ? (
             filteredProjects.map((project) => (
               <View key={project.title} style={styles.projectCard}>
                 <View style={styles.projectContent}>
