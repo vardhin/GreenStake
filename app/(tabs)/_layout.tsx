@@ -2,11 +2,12 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
-
 import { HapticTab } from '../../components/HapticTab';
-import { theme } from '../styles/theme';
+import { useTheme } from '../styles/theme';
 
 export default function TabLayout() {
+  const theme = useTheme();
+  
   return (
     <Tabs
       screenOptions={{

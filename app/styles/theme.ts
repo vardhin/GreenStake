@@ -270,9 +270,7 @@ export const ThemeContext = createContext<Theme>(lightTheme);
 export const useTheme = () => useContext(ThemeContext);
 
 // Export the theme directly
-export const theme = lightTheme;
-
-export const commonStyles = StyleSheet.create({
+export const createCommonStyles = (theme: Theme) => StyleSheet.create({
   // Layout
   container: {
     flex: 1,
