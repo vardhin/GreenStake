@@ -5,7 +5,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Ionicons } from '@expo/vector-icons';
-import { Stack } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
 
 interface ChartComponentProps {
   width?: number;
@@ -191,19 +191,19 @@ const InsightCard: React.FC<InsightCardProps> = ({ title, value, change, isBoxed
 const Projects: React.FC = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
-  const navigation = Stack.useNavigation();
+  const navigation = useNavigation();
 
   React.useEffect(() => {
     Platform.select({
       ios: () => {
-        navigation?.setOptions({
+        navigation.setOptions({
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="wallet-outline" size={size} color={color} />
           ),
         });
       },
       android: () => {
-        navigation?.setOptions({
+        navigation.setOptions({
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="wallet-outline" size={size} color={color} />
           ),
