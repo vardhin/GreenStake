@@ -1,8 +1,8 @@
 import { View, FlatList } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
+import { ThemedText } from '../../components/ThemedText';
+import { ThemedView } from '../../components/ThemedView';
 
 // Mock data - move to a separate file later
 const MOCK_PURCHASED_CREDITS = [

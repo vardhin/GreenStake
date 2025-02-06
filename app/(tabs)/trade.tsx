@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
+import { ThemedText } from '../../components/ThemedText';
+import { ThemedView } from '../../components/ThemedView';
 
 // You'll want to move these types to a separate types file later
 type Project = {

@@ -2,8 +2,8 @@ import { View, Dimensions, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { StyleSheet } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
+import { ThemedText } from '../../components/ThemedText';
+import { ThemedView } from '../../components/ThemedView';
 
 const { width } = Dimensions.get('window');
 
