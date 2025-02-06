@@ -2,7 +2,7 @@ import { ScrollView, Pressable, View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useTheme, createCommonStyles } from '../hooks/useTheme';
+import { useTheme, createCommonStyles } from '../styles/theme';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 

@@ -1,5 +1,5 @@
 import { View, FlatList } from 'react-native';
-import { useTheme, createCommonStyles } from '../hooks/useTheme';
+import { useTheme, createCommonStyles } from '../styles/theme';
 import { ThemedText } from '../../components/ThemedText';
 
 // Mock data - move to a separate file later

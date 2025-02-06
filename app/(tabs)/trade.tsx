@@ -2,7 +2,7 @@ import { View, Text, TextInput, Pressable, FlatList } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
-import { useTheme, createCommonStyles } from '../hooks/useTheme';
+import { useTheme, createCommonStyles } from '../styles/theme';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 

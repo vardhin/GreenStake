@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { Platform } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { useTheme } from '../hooks/useTheme';
+import { useTheme } from '../styles/theme';
 import { HapticTab } from '../../components/HapticTab';
 
 const TabLayout = () => {

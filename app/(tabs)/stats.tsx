@@ -1,7 +1,7 @@
 import { View, Dimensions, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { StyleSheet } from 'react-native';
-import { useTheme, createCommonStyles } from '../hooks/useTheme';
+import { useTheme, createCommonStyles } from '../styles/theme';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 
