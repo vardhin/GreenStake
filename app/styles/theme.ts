@@ -5,29 +5,36 @@ const scale = width / 375; // Base scale for iPhone 8
 
 export const theme = {
   colors: {
-    // Professional color palette
-    primary: '#1976D2', // Modern blue
-    primaryDark: '#0D47A1',
-    primaryLight: '#64B5F6',
-    secondary: '#424242', // Neutral gray
-    secondaryDark: '#212121',
-    secondaryLight: '#757575',
-    background: '#FAFAFA',
+    // Professional eco-friendly color palette
+    primary: '#2E7D32', // Rich forest green
+    primaryDark: '#1B5E20', // Deep forest green
+    primaryLight: '#4CAF50', // Fresh leaf green
+    secondary: '#37474F', // Blue-grey
+    secondaryDark: '#263238', // Dark blue-grey
+    secondaryLight: '#546E7A', // Light blue-grey
+    background: '#FAFAFA', // Clean white background
     surface: '#FFFFFF',
-    surfaceVariant: '#F5F5F5',
-    border: '#E0E0E0',
+    surfaceVariant: '#F1F8E9', // Light green tint
+    border: '#C8E6C9', // Soft green border
     text: {
-      primary: '#212121',
-      secondary: '#757575',
-      disabled: '#BDBDBD',
+      primary: '#1C2121', // Near black with slight green undertone
+      secondary: '#546E7A', // Blue-grey for secondary text
+      disabled: '#B0BEC5', // Light blue-grey
       inverse: '#FFFFFF',
     },
     status: {
-      error: '#D32F2F',
-      success: '#388E3C',
-      warning: '#FFA000',
-      info: '#1976D2',
+      error: '#C62828', // Darker red for better contrast
+      success: '#2E7D32', // Matching primary green
+      warning: '#F57F17', // Warm amber
+      info: '#0277BD', // Ocean blue
     },
+    // Additional colors for navigation bar
+    navigation: {
+      active: '#2E7D32', // Primary green
+      inactive: '#78909C', // Muted blue-grey
+      background: '#FFFFFF', // Clean white
+      border: '#E0E0E0', // Light border
+    }
   },
   spacing: {
     xxs: Math.round(4 * scale),
