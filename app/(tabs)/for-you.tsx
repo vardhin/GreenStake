@@ -475,7 +475,16 @@ export default function ForYouScreen() {
             maximumValue={20}
             step={0.5}
             value={returnExpectation}
-            onValueChange={setReturnExpectation}
+            onValueChange={(value) => {
+              // Use requestAnimationFrame to prevent excessive re-renders
+              requestAnimationFrame(() => {
+                setReturnExpectation(value);
+              });
+            }}
+            // Add onSlidingComplete for smoother updates during sliding
+            onSlidingComplete={(value) => {
+              setReturnExpectation(value);
+            }}
             minimumTrackTintColor="#4CAF50"
             maximumTrackTintColor={isDark ? '#666' : '#e0e0e0'}
             thumbTintColor="#4CAF50"
