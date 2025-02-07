@@ -32,7 +32,7 @@ export default function ChatScreen() {
     try {
       // Replace YOUR_COMPUTER_IP with your actual computer's IP address
       // Example: '192.168.1.100:11434' or whatever your computer's local IP is
-      const API_URL = 'http://192.168.122.1:11434/api/generate';
+      const API_URL = 'http://localhost:11434/api/generate';
 
       const response = await fetch(API_URL, {
         method: 'POST',
@@ -40,7 +40,7 @@ export default function ChatScreen() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'llama2',
+          model: 'llama3.2:latest',
           prompt: input.trim(),
           stream: true,
         }),

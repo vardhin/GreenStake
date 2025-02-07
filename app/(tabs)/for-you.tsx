@@ -470,15 +470,15 @@ export default function ForYouScreen() {
           <Slider
             style={styles.slider}
             minimumValue={1}
-            maximumValue={5}
-            step={1}
+            maximumValue={100}
+            step={0.5}
             value={returnExpectation}
             onValueChange={setReturnExpectation}
             minimumTrackTintColor="#4CAF50"
             maximumTrackTintColor={isDark ? '#666' : '#e0e0e0'}
           />
           <ThemedText style={styles.sliderValue}>
-            Minimum {returnExpectation}% return
+            Minimum {returnExpectation.toFixed(1)}% return
           </ThemedText>
         </View>
 
