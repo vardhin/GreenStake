@@ -6,6 +6,7 @@ import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useInvestments } from '@/contexts/InvestmentContext';
 
 interface ChartComponentProps {
   width?: number;
@@ -193,6 +194,7 @@ const Projects: React.FC = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
   const navigation = useNavigation();
+  const { investments, balance } = useInvestments();
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -238,6 +240,46 @@ const Projects: React.FC = () => {
     bottomSpacing: {
       height: 40,
     },
+    investmentCard: {
+      backgroundColor: isDark ? '#1A1D1E' : '#fff',
+      padding: 16,
+      borderRadius: 12,
+      marginBottom: 12,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 2,
+    },
+    investmentTitle: {
+      fontSize: 16,
+      fontWeight: '500',
+      marginBottom: 8,
+    },
+    investmentAmount: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#4CAF50',
+      marginBottom: 4,
+    },
+    investmentDate: {
+      fontSize: 14,
+      color: isDark ? '#999' : '#666',
+    },
+  };
+
+  const InvestmentCard: React.FC<{ investment: Investment }> = ({ investment }) => {
+    return (
+      <View style={styles.investmentCard}>
+        <ThemedText style={styles.investmentTitle}>{investment.projectTitle}</ThemedText>
+        <ThemedText style={styles.investmentAmount}>
+          ${investment.amount.toLocaleString()}
+        </ThemedText>
+        <ThemedText style={styles.investmentDate}>
+          {investment.date.toLocaleDateString()}
+        </ThemedText>
+      </View>
+    );
   };
 
   return (
@@ -253,9 +295,14 @@ const Projects: React.FC = () => {
       <Text style={styles.sectionTitle}>Your Investments</Text>
 
       <View style={styles.insightsContainer}>
-        <InsightCard title="Carbon Credits" value="+12%" change="+2%" />
-        <InsightCard title="Renewable Energy" value="$12.4B" change="+3%" />
-        <InsightCard title="Clean Tech" value="$8.2B" change="+4%" />
+        <InsightCard 
+          title="Available Balance" 
+          value={`$${balance.toLocaleString()}`} 
+        />
+        
+        {investments.map((investment, index) => (
+          <InvestmentCard key={index} investment={investment} />
+        ))}
       </View>
 
       <Text style={styles.sectionTitle}>Personalized Insights</Text>

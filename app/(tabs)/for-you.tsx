@@ -4,6 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import Slider from '@react-native-community/slider';
 import { useTheme } from '@/hooks/useTheme';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useInvestments } from '@/contexts/InvestmentContext';
 
 const FILTER_TABS = ['All', 'Favorites', 'Invested'];
 const PROJECT_TYPES = ['Trees', 'Solar', 'Wind', 'Methane'];
@@ -82,16 +83,15 @@ export default function ForYouScreen() {
   const [showInvestModal, setShowInvestModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [investmentAmount, setInvestmentAmount] = useState('');
-  const [userBalance, setUserBalance] = useState<UserBalance>({
-    available: 10000, // Example initial balance
-    invested: 0,
-  });
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Add a new state for temporary slider value
   const [slidingValue, setSlidingValue] = useState(returnExpectation);
+
+  // Replace userBalance state with context
+  const { balance, setBalance, addInvestment } = useInvestments();
 
   // Load projects when component mounts
   useEffect(() => {
@@ -200,41 +200,21 @@ export default function ForYouScreen() {
       return;
     }
     
-    if (amount > userBalance.available) {
+    if (amount > balance) {
       Alert.alert('Insufficient Funds', 'You do not have enough balance for this investment');
       return;
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/projects/PROJECT_ID/invest`, {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer INVESTOR_TOKEN',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ amount })
-      });
+      // Update balance
+      setBalance(balance - amount);
 
-      if (!response.ok) {
-        throw new Error('Investment failed');
-      }
-
-      // Update user balance
-      setUserBalance(prev => ({
-        available: prev.available - amount,
-        invested: prev.invested + amount,
-      }));
-
-      // Add to transactions
-      setTransactions(prev => [...prev, {
+      // Add to investments
+      addInvestment({
         projectTitle: selectedProject.title,
         amount,
         date: new Date(),
-        type: 'investment',
-      }]);
-
-      // Add to invested projects
-      setInvestedProjects(prev => [...prev, selectedProject.title]);
+      });
 
       // Close modal and reset
       setShowInvestModal(false);
@@ -244,7 +224,7 @@ export default function ForYouScreen() {
       Alert.alert('Success', 'Investment completed successfully!');
     } catch (error) {
       console.error('Investment failed:', error);
-      Alert.alert('Error', 'Failed to complete investment. Please check your connection.');
+      Alert.alert('Error', 'Failed to complete investment');
     }
   };
 
@@ -554,7 +534,7 @@ export default function ForYouScreen() {
             <ThemedText style={styles.modalTitle}>Invest in {selectedProject?.title}</ThemedText>
             
             <ThemedText style={styles.balanceText}>
-              Available Balance: ${userBalance.available.toLocaleString()}
+              Available Balance: ${balance.toLocaleString()}
             </ThemedText>
             
             <TextInput
