@@ -209,11 +209,17 @@ export default function ForYouScreen() {
       // Update balance
       setBalance(balance - amount);
 
-      // Add to investments
+      // Add to invested projects list if not already there
+      if (!investedProjects.includes(selectedProject.title)) {
+        setInvestedProjects([...investedProjects, selectedProject.title]);
+      }
+
+      // Add investment to context
       addInvestment({
         projectTitle: selectedProject.title,
         amount,
         date: new Date(),
+        type: 'investment',
       });
 
       // Close modal and reset
@@ -221,7 +227,7 @@ export default function ForYouScreen() {
       setSelectedProject(null);
       setInvestmentAmount('');
 
-      Alert.alert('Success', 'Investment completed successfully!');
+      Alert.alert('Success', 'Investment added to your portfolio!');
     } catch (error) {
       console.error('Investment failed:', error);
       Alert.alert('Error', 'Failed to complete investment');
