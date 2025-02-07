@@ -90,6 +90,9 @@ export default function ForYouScreen() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Add a new state for temporary slider value
+  const [slidingValue, setSlidingValue] = useState(returnExpectation);
+
   // Load projects when component mounts
   useEffect(() => {
     loadProjects();
@@ -474,23 +477,20 @@ export default function ForYouScreen() {
             minimumValue={1}
             maximumValue={20}
             step={0.5}
-            value={returnExpectation}
+            value={slidingValue}
             onValueChange={(value) => {
-              // Use requestAnimationFrame to prevent excessive re-renders
-              requestAnimationFrame(() => {
-                setReturnExpectation(value);
-              });
+              setSlidingValue(value);
             }}
-            // Add onSlidingComplete for smoother updates during sliding
             onSlidingComplete={(value) => {
               setReturnExpectation(value);
+              setSlidingValue(value);
             }}
             minimumTrackTintColor="#4CAF50"
             maximumTrackTintColor={isDark ? '#666' : '#e0e0e0'}
             thumbTintColor="#4CAF50"
           />
           <ThemedText style={styles.sliderValue}>
-            Minimum {returnExpectation.toFixed(1)}% return
+            Minimum {slidingValue.toFixed(1)}% return
           </ThemedText>
         </View>
 
