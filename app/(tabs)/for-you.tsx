@@ -473,19 +473,27 @@ export default function ForYouScreen() {
         <View style={styles.sliderContainer}>
           <ThemedText style={styles.sliderTitle}>Return Expectation</ThemedText>
           <Slider
-            style={styles.slider}
+            style={[
+              styles.slider,
+              Platform.OS === 'android' ? { height: 40 } : null
+            ]}
             minimumValue={1}
             maximumValue={20}
             step={1}
             value={slidingValue}
             onValueChange={(value) => {
-              setSlidingValue(Math.round(value));
+              if (Platform.OS === 'ios') {
+                setSlidingValue(Math.round(value));
+              }
             }}
             onSlidingComplete={(value) => {
               const roundedValue = Math.round(value);
               setReturnExpectation(roundedValue);
               setSlidingValue(roundedValue);
             }}
+            {...(Platform.OS === 'android' ? {
+              onValueChange: (value) => setSlidingValue(Math.round(value))
+            } : {})}
             minimumTrackTintColor="#4CAF50"
             maximumTrackTintColor={isDark ? '#666' : '#e0e0e0'}
             thumbTintColor="#4CAF50"
