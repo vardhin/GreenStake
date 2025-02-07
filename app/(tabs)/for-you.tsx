@@ -283,6 +283,7 @@ export default function ForYouScreen() {
     },
     sliderContainer: {
       marginBottom: 20,
+      paddingHorizontal: 10,
     },
     sliderTitle: {
       marginBottom: 8,
@@ -290,6 +291,7 @@ export default function ForYouScreen() {
       fontWeight: 'bold',
     },
     slider: {
+      width: '100%',
       height: 40,
     },
     projectsContainer: {
@@ -470,12 +472,13 @@ export default function ForYouScreen() {
           <Slider
             style={styles.slider}
             minimumValue={1}
-            maximumValue={100}
+            maximumValue={20}
             step={0.5}
             value={returnExpectation}
             onValueChange={setReturnExpectation}
             minimumTrackTintColor="#4CAF50"
             maximumTrackTintColor={isDark ? '#666' : '#e0e0e0'}
+            thumbTintColor="#4CAF50"
           />
           <ThemedText style={styles.sliderValue}>
             Minimum {returnExpectation.toFixed(1)}% return
