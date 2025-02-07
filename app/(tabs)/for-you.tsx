@@ -476,21 +476,22 @@ export default function ForYouScreen() {
             style={styles.slider}
             minimumValue={1}
             maximumValue={20}
-            step={0.5}
+            step={1}
             value={slidingValue}
             onValueChange={(value) => {
-              setSlidingValue(value);
+              setSlidingValue(Math.round(value));
             }}
             onSlidingComplete={(value) => {
-              setReturnExpectation(value);
-              setSlidingValue(value);
+              const roundedValue = Math.round(value);
+              setReturnExpectation(roundedValue);
+              setSlidingValue(roundedValue);
             }}
             minimumTrackTintColor="#4CAF50"
             maximumTrackTintColor={isDark ? '#666' : '#e0e0e0'}
             thumbTintColor="#4CAF50"
           />
           <ThemedText style={styles.sliderValue}>
-            Minimum {slidingValue.toFixed(1)}% return
+            Minimum {Math.round(slidingValue)}% return
           </ThemedText>
         </View>
 
